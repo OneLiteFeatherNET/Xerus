@@ -16,23 +16,22 @@ java {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven("https://jitpack.io")
 }
 
-val strigiVersion = "e89dd8352c"
-
 dependencies {
-    implementation("com.github.PatrickZdarsky:Strigiformes:$strigiVersion")
+    implementation(libs.strigiformes)
 
-    compileOnly("de.icevizion.lib:Aves:1.2.0-SNAPSHOT")
+    compileOnly(libs.aves)
     compileOnly(libs.minestom)
 
     testImplementation(libs.minestom)
     testImplementation(libs.junitApi)
-    testImplementation("org.mockito:mockito-core:4.6.1")
-    testImplementation("org.mockito:mockito-junit-jupiter:4.6.1")
-    testImplementation("de.icevizion.lib:Aves:1.2.0-SNAPSHOT")
+    testImplementation(libs.mockitoCore)
+    testImplementation(libs.mockitoJunit)
+    testImplementation(libs.aves)
     testRuntimeOnly(libs.junitEngine)
 }
 
