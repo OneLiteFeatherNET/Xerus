@@ -13,9 +13,24 @@ junit = "5.9.0"
 sonarqube = "3.4.0.2513"
 # Minestom
 minestom = "master-SNAPSHOT"
+# Strigifomres
+strigiformes = "e89dd8352c"
+# Aves
+aves = "1.2.0-SNAPSHOT"
+# Mockito Core
+mockitoCore = "4.6.1"
+# Mockito Junit
+mockitoJunit = "4.6.1"
 
 [libraries]
-
+# Mockito Core
+mockitoCore = { group = "org.mockito", name = "mockito-core", version.ref = "mockitoCore" }
+# Mockito Junit
+mockitoJunit = { group = "org.mockito", name = "mockito-junit-jupiter", version.ref = "mockitoJunit" }
+# Aves
+aves = { group = "de.icevizion.lib", name = "Aves", version.ref = "aves"}
+# Strigiformes
+strigiformes = { group = "com.github.PatrickZdarsky", name = "Strigiformes", version.ref = "strigiformes" }
 # Minestom
 minestom = { group = "com.github.Minestom", name = "Minestom", version.ref = "minestom"}
 # Chat
