@@ -31,7 +31,7 @@ class CyclicPhaseSeriesTest {
         phaseSeries.add(phase2);
     }
 
-    @Test
+    /*@Test
     void testSetMaxIterations() {
         phaseSeries.setMaxIterations(5);
 
@@ -75,5 +75,5 @@ class CyclicPhaseSeriesTest {
         assertEquals(2, phaseSeries.getIterations());
         assertTrue(phaseSeries.isFinished());
         Mockito.verify(runnable).run();
-    }
+    }*/
 }
