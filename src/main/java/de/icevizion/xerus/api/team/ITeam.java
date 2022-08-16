@@ -35,7 +35,7 @@ public interface ITeam extends Joinable {
 
     /**
      * Add certain players to a team.
-     * @param players The set off player to add
+     * @param players the set with the players to add
      */
     @Override
     default void addPlayers(@NotNull Set<Player> players) {
@@ -61,7 +61,7 @@ public interface ITeam extends Joinable {
 
     /**
      * Remove certain players from a team.
-     * @param players The set off player to remove
+     * @param players The set of players to remove
      */
     @Override
     default void removePlayers(@NotNull Set<Player> players) {
