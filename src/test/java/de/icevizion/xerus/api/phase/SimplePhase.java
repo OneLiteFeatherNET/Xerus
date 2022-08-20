@@ -1,4 +1,4 @@
-package de.icivizion.xerus.api.phase;
+package de.icevizion.xerus.api.phase;
 
 import de.icevizion.xerus.api.phase.Phase;
 
