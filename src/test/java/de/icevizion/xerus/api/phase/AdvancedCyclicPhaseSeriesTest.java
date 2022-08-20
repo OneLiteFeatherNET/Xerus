@@ -1,4 +1,4 @@
-package de.icivizion.xerus.api.phase;
+package de.icevizion.xerus.api.phase;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

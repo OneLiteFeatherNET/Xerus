@@ -1,6 +1,5 @@
-package de.icivizion.xerus.api.phase;
+package de.icevizion.xerus.api.phase;
 
-import de.icevizion.xerus.api.phase.LinearPhaseSeries;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

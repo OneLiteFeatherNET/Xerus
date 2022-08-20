@@ -1,14 +1,9 @@
-package de.icivizion.xerus.api.phase;
+package de.icevizion.xerus.api.phase;
 
-import de.icevizion.xerus.api.phase.CyclicPhaseSeries;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 
 /**
