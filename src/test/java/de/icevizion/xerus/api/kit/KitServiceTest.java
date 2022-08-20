@@ -1,4 +1,4 @@
-package de.icivizion.xerus.api.kit;
+package de.icevizion.xerus.api.kit;
 
 import de.icevizion.xerus.api.kit.IKit;
 import de.icevizion.xerus.api.kit.Kit;

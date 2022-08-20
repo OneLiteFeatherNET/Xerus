@@ -1,4 +1,4 @@
-package de.icivizion.xerus.api.kit.event;
+package de.icevizion.xerus.api.kit.event;
 
 import de.icevizion.xerus.api.kit.IKit;
 import de.icevizion.xerus.api.kit.Kit;
