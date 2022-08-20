@@ -23,7 +23,7 @@ public interface Joinable {
 
     /**
      * Add a set off players
-     * @param players The set off player to add
+     * @param players The set which contains the players to add
      */
     void addPlayers(@NotNull Set<Player> players);
 
@@ -35,7 +35,7 @@ public interface Joinable {
 
     /**
      * Remove a set off players
-     * @param players The set off player to remove
+     * @param players The set which contains the players to remove
      */
     void removePlayers(@NotNull Set<Player> players);
 }
