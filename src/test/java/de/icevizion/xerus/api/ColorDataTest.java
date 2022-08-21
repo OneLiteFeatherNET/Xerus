@@ -24,7 +24,7 @@ class ColorDataTest {
 
     @Test
     void testLength() {
-        assertSame(16, 16);
+        assertSame(16, ColorData.getValues().length);
     }
 
 }
