@@ -14,11 +14,11 @@ public class Xerus extends Extension {
                   > < / _ \\ '__| | | / __|
                  / . \\  __/ |  | |_| \\_ \\
                 /_/ \\_\\___|_|   \\__,_|___/""");
-        getLogger().info("Starting de.icevizion.xerus.Xerus v" + getOrigin().getVersion());
+        getLogger().info("Starting Xerus v{}", getOrigin().getVersion());
     }
 
     @Override
     public void terminate() {
-
+        // Nothing to do
     }
 }
