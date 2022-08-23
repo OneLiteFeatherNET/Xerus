@@ -21,11 +21,11 @@ public abstract class TimedPhase extends TickingPhase {
     private int currentTicks;
     private TickDirection tickDirection = TickDirection.DOWN;
 
-    public TimedPhase(String name, TemporalUnit temporalUnit, long interval) {
+    protected TimedPhase(String name, TemporalUnit temporalUnit, long interval) {
         super(name, temporalUnit, interval);
     }
 
-    public TimedPhase(String name, TemporalUnit temporalUnit) {
+    protected TimedPhase(String name, TemporalUnit temporalUnit) {
         super(name, temporalUnit);
     }
 
