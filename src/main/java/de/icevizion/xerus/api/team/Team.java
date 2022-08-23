@@ -19,15 +19,11 @@ import java.util.Set;
  */
 public class Team implements ITeam {
 
-    public static int DEFAULT_CAPACITY = -1;
-
-    private transient final Set<Player> players;
-
+    private static final int DEFAULT_CAPACITY = -1;
+    private final Set<Player> players;
     private final String name;
     private final ColorData colorData;
-
     private int capacity;
-
     private IItem icon;
 
     /**
