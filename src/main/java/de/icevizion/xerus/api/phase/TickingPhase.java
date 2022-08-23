@@ -19,13 +19,13 @@ public abstract class TickingPhase extends TickedPhase {
     protected final TemporalUnit temporalUnit;
     protected Task scheduledTask;
 
-    public TickingPhase(@NotNull String name, @NotNull TemporalUnit temporalUnit, long interval) {
+    protected TickingPhase(@NotNull String name, @NotNull TemporalUnit temporalUnit, long interval) {
         super(name);
         this.interval = interval;
         this.temporalUnit = temporalUnit;
     }
 
-    public TickingPhase(@NotNull String name, @NotNull TemporalUnit temporalUnit) {
+    protected TickingPhase(@NotNull String name, @NotNull TemporalUnit temporalUnit) {
         this(name, temporalUnit, 20);
     }
 

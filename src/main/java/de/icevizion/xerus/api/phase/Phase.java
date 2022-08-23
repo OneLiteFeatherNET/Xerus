@@ -19,9 +19,9 @@ public abstract class Phase {
 
     private Runnable finishedCallback;
 
-    public Phase() { }
+    protected Phase() { }
 
-    public Phase(@NotNull String name) {
+    protected Phase(@NotNull String name) {
         this.name = name;
     }
 

@@ -19,7 +19,7 @@ public abstract class GamePhase extends Phase {
     private EventNode<Event> phaseNode;
     private HashMap<Class<Event>, EventListener<Event>> listenerHashMap;
 
-    public GamePhase(@NotNull String name) {
+    protected GamePhase(@NotNull String name) {
         super(name);
     }
 

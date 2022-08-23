@@ -8,7 +8,7 @@ package de.icevizion.xerus.api.phase;
 
 public abstract class TickedPhase extends GamePhase {
 
-    public TickedPhase(String name) {
+    protected TickedPhase(String name) {
         super(name);
     }
 
