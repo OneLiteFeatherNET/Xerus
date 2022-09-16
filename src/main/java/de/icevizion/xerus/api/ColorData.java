@@ -13,6 +13,7 @@ import net.minestom.server.item.Material;
  * @version 1.0.1
  * @since 1.0.0
  */
+@SuppressWarnings("java:S3252")
 public enum ColorData {
 
     AQUA(NamedTextColor.AQUA, DyeColor.LIGHT_BLUE,
