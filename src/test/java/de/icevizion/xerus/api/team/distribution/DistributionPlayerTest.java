@@ -22,5 +22,4 @@ class DistributionPlayerTest {
         assertNotEquals(0, player.elo());
         assertNotSame(UUID.randomUUID(), player.uuid());
     }
-
 }
