@@ -1,5 +1,6 @@
-package de.icevizion.xerus.api;
+package de.icevizion.xerus.api.mocks;
 
+import de.icevizion.xerus.api.Joinable;
 import net.minestom.server.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
