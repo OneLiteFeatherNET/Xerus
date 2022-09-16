@@ -1,5 +1,6 @@
 package de.icevizion.xerus.api;
 
+import de.icevizion.xerus.api.mocks.TestJoinableImpl;
 import net.minestom.server.entity.Player;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
