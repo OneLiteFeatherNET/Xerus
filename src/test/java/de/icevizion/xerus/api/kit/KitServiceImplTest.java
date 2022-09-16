@@ -1,8 +1,5 @@
 package de.icevizion.xerus.api.kit;
 
-import de.icevizion.xerus.api.kit.IKit;
-import de.icevizion.xerus.api.kit.Kit;
-import de.icevizion.xerus.api.kit.KitService;
 import net.minestom.server.entity.Player;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
@@ -21,9 +18,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class KitServiceTest {
+class KitServiceImplTest {
 
-    KitService kitService;
+    KitServiceImpl kitService;
 
     IKit defaultKit;
 
@@ -33,14 +30,14 @@ class KitServiceTest {
     void init() {
         this.testPlayer = Mockito.mock(Player.class);
         this.defaultKit = new Kit("TestKit", "TestKit", 3, true);
-        this.kitService = new KitService();
+        this.kitService = new KitServiceImpl();
         this.kitService.add(defaultKit);
     }
 
     @Order(1)
     @Test
     void testOtherConstructor() {
-        var service = new KitService(10);
+        var service = new KitServiceImpl(10);
         assertSame(0, service.getKits().size());
     }
 
