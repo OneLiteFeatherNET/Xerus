@@ -1,5 +1,6 @@
 package de.icevizion.xerus.api.team.distribution;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -13,8 +14,8 @@ import java.util.UUID;
  */
 public record DistributionPlayer(@NotNull UUID uuid, int elo) {
 
-    public static DistributionPlayer of(@NotNull UUID uuid, int elo) {
+    @Contract("_, _ -> new")
+    public static @NotNull DistributionPlayer of(@NotNull UUID uuid, int elo) {
         return new DistributionPlayer(uuid, elo);
     }
-
 }
