@@ -20,7 +20,6 @@ public class MultiPlayerTeamEvent<T extends ITeam> implements Event, Cancellable
     private final T team;
     private final Set<Player> players;
     private final TeamAction teamAction;
-
     private boolean cancelled;
 
     /**
