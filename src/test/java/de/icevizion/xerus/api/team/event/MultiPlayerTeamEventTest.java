@@ -14,11 +14,17 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class MultiPlayerTeamEventTest {
 
+    static Team mockedTeam = Mockito.mock(Team.class);
+    static Player mockedPlayer = Mockito.mock(Player.class);
+
+    @Test
+    void testEventConstructor() {
+        var event = new MultiPlayerTeamEvent<>(mockedTeam, Set.of(mockedPlayer), TeamAction.ADD, true);
+        assertTrue(event.isCancelled());
+    }
+
     @Test
     void testPlayerMultiTeamEvent() {
-        var mockedTeam = Mockito.mock(Team.class);
-        var mockedPlayer = Mockito.mock(Player.class);
-
         var event = new MultiPlayerTeamEvent<>(mockedTeam, Set.of(mockedPlayer), TeamAction.ADD);
 
         assertNotSame(3, event.getPlayers().size());
