@@ -1,5 +1,9 @@
 package de.icevizion.xerus.api.kit;
 
+import de.icevizion.aves.item.IItem;
+import de.icevizion.aves.item.Item;
+import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -13,11 +17,22 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class IKitTest {
 
+    IItem dummyItem;
     IKit kit;
 
     @BeforeAll
     void init() {
+        this.dummyItem = new Item(ItemStack.AIR);
         this.kit = Kit.of("TestKit", 9, true);
+    }
+
+    @Test
+    void testConstructorWithException() {
+        assertThrowsExactly(
+                IllegalArgumentException.class,
+                () -> new Kit("Test", null, 12, false),
+                "The max size for the HotBar is 9"
+        );
     }
 
     @Test
@@ -28,6 +43,18 @@ class IKitTest {
     @Test
     void testMaxHotArmorItems() {
         assertSame(9, MAX_HOT_BAR_ITEMS);
+    }
+
+    @Test
+    void testSetArmorItems() {
+        var kit = new Kit("Test", null, 9, false);
+        assertThrowsExactly(
+                IllegalArgumentException.class,
+                () -> kit.setArmorItem(12, dummyItem),
+                "The index is to high"
+        );
+        kit.setItem(0, new Item(ItemStack.builder(Material.STONE).build()));
+        assertNotNull(kit);
     }
 
     @Test
@@ -58,5 +85,10 @@ class IKitTest {
     @Test
     void testGetIcon() {
         assertNull(this.kit.getIcon());
+    }
+
+    @Test
+    void testHashCode() {
+        assertNotEquals(12, this.kit.hashCode());
     }
 }
