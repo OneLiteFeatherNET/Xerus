@@ -180,4 +180,43 @@ public interface ITeam extends Joinable {
      */
     @NotNull
     Set<Player> getPlayers();
+
+    sealed interface Builder permits TeamBuilder {
+
+        /**
+         * Set a name to the team.
+         * @param name the new name set
+         * @return the builder instance
+         */
+        @NotNull Builder name(@NotNull String name);
+
+        /**
+         * Set the used color to the team
+         * @param colorData the {@link ColorData} to set
+         * @return the builder instance
+         */
+        @NotNull Builder colorData(@NotNull ColorData colorData);
+
+        /**
+         * Set the icon to the team.
+         * @param icon the icon to set
+         * @return the builder instance
+         */
+        @NotNull Builder icon(@NotNull IItem icon);
+
+        /**
+         * Set the maximum size for the team.
+         * @param capacity the capacity to set
+         * @return the builder instance
+         */
+        @NotNull Builder capacity(int capacity);
+
+        /**
+         * Creates a new instance from the team with the given values from the builder.
+         * When some value is invalid the creation process will fail with an exception
+         * @return the builder instace
+         */
+        @NotNull Team build();
+
+    }
 }
