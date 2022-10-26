@@ -3,6 +3,7 @@ package de.icevizion.xerus.api.kit;
 import de.icevizion.aves.item.IItem;
 import de.icevizion.aves.util.Players;
 import net.minestom.server.entity.Player;
+import net.minestom.server.utils.validate.Check;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -26,12 +27,9 @@ public class Kit implements IKit {
     protected IItem[] hotBarItems;
 
     public Kit(@NotNull String name, @Nullable String description, int hotBarSize, boolean armorItems) {
+        Check.argCondition(hotBarSize > MAX_HOT_BAR_ITEMS, "The max size for the HotBar is 9");
         this.name = name;
         this.description = description;
-
-        if (hotBarSize > MAX_HOT_BAR_ITEMS) {
-            throw new IllegalArgumentException("The max size for the HotBar is 9");
-        }
         this.hotBarItems = new IItem[hotBarSize];
 
         if (armorItems) {
@@ -46,10 +44,7 @@ public class Kit implements IKit {
 
     @Override
     public void setArmorItem(int index, @NotNull IItem item) {
-        if (index > hotBarItems.length) {
-            throw new IllegalArgumentException("The index is to high");
-        }
-
+        Check.argCondition(index > hotBarItems.length, "The index is to high");
         armorItems[index] = item;
     }
 

@@ -69,7 +69,7 @@ class PhaseStructureTest {
     @Test
     void testSetNameWithException() {
         assertThrowsExactly(IllegalArgumentException.class,
-                () -> this.phase.setName(" "), "The name can not be empty");
+                () -> this.phase.setName(" "), "The name can't be empty");
     }
 
     @Order(7)

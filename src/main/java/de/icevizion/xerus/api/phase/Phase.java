@@ -1,5 +1,6 @@
 package de.icevizion.xerus.api.phase;
 
+import net.minestom.server.utils.validate.Check;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -62,13 +63,15 @@ public abstract class Phase {
         return this;
     }
 
-    public void setName(String name) {
+    public void setName(@NotNull String name) {
+        Check.argCondition(name.trim().isEmpty(), "The name can't be empty");
         this.name = name;
     }
 
     /**
      * @return The name of this phase
      */
+    @NotNull
     public String getName() {
         return name;
     }
