@@ -22,9 +22,23 @@ import java.util.Set;
  **/
 public interface Team extends Joinable {
 
+    /**
+     * Creates a new instance from the {@link TeamImpl.Builder} interface.
+     * @return the created instance
+     */
     @Contract(value = " -> new", pure = true)
     static @NotNull Builder builder() {
         return new TeamBuilder();
+    }
+
+    @Contract(value = "_, _ -> new", pure = true)
+    static @NotNull Team of(@NotNull String name, @NotNull ColorData colorData) {
+        return builder().name(name).colorData(colorData).build();
+    }
+
+    @Contract(value = "_, _, _ -> new", pure = true)
+    static @NotNull Team of(@NotNull String name, @NotNull ColorData colorData, int capacity) {
+        return builder().name(name).colorData(colorData).capacity(capacity).build();
     }
 
     /**
@@ -187,6 +201,9 @@ public interface Team extends Joinable {
     @NotNull
     Set<Player> getPlayers();
 
+    /**
+     * The interface defines all relevant method for a builder pattern.
+     */
     sealed interface Builder permits TeamBuilder {
 
         /**
@@ -222,7 +239,7 @@ public interface Team extends Joinable {
          * When some value is invalid the creation process will fail with an exception
          * @return the builder instace
          */
-        @NotNull TeamImpl build();
+        @NotNull Team build();
 
     }
 }
