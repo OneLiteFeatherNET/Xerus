@@ -22,14 +22,14 @@ class KitServiceImplTest {
 
     KitServiceImpl kitService;
 
-    IKit defaultKit;
+    Kit defaultKit;
 
     Player testPlayer;
 
     @BeforeAll
     void init() {
         this.testPlayer = Mockito.mock(Player.class);
-        this.defaultKit = new Kit("TestKit", "TestKit", 3, true);
+        this.defaultKit = new KitImpl("TestKit", "TestKit", 3, true);
         this.kitService = new KitServiceImpl();
         this.kitService.add(defaultKit);
     }
@@ -44,7 +44,7 @@ class KitServiceImplTest {
     @Order(2)
     @Test
     void testAddKit() {
-        this.kitService.add(new Kit("Test", "Test", 3, false));
+        this.kitService.add(new KitImpl("Test", "Test", 3, false));
         assertSame(2, this.kitService.getKits().size());
     }
 

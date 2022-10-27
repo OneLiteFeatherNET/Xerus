@@ -1,8 +1,6 @@
 package de.icevizion.xerus.api.kit.event;
 
-import de.icevizion.xerus.api.kit.IKit;
 import de.icevizion.xerus.api.kit.Kit;
-import de.icevizion.xerus.api.kit.event.PlayerKitChangeEvent;
 import net.minestom.server.entity.Player;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,8 +17,7 @@ class PlayerKitChangeEventTest {
     @Test
     void testPlayerKitChangeEvent() {
         var player = Mockito.mock(Player.class);
-        IKit newKit = new Kit("NewKit", "Cool", 3, false);
-
+        Kit newKit = Kit.of("NewKit", 3, false);
         var event = new PlayerKitChangeEvent(player, null, newKit);
         assertNotSame(UUID.randomUUID(), event.getPlayer().getUuid());
         assertNull(event.getCurrentKit());
