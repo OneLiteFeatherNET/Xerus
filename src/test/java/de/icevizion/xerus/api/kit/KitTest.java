@@ -11,7 +11,6 @@ import org.junit.jupiter.api.TestInstance;
 import java.util.Locale;
 
 import static de.icevizion.xerus.api.kit.Kit.MAX_ARMOR_ITEMS;
-import static de.icevizion.xerus.api.kit.Kit.MAX_HOT_BAR_ITEMS;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -23,16 +22,7 @@ class KitTest {
     @BeforeAll
     void init() {
         this.dummyItem = new Item(ItemStack.AIR);
-        this.kit = Kit.of("TestKit", 9, true);
-    }
-
-    @Test
-    void testConstructorWithException() {
-        assertThrowsExactly(
-                IllegalArgumentException.class,
-                () -> new KitImpl("Test", null, 12, false),
-                "The max size for the HotBar is 9"
-        );
+        this.kit = Kit.of("TestKit", true);
     }
 
     @Test
@@ -41,18 +31,9 @@ class KitTest {
     }
 
     @Test
-    void testMaxHotArmorItems() {
-        assertSame(9, MAX_HOT_BAR_ITEMS);
-    }
-
-    @Test
     void testSetArmorItems() {
-        var kit = new KitImpl("Test", null, 9, false);
-        assertThrowsExactly(
-                IllegalArgumentException.class,
-                () -> kit.setArmorItem(12, dummyItem),
-                "The index is to high"
-        );
+        var kit = new KitImpl("Test", null, false);
+        assertThrows(NullPointerException.class, () -> kit.setArmorItem(ArmorSlot.BOOTS, dummyItem));
         kit.setItem(0, new Item(ItemStack.builder(Material.STONE).build()));
         assertNotNull(kit);
     }

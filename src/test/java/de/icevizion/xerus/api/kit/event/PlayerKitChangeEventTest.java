@@ -17,7 +17,7 @@ class PlayerKitChangeEventTest {
     @Test
     void testPlayerKitChangeEvent() {
         var player = Mockito.mock(Player.class);
-        Kit newKit = Kit.of("NewKit", 3, false);
+        Kit newKit = Kit.of("NewKit", false);
         var event = new PlayerKitChangeEvent(player, null, newKit);
         assertNotSame(UUID.randomUUID(), event.getPlayer().getUuid());
         assertNull(event.getCurrentKit());
