@@ -23,22 +23,13 @@ class TranslatedKitTest {
 
     @Test
     void testKitConstructor() {
-        var kit = new TranslatedKit(messageProvider, "key", 9, true);
+        var kit = new TranslatedKit(messageProvider, "key", true);
         assertNotNull(kit);
     }
 
     @Test
-    void testKitConstructorWithException() {
-        assertThrowsExactly(
-                IllegalArgumentException.class,
-                () -> new TranslatedKit(messageProvider, "Key", 12, false),
-                "The maximum size for the HotBar is nine"
-        );
-    }
-
-    @Test
     void testStaticKitCreation() {
-        var kit = TranslatedKit.of(messageProvider, 9, "Test", true);
+        var kit = TranslatedKit.of(messageProvider, "Test", true);
         assertNotNull(kit);
     }
 }
