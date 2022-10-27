@@ -237,7 +237,7 @@ public interface Team extends Joinable {
         /**
          * Creates a new instance from the team with the given values from the builder.
          * When some value is invalid the creation process will fail with an exception
-         * @return the builder instace
+         * @return the builder instance
          */
         @NotNull Team build();
 
