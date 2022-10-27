@@ -22,9 +22,9 @@ public final class KitServiceImpl implements KitService {
 
     private static final Logger KIT_LOGGER = LoggerFactory.getLogger(KitServiceImpl.class);
 
-    private final List<IKit> kits;
+    private final List<Kit> kits;
 
-    private final Map<Player, IKit> usedKits;
+    private final Map<Player, Kit> usedKits;
 
     public KitServiceImpl() {
         this.kits = new ArrayList<>();
@@ -41,16 +41,16 @@ public final class KitServiceImpl implements KitService {
      * @param player The player to add
      * @param kit The kit to add
      */
-    public void add(@NotNull Player player, @NotNull IKit kit) {
+    public void add(@NotNull Player player, @NotNull Kit kit) {
         this.usedKits.put(player, kit);
     }
 
     /**
      * Remove a player from the underlying cache.
      * @param player The player to remove
-     * @return The current {@link IKit} from the player
+     * @return The current {@link Kit} from the player
      */
-    public IKit remove(@NotNull Player player) {
+    public Kit remove(@NotNull Player player) {
         return this.usedKits.remove(player);
     }
 
@@ -78,9 +78,9 @@ public final class KitServiceImpl implements KitService {
     /**
      * Changes the current kit from a player.
      * @param player The player who changes his current kit
-     * @param newKit The new {@link IKit}
+     * @param newKit The new {@link Kit}
      */
-    public void changeKit(@NotNull Player player, @NotNull IKit newKit) {
+    public void changeKit(@NotNull Player player, @NotNull Kit newKit) {
         var oldKit = usedKits.remove(player);
 
         var event = new PlayerKitChangeEvent(player, oldKit, newKit);
@@ -96,7 +96,7 @@ public final class KitServiceImpl implements KitService {
      * @param kit that should be added
      */
     @Override
-    public void add(@NotNull IKit kit) {
+    public void add(@NotNull Kit kit) {
         if (kits.contains(kit)) {
             KIT_LOGGER.info("Overwriting existing kit!");
         }
@@ -108,10 +108,15 @@ public final class KitServiceImpl implements KitService {
      * @param kit that should be removed
      */
     @Override
-    public boolean remove(@NotNull IKit kit) {
+    public boolean remove(@NotNull Kit kit) {
         return this.kits.remove(kit);
     }
 
+    /**
+     * Removes a kit by his identifier.
+     * @param identifier The identifier from the kit
+     * @return true when the kit was removed otherwise false
+     */
     @Override
     public boolean remove(@NotNull String identifier) {
         if (identifier.trim().isEmpty()) {
@@ -127,11 +132,11 @@ public final class KitServiceImpl implements KitService {
      * @return The fetched kit in an optional
      */
     @Override
-    public Optional<IKit> getKit(@NotNull String name) {
+    public Optional<Kit> getKit(@NotNull String name) {
         if (name.isEmpty()) {
             throw new IllegalArgumentException("The name can not be empty");
         }
-        IKit kit = null;
+        Kit kit = null;
         for (int i = 0; i < kits.size() && kit == null; i++) {
             if (kits.get(i).getIdentifier().equals(name)) {
                 kit = kits.get(i);
@@ -147,7 +152,7 @@ public final class KitServiceImpl implements KitService {
      * @param player The player to determine his kit
      * @return the fetched kit.
      */
-    public Optional<IKit> getKit(@NotNull Player player) {
+    public Optional<Kit> getKit(@NotNull Player player) {
         if (!usedKits.isEmpty()) {
             for (var entry : usedKits.entrySet()) {
                 if (!entry.getKey().getUuid().equals(player.getUuid())) continue;
@@ -163,7 +168,7 @@ public final class KitServiceImpl implements KitService {
      * @return the underlying list
      */
     @Override
-    public List<IKit> getKits() {
+    public List<Kit> getKits() {
         return kits;
     }
 
@@ -171,7 +176,7 @@ public final class KitServiceImpl implements KitService {
      * Returns a map which contains all player and kits which are currently in use.
      * @return the underlying map
      */
-    public Map<Player, IKit> getUsedKits() {
+    public Map<Player, Kit> getUsedKits() {
         return usedKits;
     }
 }
