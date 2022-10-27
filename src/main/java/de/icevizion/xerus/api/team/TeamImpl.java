@@ -3,7 +3,6 @@ package de.icevizion.xerus.api.team;
 import de.icevizion.aves.item.IItem;
 import de.icevizion.xerus.api.ColorData;
 import net.minestom.server.entity.Player;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
