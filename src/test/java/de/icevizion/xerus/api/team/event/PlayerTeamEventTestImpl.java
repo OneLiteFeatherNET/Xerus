@@ -1,6 +1,6 @@
 package de.icevizion.xerus.api.team.event;
 
-import de.icevizion.xerus.api.team.Team;
+import de.icevizion.xerus.api.team.TeamImpl;
 import net.minestom.server.entity.Player;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,11 +12,11 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class PlayerTeamEventTest {
+class PlayerTeamEventTestImpl {
 
     @Test
     void testPlayerTeamEvent() {
-        var mockedTeam = Mockito.mock(Team.class);
+        var mockedTeam = Mockito.mock(TeamImpl.class);
         var mockedPlayer = Mockito.mock(Player.class);
 
         var event = new PlayerTeamEvent<>(mockedPlayer, mockedTeam, TeamAction.ADD);

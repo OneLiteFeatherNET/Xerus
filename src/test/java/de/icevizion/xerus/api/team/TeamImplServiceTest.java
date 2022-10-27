@@ -12,17 +12,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class TeamServiceTest {
+class TeamImplServiceTest {
 
-    TeamService<Team> teamService;
+    TeamService<TeamImpl> teamService;
 
-    Team defaultTeam;
+    TeamImpl defaultTeamImpl;
 
     @BeforeAll
     void init() {
         this.teamService = new TeamServiceImpl<>();
-        this.defaultTeam = Mockito.mock(Team.class);
-        this.teamService.add(defaultTeam);
+        this.defaultTeamImpl = Mockito.mock(TeamImpl.class);
+        this.teamService.add(defaultTeamImpl);
     }
 
     @Test
