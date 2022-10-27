@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.UnknownNullability;
 
+import java.util.EnumMap;
 import java.util.Locale;
 
 /**
@@ -17,25 +18,26 @@ import java.util.Locale;
 public interface Kit extends Equipable {
 
     int MAX_ARMOR_ITEMS = 4;
-    int MAX_HOT_BAR_ITEMS = 9;
 
-    @Contract(value = "_, _, _ -> new", pure = true)
-    static @NotNull KitImpl of(@NotNull String name, int hotBarSize, boolean armorItems) {
-        return new KitImpl(name, null, hotBarSize, armorItems);
+    @Contract(value = "_, _ -> new", pure = true)
+    static @NotNull KitImpl of(@NotNull String name, boolean armorItems) {
+        return new KitImpl(name, null, armorItems);
     }
+
+    void setIcon(@NotNull IItem item);
 
     /**
      * Add an item to a specific position in the array for the armor items.
-     * @param index The index where the item should be set
+     * @param slot The index where the item should be set
      * @param item The item to set
      */
-    void setArmorItem(int index, @NotNull IItem item);
+    void setArmorItem(@NotNull ArmorSlot slot, @NotNull IItem item);
 
     /**
      * Set the armor items directly per array.
      * @param items The items to set
      */
-    void setArmorItems(@NotNull IItem... items);
+    void setArmorItems(@NotNull EnumMap<ArmorSlot, IItem> items);
 
     /**
      * Add an item to a specific position in the array for the hotBar items.
