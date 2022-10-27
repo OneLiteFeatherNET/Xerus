@@ -1,7 +1,10 @@
 package de.icevizion.xerus.api.team;
 
+import de.icevizion.aves.item.Item;
 import de.icevizion.xerus.api.ColorData;
 import net.minestom.server.entity.Player;
+import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -15,13 +18,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
-class TeamTestImpl {
+class TeamTest {
 
     Team team;
 
     @BeforeAll
     void init() {
-        this.team = Team.builder().name("Team A").colorData(ColorData.AQUA).build();
+        this.team = Team.builder()
+                .name("Team A")
+                .colorData(ColorData.AQUA)
+                .icon(new Item(ItemStack.builder(Material.ACACIA_FENCE).build()))
+                .build();
     }
 
     @Test
@@ -58,12 +65,17 @@ class TeamTestImpl {
 
     @Test
     void testGetIcon() {
-        assertNull(this.team.getIcon());
+        assertNotNull(this.team.getIcon());
     }
 
     @Test
     void testGetPlayers() {
         assertNotNull(team.getPlayers());
         assertTrue(team.getPlayers().isEmpty());
+    }
+
+    @Test
+    void testHashCode() {
+        assertNotEquals(32, this.team.hashCode());
     }
 }
