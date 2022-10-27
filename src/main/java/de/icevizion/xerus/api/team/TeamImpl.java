@@ -19,7 +19,7 @@ import java.util.Set;
  */
 public class TeamImpl implements Team {
 
-    private static final int DEFAULT_CAPACITY = -1;
+    protected static final int DEFAULT_CAPACITY = -1;
     private final Set<Player> players;
     private final String name;
     private final ColorData colorData;
@@ -36,7 +36,11 @@ public class TeamImpl implements Team {
         this.name = name;
         this.colorData = colorData;
         this.capacity = initialCapacity;
-        this.players = new HashSet<>(initialCapacity);
+        if (initialCapacity == DEFAULT_CAPACITY) {
+            this.players = new HashSet<>();
+        } else {
+            this.players = new HashSet<>(initialCapacity);
+        }
     }
 
     /**
