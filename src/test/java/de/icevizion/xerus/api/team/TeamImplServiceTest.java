@@ -1,5 +1,6 @@
 package de.icevizion.xerus.api.team;
 
+import de.icevizion.xerus.api.ColorData;
 import net.minestom.server.entity.Player;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -14,14 +15,14 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TeamImplServiceTest {
 
-    TeamService<TeamImpl> teamService;
+    TeamService<Team> teamService;
 
-    TeamImpl defaultTeamImpl;
+    Team defaultTeamImpl;
 
     @BeforeAll
     void init() {
         this.teamService = new TeamServiceImpl<>();
-        this.defaultTeamImpl = Mockito.mock(TeamImpl.class);
+        this.defaultTeamImpl = Team.builder().name("Red").capacity(10).colorData(ColorData.DARK_RED).build();
         this.teamService.add(defaultTeamImpl);
     }
 
@@ -42,4 +43,23 @@ class TeamImplServiceTest {
         assertSame(1, this.teamService.getTeams().size());
     }
 
+    @Test
+    void testRemoveTeam() {
+        this.teamService.remove(defaultTeamImpl);
+        assertTrue(this.teamService.getTeams().isEmpty());
+        this.teamService.add(defaultTeamImpl);
+    }
+
+    @Test
+    void testRemoveWithIdentifier() {
+        this.teamService.remove("Team A");
+        assertFalse(this.teamService.getTeams().isEmpty());
+    }
+
+    @Test
+    void testClearMethod() {
+        this.teamService.clear();
+        assertTrue(this.teamService.getTeams().isEmpty());
+        this.teamService.add(defaultTeamImpl);
+    }
 }
