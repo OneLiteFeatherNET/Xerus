@@ -1,7 +1,7 @@
 package de.icevizion.xerus.api.team.event;
 
-import de.icevizion.xerus.api.team.ITeam;
 import de.icevizion.xerus.api.team.Team;
+import de.icevizion.xerus.api.team.TeamImpl;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.trait.CancellableEvent;
 import net.minestom.server.event.trait.PlayerEvent;
@@ -10,12 +10,12 @@ import org.jetbrains.annotations.NotNull;
 /**
  * The event would be fired when a player leaves or joins the team.
  * The {@link TeamAction} shows if a player joins or not
- * @param <T> The generic typ must extend the given {@link Team} class.
+ * @param <T> The generic typ must extend the given {@link TeamImpl} class.
  * @author theEvilReaper
  * @version 1.0.0
  * @since 1.0.0
  */
-public final class PlayerTeamEvent<T extends ITeam> implements PlayerEvent, CancellableEvent {
+public final class PlayerTeamEvent<T extends Team> implements PlayerEvent, CancellableEvent {
 
     private final Player player;
     private final TeamAction teamAction;

@@ -12,7 +12,7 @@ import java.util.Optional;
  * @since 1.0.0
  * @version 1.0.3
  */
-public class TeamServiceImpl<T extends ITeam> implements TeamService<T> {
+public class TeamServiceImpl<T extends Team> implements TeamService<T> {
 
     private final List<T> teams;
 

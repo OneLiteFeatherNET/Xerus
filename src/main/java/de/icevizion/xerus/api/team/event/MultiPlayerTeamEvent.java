@@ -1,6 +1,6 @@
 package de.icevizion.xerus.api.team.event;
 
-import de.icevizion.xerus.api.team.ITeam;
+import de.icevizion.xerus.api.team.Team;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.trait.CancellableEvent;
@@ -15,7 +15,7 @@ import java.util.Set;
  * @version 1.0.0
  * @since 1.0.11
  **/
-public class MultiPlayerTeamEvent<T extends ITeam> implements Event, CancellableEvent {
+public class MultiPlayerTeamEvent<T extends Team> implements Event, CancellableEvent {
 
     private final T team;
     private final Set<Player> players;

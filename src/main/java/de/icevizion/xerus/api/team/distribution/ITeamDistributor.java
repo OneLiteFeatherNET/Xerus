@@ -1,6 +1,6 @@
 package de.icevizion.xerus.api.team.distribution;
 
-import de.icevizion.xerus.api.team.ITeam;
+import de.icevizion.xerus.api.team.Team;
 import net.minestom.server.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,7 +12,7 @@ import java.util.function.ToIntFunction;
  * @version 1.0.0
  * @since 1.0.0
  **/
-public interface ITeamDistributor<T extends ITeam> {
+public interface ITeamDistributor<T extends Team> {
 
     void distribute(@NotNull List<T> teams, @NotNull List<Player> players, int teamSize, ToIntFunction<Player> eloFunction,
                     boolean evenTeams, boolean lowVariance);

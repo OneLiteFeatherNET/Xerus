@@ -12,7 +12,7 @@ import java.util.Optional;
  * @version 1.0.3
  * @since 1.0.0
  **/
-public interface TeamService<T extends ITeam> {
+public interface TeamService<T extends Team> {
 
     /**
      * Add a team to the service.

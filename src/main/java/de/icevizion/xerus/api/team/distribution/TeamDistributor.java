@@ -1,6 +1,6 @@
 package de.icevizion.xerus.api.team.distribution;
 
-import de.icevizion.xerus.api.team.ITeam;
+import de.icevizion.xerus.api.team.Team;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.network.ConnectionManager;
@@ -15,7 +15,7 @@ import java.util.function.ToIntFunction;
  * @version 1.0
  * @since 03/02/2020 20:32
  */
-public class TeamDistributor<T extends ITeam> implements ITeamDistributor<T> {
+public class TeamDistributor<T extends Team> implements ITeamDistributor<T> {
 
     private static final ConnectionManager CONNECTION_MANAGER = MinecraftServer.getConnectionManager();
 
@@ -54,7 +54,7 @@ public class TeamDistributor<T extends ITeam> implements ITeamDistributor<T> {
 
         //Unwrap
         for (DistributionTeam distributionTeam : distributedTeams) {
-            ITeam team = null;
+            Team team = null;
 
             for (int i = 0; i < teams.size() && team == null; i++) {
                 if (!teams.get(i).getName().equals(distributionTeam.getName())) continue;

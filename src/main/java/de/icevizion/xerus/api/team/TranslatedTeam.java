@@ -19,7 +19,7 @@ import java.util.Set;
  * @version 1.0.0
  * @since 1.0.13
  **/
-public class TranslatedTeam implements ITeam {
+public class TranslatedTeam implements Team {
 
     private final MessageProvider messageProvider;
     private final TranslatedObjectCache<String> nameCache;
