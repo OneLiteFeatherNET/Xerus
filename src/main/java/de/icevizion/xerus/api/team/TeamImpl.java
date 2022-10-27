@@ -44,29 +44,6 @@ public class TeamImpl implements Team {
     }
 
     /**
-     * Creates a new instance from the team.
-     * @param name the name of team.
-     * @param colorData the {@link ColorData} for the team
-     * @param capacity the size of the team.
-     * @return the created object
-     */
-    @Contract(value = "_, _, _ -> new", pure = true)
-    public static @NotNull TeamImpl of(@NotNull String name, @NotNull ColorData colorData, int capacity) {
-        return new TeamImpl(name, colorData, capacity);
-    }
-
-    /**
-     * Creates a new instance from the team.
-     * @param name the name of team.
-     * @param colorData the {@link ColorData} for the team
-     * @return the created object
-     */
-    @Contract(value = "_, _ -> new", pure = true)
-    public static @NotNull TeamImpl of(@NotNull String name, @NotNull ColorData colorData) {
-        return Team.builder().name(name).colorData(colorData).build();
-    }
-
-    /**
      * Set / overwrite the capacity of the team.
      * @param capacity The capacity to set
      */
