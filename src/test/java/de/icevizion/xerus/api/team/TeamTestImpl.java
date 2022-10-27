@@ -15,13 +15,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
-class ITeamTest {
+class TeamTestImpl {
 
-    ITeam team;
+    Team team;
 
     @BeforeAll
     void init() {
-        this.team = new Team("Team A", ColorData.AQUA);
+        this.team = Team.builder().name("Team A").colorData(ColorData.AQUA).build();
     }
 
     @Test
@@ -33,7 +33,7 @@ class ITeamTest {
 
     @Test
     void testCanJoin() {
-        var team = new Team("Team C", ColorData.AQUA);
+        var team = Team.builder().name("Team C").colorData(ColorData.AQUA).build();
         assertTrue(team.canJoin());
     }
 
