@@ -66,7 +66,7 @@ public non-sealed class TeamBuilder implements Team.Builder {
 
     /**
      * Returns a new instance from a {@link Team}.
-     * @return the create instance
+     * @return the created instance
      */
     @Override
     public @NotNull Team build() {
