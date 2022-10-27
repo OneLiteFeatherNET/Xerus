@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class DistributionTeamTestImpl {
+class DistributionTeamTest {
 
     private final DistributionTeam blueTeam = DistributionTeam.of("blue");
 

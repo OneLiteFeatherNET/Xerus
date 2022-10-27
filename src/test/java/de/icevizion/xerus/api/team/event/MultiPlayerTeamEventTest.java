@@ -12,7 +12,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class MultiPlayerTeamEventTestImpl {
+class MultiPlayerTeamEventTest {
 
     static TeamImpl mockedTeamImpl = Mockito.mock(TeamImpl.class);
     static Player mockedPlayer = Mockito.mock(Player.class);
