@@ -46,7 +46,7 @@ public class LinearPhaseSeries<T extends Phase> extends PhaseCollection<T> {
         }
 
         currentPhaseIndex++;
-        setCurrentPhase(phases.get(currentPhaseIndex));
+        setCurrentPhase(phaseList.get(currentPhaseIndex));
         startCurrentPhase();
     }
 
