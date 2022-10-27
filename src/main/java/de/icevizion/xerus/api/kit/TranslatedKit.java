@@ -35,33 +35,23 @@ import java.util.Objects;
  * @version 1.0.0
  * @since 1.2.0
  **/
-public class TranslatedKit implements Kit {
+public class TranslatedKit extends BaseKit {
 
     protected final MessageProvider messageProvider;
     private final TranslatedObjectCache<String> name;
     private final String nameKey;
     private TranslatedObjectCache<String> description;
-    protected IItem icon;
-    protected IItem[] armorItems;
-    protected IItem[] hotBarItems;
 
     /**
      * Creates a new instance from the {@link TranslatedKit} with the given value.
      * @param messageProvider A valid instance to an {@link MessageProvider}
      * @param nameKey The translation key for the name
-     * @param hotBarSize The size of the items in the hotBar
      * @param armorItems Option to use the armor slots
      */
-    public TranslatedKit(MessageProvider messageProvider, String nameKey, int hotBarSize, boolean armorItems) {
+    public TranslatedKit(MessageProvider messageProvider, String nameKey, boolean armorItems) {
+        super(armorItems);
         this.nameKey = nameKey;
-        Check.argCondition(hotBarSize > 9, "The maximum size for the Hotbar is nine");
         this.messageProvider = messageProvider;
-        this.hotBarItems = new IItem[hotBarSize];
-
-        if (armorItems) {
-            this.armorItems = new IItem[4];
-        }
-
         this.name = new TranslatedObjectCache<>(locale -> messageProvider.getTextProvider().getString(nameKey, locale));
     }
 
@@ -69,13 +59,12 @@ public class TranslatedKit implements Kit {
      * Creates a new instance from the {@link TranslatedKit} with the given value.
      * @param messageProvider A valid instance to an {@link MessageProvider}
      * @param name The translation key for the name
-     * @param hotBarSize The size of the items in the hotBar
      * @param armorItems Option to use the armor slots
      * @return The created object from the class
      */
-    @Contract("_, _, _, _ -> new")
-    public static @NotNull TranslatedKit of(MessageProvider messageProvider, int hotBarSize, String name, boolean armorItems) {
-        return new TranslatedKit(messageProvider, name, hotBarSize, armorItems);
+    @Contract("_, _, _ -> new")
+    public static @NotNull TranslatedKit of(MessageProvider messageProvider,String name, boolean armorItems) {
+        return new TranslatedKit(messageProvider, name, armorItems);
     }
 
     /**
@@ -88,68 +77,13 @@ public class TranslatedKit implements Kit {
     }
 
     /**
-     * Add an item to a specific position in the array for the armor items.
-     * @param index The index where the item should be set
-     * @param item The item to set
-     */
-    @Override
-    public void setArmorItem(int index, @NotNull IItem item) {
-        if (index > armorItems.length) {
-            throw new IllegalArgumentException("The index is higher than the length of the array. " +
-                    "The length is" + armorItems.length);
-        }
-        this.armorItems[index] = item;
-    }
-
-    @Override
-    public void setArmorItems(@NotNull IItem... armorItems) {
-        if (armorItems.length > MAX_ARMOR_ITEMS) {
-            throw new IllegalArgumentException("The given max size for the armor array is four. " +
-                    "The given length is " + armorItems.length);
-        }
-        this.armorItems = armorItems;
-    }
-
-    /**
-     * Add an item to a specific position in the array for the hotBar items.
-     * @param index The index where the item should be set
-     * @param item The item to set
-     */
-    @Override
-    public void setItem(int index, @NotNull IItem item) {
-        if (index > hotBarItems.length) {
-            throw new IllegalArgumentException("The index is higher than the length of the array. " +
-                    "The length is" + hotBarItems.length);
-        }
-
-        this.hotBarItems[index] = item;
-    }
-
-    @Override
-    public void setItems(@NotNull IItem... items) {
-        if (items.length > MAX_HOT_BAR_ITEMS) {
-            throw new IllegalArgumentException("The given max size for the hotbar array is nine. " +
-                    "The given length is " + armorItems.length);
-        }
-        this.hotBarItems = items;
-    }
-
-    /**
-     * Sets the icon for the kit.
-     * @param icon The icon to set
-     */
-    public void setIcon(IItem icon) {
-        this.icon = icon;
-    }
-
-    /**
      * Gives the kit to the player in his inventory.
      * @param player The player who receives the kit
      * @param shiftedSlots The slot array where the indexes can be shifted
      */
     @Override
     public void setEquipment(@NotNull Player player, Locale locale, int... shiftedSlots) {
-        Players.updateEquipment(player, armorItems, hotBarItems, locale, shiftedSlots);
+       // Players.updateEquipment(player, armorItems, items, locale, shiftedSlots);
     }
 
     @Override
@@ -197,13 +131,5 @@ public class TranslatedKit implements Kit {
     @Override
     public String getDescription(Locale locale) {
         return description.get(locale);
-    }
-
-    /**
-     * Returns the underlying icon from the kit.
-     * @return The underlying icon which is an object from {@link IItem}
-     */
-    public @Nullable IItem getIcon() {
-        return icon;
     }
 }
