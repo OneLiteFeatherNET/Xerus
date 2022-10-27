@@ -33,7 +33,7 @@ class TeamTestImpl {
 
     @Test
     void testCanJoin() {
-        var team = Team.builder().name("Team C").colorData(ColorData.AQUA).build();
+        var team = Team.builder().name("Team C").capacity(10).colorData(ColorData.AQUA).build();
         assertTrue(team.canJoin());
     }
 
