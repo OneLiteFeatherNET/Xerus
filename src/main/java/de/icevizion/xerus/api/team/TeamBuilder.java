@@ -10,7 +10,7 @@ public non-sealed class TeamBuilder implements Team.Builder {
     private String name;
     private ColorData colorData;
     private IItem icon;
-    private int capacity;
+    private int capacity = TeamImpl.DEFAULT_CAPACITY;
 
     @Override
     public Team.@NotNull Builder name(@NotNull String name) {
