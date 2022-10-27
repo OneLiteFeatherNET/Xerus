@@ -10,15 +10,15 @@ import org.junit.jupiter.api.TestInstance;
 
 import java.util.Locale;
 
-import static de.icevizion.xerus.api.kit.IKit.MAX_ARMOR_ITEMS;
-import static de.icevizion.xerus.api.kit.IKit.MAX_HOT_BAR_ITEMS;
+import static de.icevizion.xerus.api.kit.Kit.MAX_ARMOR_ITEMS;
+import static de.icevizion.xerus.api.kit.Kit.MAX_HOT_BAR_ITEMS;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class IKitTest {
+class KitTest {
 
     IItem dummyItem;
-    IKit kit;
+    Kit kit;
 
     @BeforeAll
     void init() {
@@ -30,7 +30,7 @@ class IKitTest {
     void testConstructorWithException() {
         assertThrowsExactly(
                 IllegalArgumentException.class,
-                () -> new Kit("Test", null, 12, false),
+                () -> new KitImpl("Test", null, 12, false),
                 "The max size for the HotBar is 9"
         );
     }
@@ -47,7 +47,7 @@ class IKitTest {
 
     @Test
     void testSetArmorItems() {
-        var kit = new Kit("Test", null, 9, false);
+        var kit = new KitImpl("Test", null, 9, false);
         assertThrowsExactly(
                 IllegalArgumentException.class,
                 () -> kit.setArmorItem(12, dummyItem),
