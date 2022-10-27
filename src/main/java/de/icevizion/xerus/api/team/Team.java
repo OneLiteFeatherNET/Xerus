@@ -1,188 +1,228 @@
 package de.icevizion.xerus.api.team;
 
 import de.icevizion.aves.item.IItem;
+import de.icevizion.xerus.api.Joinable;
 import de.icevizion.xerus.api.ColorData;
+import de.icevizion.xerus.api.team.event.MultiPlayerTeamEvent;
+import de.icevizion.xerus.api.team.event.TeamAction;
+import de.icevizion.xerus.api.team.event.PlayerTeamEvent;
+import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Set;
 
 /**
  * @author theEvilReaper
- * @since 1.0.0
- * @version 1.0.3
- */
-public class Team implements ITeam {
+ * @version 1.0.2
+ * @since 1.1.6
+ **/
+public interface Team extends Joinable {
 
-    private static final int DEFAULT_CAPACITY = -1;
-    private final Set<Player> players;
-    private final String name;
-    private final ColorData colorData;
-    private int capacity;
-    private IItem icon;
-
-    /**
-     * Creates a new instance from the team.
-     * @param name for the team
-     * @param colorData for the team
-     * @param initialCapacity for the team
-     */
-    public Team(@NotNull String name, @NotNull ColorData colorData, int initialCapacity) {
-        this.name = name;
-        this.colorData = colorData;
-        this.capacity = initialCapacity;
-        this.players = new HashSet<>(initialCapacity);
+    @Contract(value = " -> new", pure = true)
+    static @NotNull Builder builder() {
+        return new TeamBuilder();
     }
 
     /**
-     * Creates a new instance from the team.
-     * @param name for the team
-     * @param colorData for the team
+     * Add specific player to a specific team
+     * @param paramPlayer the player to add
      */
-    public Team(@NotNull String name, @NotNull ColorData colorData) {
-        this.name = name;
-        this.colorData = colorData;
-        this.capacity = DEFAULT_CAPACITY;
-        this.players = new HashSet<>();
+    @Override
+    default void addPlayer(@NotNull Player paramPlayer) {
+        if (getPlayers().add(paramPlayer)) {
+            MinecraftServer.getGlobalEventHandler().call(new PlayerTeamEvent<>(
+                    paramPlayer, this, TeamAction.ADD));
+        }
     }
 
     /**
-     * Creates a new instance from the team.
-     * @param name the name of team.
-     * @param colorData the {@link ColorData} for the team
-     * @param capacity the size of the team.
-     * @return the created object
+     * Add certain players to a team.
+     * @param players the set with the players to add
      */
-    @Contract(value = "_, _, _ -> new", pure = true)
-    public static @NotNull Team of(@NotNull String name, @NotNull ColorData colorData, int capacity) {
-        return new Team(name, colorData, capacity);
+    @Override
+    default void addPlayers(@NotNull Set<Player> players) {
+        if (players.isEmpty()) return;
+
+        players.removeIf(player -> !getPlayers().add(player));
+
+        MinecraftServer.getGlobalEventHandler().call(new MultiPlayerTeamEvent<>(
+                this, players, TeamAction.ADD));
     }
 
     /**
-     * Creates a new instance from the team.
-     * @param name the name of team.
-     * @param colorData the {@link ColorData} for the team
-     * @return the created object
+     * Remove specific player from a team.
+     * @param paramPlayer the player to remove
      */
-    @Contract(value = "_, _ -> new", pure = true)
-    public static @NotNull Team of(@NotNull String name, @NotNull ColorData colorData) {
-        return new Team(name, colorData);
+    @Override
+    default void removePlayer(@NotNull Player paramPlayer) {
+        if (getPlayers().remove(paramPlayer)) {
+            MinecraftServer.getGlobalEventHandler().call(new PlayerTeamEvent<>(
+                    paramPlayer, this, TeamAction.REMOVE));
+        }
+    }
+
+    /**
+     * Remove certain players from a team.
+     * @param players The set of players to remove
+     */
+    @Override
+    default void removePlayers(@NotNull Set<Player> players) {
+        if (players.isEmpty()) return;
+
+        players.removeIf(player -> !getPlayers().remove(player));
+
+        MinecraftServer.getGlobalEventHandler().call(new MultiPlayerTeamEvent<>(
+                this, players, TeamAction.ADD));
     }
 
     /**
      * Set / overwrite the capacity of the team.
      * @param capacity The capacity to set
      */
-    @Override
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
+    void setCapacity(int capacity);
 
     /**
      * Checks if a player can join a team or not.
      * @return true when a player can join otherwise false
      */
-    @Override
-    public boolean canJoin() {
-        return capacity == DEFAULT_CAPACITY || players.size() != capacity;
+    boolean canJoin();
+
+    /**
+     * Checks if a given player is in the team.
+     * @param player The player to check
+     * @return True when the player is in the team otherwise false
+     */
+    default boolean hasPlayer(@NotNull Player player) {
+        return getPlayers().contains(player);
     }
 
     /**
-     * Override or set the icon for the team.
-     * The icon must be a {@link net.minestom.server.item.ItemStack}
-     * @param icon The {@link net.minestom.server.item.ItemStack} which represents the icon
+     * Send a specific message to each player in the team.
+     * @param message The message who should send
      */
-    public void setIcon(IItem icon) {
-        this.icon = icon;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Team team = (Team) o;
-        return capacity == team.capacity && name.equals(team.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, capacity);
+    default void sendMessage(@NotNull String message) {
+        if (message.trim().isEmpty()) return;
+        for (Player player : getPlayers()) {
+            player.sendMessage(message);
+        }
     }
 
     /**
-     * Returns the identifier from the team.
-     * @return the identifier
+     * Clears the underlying structure in which the players are stored.
      */
-    @Override
-    public @NotNull String getIdentifier() {
-        return getName(null);
+    default void clearPlayers() {
+        if (getPlayers().isEmpty()) return;
+        removePlayers(getPlayers());
     }
+
+    /**
+     * Returns the identifier of the team.
+     * @return the underlying value
+     */
+    @NotNull
+    String getIdentifier();
 
     /**
      * Returns the name of the team.
      * @return The name of the team
      */
-    @Override
-    public String getName(Locale ignored) {
-        return name;
+    String getName(Locale locale);
+
+    /**
+     * Returns the name of the team.
+     * @return The name of the team
+     */
+    default String getName() {
+        return getName(null);
     }
 
     /**
      * Returns the name with the color.
      * @return The name with the color
      */
-    @Override
-    public String getColoredName(Locale ignored) {
-        return getColorData().getChatColor() + name;
+    String getColoredName(Locale locale);
+
+    /**
+     * Returns the name with the color.
+     * @return The name with the color
+     */
+    default String getColoredName() {
+        return getColoredName(null);
     }
 
     /**
      * Returns the given color data from the team.
      * @return the color data
      */
-    @Override
-    public @NotNull ColorData getColorData() {
-        return colorData;
-    }
+    @NotNull
+    ColorData getColorData();
 
     /**
      * Returns the maximum capacity of the team.
      * @return -1 when no capacity is set otherwise the capacity
      */
-    @Override
-    public int getCapacity() {
-        return capacity;
-    }
+    int getCapacity();
 
     /**
      * Returns the current size of the team.
      * @return the current size
      */
-    @Override
-    public int getCurrentSize() {
-        return players.size();
-    }
+    int getCurrentSize();
 
     /**
      * Returns the icon from the team.
-     * @return The {@link net.minestom.server.item.ItemStack} which represents the icon
+     * @return the underlying icon
      */
-    @Override
-    public @Nullable IItem getIcon() {
-        return icon;
-    }
+    @Nullable
+    IItem getIcon();
 
     /**
-     * Returns a set with all current players in the team.
-     * @return The underlying set with the players
+     * Returns a set which includes all current players in the team
+     * @return the given set
      */
-    @Override
-    public @NotNull Set<Player> getPlayers() {
-        return players;
+    @NotNull
+    Set<Player> getPlayers();
+
+    sealed interface Builder permits TeamBuilder {
+
+        /**
+         * Set a name to the team.
+         * @param name the new name set
+         * @return the builder instance
+         */
+        @NotNull Builder name(@NotNull String name);
+
+        /**
+         * Set the used color to the team
+         * @param colorData the {@link ColorData} to set
+         * @return the builder instance
+         */
+        @NotNull Builder colorData(@NotNull ColorData colorData);
+
+        /**
+         * Set the icon to the team.
+         * @param icon the icon to set
+         * @return the builder instance
+         */
+        @NotNull Builder icon(@NotNull IItem icon);
+
+        /**
+         * Set the maximum size for the team.
+         * @param capacity the capacity to set
+         * @return the builder instance
+         */
+        @NotNull Builder capacity(int capacity);
+
+        /**
+         * Creates a new instance from the team with the given values from the builder.
+         * When some value is invalid the creation process will fail with an exception
+         * @return the builder instace
+         */
+        @NotNull TeamImpl build();
+
     }
 }
