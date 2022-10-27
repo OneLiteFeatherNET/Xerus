@@ -1,6 +1,6 @@
 package de.icevizion.xerus.api.kit.event;
 
-import de.icevizion.xerus.api.kit.IKit;
+import de.icevizion.xerus.api.kit.Kit;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.trait.CancellableEvent;
 import net.minestom.server.event.trait.PlayerEvent;
@@ -16,8 +16,8 @@ import org.jetbrains.annotations.Nullable;
 public final class PlayerKitChangeEvent implements PlayerEvent, CancellableEvent {
 
     private final Player player;
-    private final IKit currentKit;
-    private final IKit newKit;
+    private final Kit currentKit;
+    private final Kit newKit;
     private boolean cancelled;
 
     /**
@@ -26,7 +26,7 @@ public final class PlayerKitChangeEvent implements PlayerEvent, CancellableEvent
      * @param currentKit The current kit of the player
      * @param newKit The new kit of the player
      */
-    public PlayerKitChangeEvent(@NotNull Player player, @Nullable IKit currentKit, @NotNull IKit newKit) {
+    public PlayerKitChangeEvent(@NotNull Player player, @Nullable Kit currentKit, @NotNull Kit newKit) {
         this.player = player;
         this.currentKit = currentKit;
         this.newKit = newKit;
@@ -69,7 +69,7 @@ public final class PlayerKitChangeEvent implements PlayerEvent, CancellableEvent
      * @return the current kit
      */
     @Nullable
-    public IKit getCurrentKit() {
+    public Kit getCurrentKit() {
         return currentKit;
     }
 
@@ -78,7 +78,7 @@ public final class PlayerKitChangeEvent implements PlayerEvent, CancellableEvent
      * @return the new kit
      */
     @NotNull
-    public IKit getNewKit() {
+    public Kit getNewKit() {
         return newKit;
     }
 }

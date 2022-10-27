@@ -19,13 +19,13 @@ public interface KitService {
      * Add a kit to the service.
      * @param kit that should be added
      */
-    void add(@NotNull IKit kit);
+    void add(@NotNull Kit kit);
 
     /**
      * Remove a kit from the service.
      * @param kit that should be removed
      */
-    boolean remove(@NotNull IKit kit);
+    boolean remove(@NotNull Kit kit);
 
     /**
      * Remove a kit by the identifier from the kit.
@@ -44,11 +44,11 @@ public interface KitService {
      * @param name The name of the kit
      * @return The fetched kit in an optional
      */
-    Optional<IKit> getKit(@NotNull String name);
+    Optional<Kit> getKit(@NotNull String name);
 
     /**
      * Returns a list with all current available kits.
      * @return the underlying list
      */
-    List<IKit> getKits();
+    List<Kit> getKits();
 }

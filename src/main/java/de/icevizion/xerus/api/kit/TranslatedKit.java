@@ -5,6 +5,7 @@ import at.rxcki.strigiformes.TranslatedObjectCache;
 import de.icevizion.aves.item.IItem;
 import de.icevizion.aves.util.Players;
 import net.minestom.server.entity.Player;
+import net.minestom.server.utils.validate.Check;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -13,7 +14,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
- * The {@link TranslatedKit} is an implementation from the {@link IKit} which supports the translation over i18n.
+ * The {@link TranslatedKit} is an implementation from the {@link Kit} which supports the translation over i18n.
  * The kit handles the items for the armor slots and the hotBar itself.
  * If other items should be added, this must be implemented explicitly (changes can still be made).
  * When creating an instance of the kit, arrays are pre-generated for the items
@@ -34,18 +35,13 @@ import java.util.Objects;
  * @version 1.0.0
  * @since 1.2.0
  **/
-public class TranslatedKit implements IKit {
+public class TranslatedKit implements Kit {
 
     protected final MessageProvider messageProvider;
-
     private final TranslatedObjectCache<String> name;
-
     private final String nameKey;
-
     private TranslatedObjectCache<String> description;
-
     protected IItem icon;
-
     protected IItem[] armorItems;
     protected IItem[] hotBarItems;
 
@@ -58,9 +54,7 @@ public class TranslatedKit implements IKit {
      */
     public TranslatedKit(MessageProvider messageProvider, String nameKey, int hotBarSize, boolean armorItems) {
         this.nameKey = nameKey;
-        if (hotBarSize > 9) {
-            throw new IllegalArgumentException("The max size for the HotBar is 9");
-        }
+        Check.argCondition(hotBarSize > 9, "The maximum size for the Hotbar is nine");
         this.messageProvider = messageProvider;
         this.hotBarItems = new IItem[hotBarSize];
 
@@ -81,19 +75,6 @@ public class TranslatedKit implements IKit {
      */
     @Contract("_, _, _, _ -> new")
     public static @NotNull TranslatedKit of(MessageProvider messageProvider, int hotBarSize, String name, boolean armorItems) {
-        return new TranslatedKit(messageProvider, name, hotBarSize, armorItems);
-    }
-
-    /**
-     * Creates a new instance from the {@link TranslatedKit} with the given value.
-     * @param messageProvider A valid instance to an {@link MessageProvider}
-     * @param name The translation key for the name
-     * @param hotBarSize The size of the items in the hotBar
-     * @param armorItems Option to use the armor slots
-     * @return The created object from the class
-     */
-    @Contract("_, _, _, _ -> new")
-    public static @NotNull TranslatedKit of(MessageProvider messageProvider, String name, int hotBarSize, boolean armorItems) {
         return new TranslatedKit(messageProvider, name, hotBarSize, armorItems);
     }
 
