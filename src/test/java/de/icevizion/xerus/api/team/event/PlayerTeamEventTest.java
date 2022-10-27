@@ -12,7 +12,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class PlayerTeamEventTestImpl {
+class PlayerTeamEventTest {
 
     @Test
     void testPlayerTeamEvent() {
