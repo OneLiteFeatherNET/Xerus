@@ -18,139 +18,139 @@ import java.util.ListIterator;
  */
 public abstract class PhaseCollection<T extends Phase> extends Phase implements Iterable<T>, List<T> {
 
-    protected final List<T> phases;
+    protected final List<T> phaseList;
 
     protected PhaseCollection() {
-        phases = new LinkedList<>();
+        phaseList = new LinkedList<>();
     }
 
-    protected PhaseCollection(String name) {
+    protected PhaseCollection(@NotNull String name) {
         super(name);
-        phases = new LinkedList<>();
+        phaseList = new LinkedList<>();
     }
 
-    protected PhaseCollection(List<T> phases) {
-        this.phases = phases;
+    protected PhaseCollection(@NotNull List<T> phaseList) {
+        this.phaseList = phaseList;
     }
 
-    protected PhaseCollection(String name, List<T> phases) {
+    protected PhaseCollection(@NotNull String name, @NotNull List<T> phaseList) {
         super(name);
-        this.phases = phases;
+        this.phaseList = phaseList;
     }
 
     @Override
     public int size() {
-        return phases.size();
+        return phaseList.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return phases.isEmpty();
+        return phaseList.isEmpty();
     }
 
     @Override
     public boolean contains(Object o) {
-        return phases.contains(o);
+        return phaseList.contains(o);
     }
 
     @NotNull
     @Override
     public Object[] toArray() {
-        return phases.toArray();
+        return phaseList.toArray();
     }
 
     @NotNull
     @Override
-    public <T> T[] toArray(@NotNull T[] a) {
-        return phases.toArray(a);
+    public <T> T[] toArray(@NotNull T[] array) {
+        return phaseList.toArray(array);
     }
 
     @Override
     public boolean add(T phase) {
-        return phases.add(phase);
+        return phaseList.add(phase);
     }
 
     @Override
     public boolean remove(Object o) {
-        return phases.remove(o);
+        return phaseList.remove(o);
     }
 
     @Override
     public T remove(int index) {
-        return phases.remove(index);
+        return phaseList.remove(index);
     }
 
     @Override
     public boolean containsAll(@NotNull Collection<?> c) {
-        return phases.containsAll(c);
+        return phaseList.containsAll(c);
     }
 
     @Override
     public boolean addAll(@NotNull Collection<? extends T> c) {
-        return phases.addAll(c);
+        return phaseList.addAll(c);
     }
 
     @Override
     public boolean addAll(int index, @NotNull Collection<? extends T> c) {
-        return phases.addAll(c);
+        return phaseList.addAll(c);
     }
 
     @Override
     public boolean removeAll(@NotNull Collection<?> c) {
-        return phases.removeAll(c);
+        return phaseList.removeAll(c);
     }
 
     @Override
     public boolean retainAll(@NotNull Collection<?> c) {
-        return phases.retainAll(c);
+        return phaseList.retainAll(c);
     }
 
     @Override
     public void clear() {
-        phases.clear();
+        phaseList.clear();
     }
 
     @Override
     public T get(int index) {
-        return phases.get(index);
+        return phaseList.get(index);
     }
 
     @Override
     public T set(int index, T element) {
-        return phases.set(index, element);
+        return phaseList.set(index, element);
     }
 
     @Override
     public void add(int index, T element) {
-        phases.add(index, element);
+        phaseList.add(index, element);
     }
 
     @Override
     public int indexOf(Object o) {
-        return phases.indexOf(o);
+        return phaseList.indexOf(o);
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        return phases.lastIndexOf(o);
+        return phaseList.lastIndexOf(o);
     }
 
     @NotNull
     @Override
     public ListIterator<T> listIterator() {
-        return phases.listIterator();
+        return phaseList.listIterator();
     }
 
     @NotNull
     @Override
     public ListIterator<T> listIterator(int index) {
-        return phases.listIterator(index);
+        return phaseList.listIterator(index);
     }
 
     @NotNull
     @Override
     public List<T> subList(int fromIndex, int toIndex) {
-        return phases.subList(fromIndex, toIndex);
+        return phaseList.subList(fromIndex, toIndex);
     }
 
     /**
@@ -160,6 +160,6 @@ public abstract class PhaseCollection<T extends Phase> extends Phase implements 
     @Override
     @NotNull
     public Iterator<T> iterator() {
-        return phases.iterator();
+        return phaseList.iterator();
     }
 }
