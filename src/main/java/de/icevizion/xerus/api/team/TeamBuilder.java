@@ -5,7 +5,7 @@ import de.icevizion.xerus.api.ColorData;
 import net.minestom.server.utils.validate.Check;
 import org.jetbrains.annotations.NotNull;
 
-public non-sealed class TeamBuilder implements ITeam.Builder {
+public non-sealed class TeamBuilder implements Team.Builder {
 
     private String name;
     private ColorData colorData;
@@ -13,34 +13,34 @@ public non-sealed class TeamBuilder implements ITeam.Builder {
     private int capacity;
 
     @Override
-    public ITeam.@NotNull Builder name(@NotNull String name) {
+    public Team.@NotNull Builder name(@NotNull String name) {
         Check.argCondition(name.trim().isEmpty(), "The name can't be empty");
         this.name = name;
         return this;
     }
 
     @Override
-    public ITeam.@NotNull Builder colorData(@NotNull ColorData colorData) {
+    public Team.@NotNull Builder colorData(@NotNull ColorData colorData) {
         this.colorData = colorData;
         return this;
     }
 
     @Override
-    public ITeam.@NotNull Builder icon(@NotNull IItem icon) {
+    public Team.@NotNull Builder icon(@NotNull IItem icon) {
         this.icon = icon;
         return this;
     }
 
     @Override
-    public ITeam.@NotNull Builder capacity(int capacity) {
+    public Team.@NotNull Builder capacity(int capacity) {
         Check.argCondition(capacity < 0, "The size can't be negative");
         this.capacity = capacity;
         return this;
     }
 
     @Override
-    public @NotNull Team build() {
-        var team = new Team(name, colorData, capacity);
+    public @NotNull TeamImpl build() {
+        var team = new TeamImpl(name, colorData, capacity);
         team.setIcon(icon);
         return team;
     }
