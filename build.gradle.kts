@@ -87,6 +87,7 @@ tasks {
 sonarqube {
     properties {
         property("sonar.projectKey", sonarKey)
+        property("sonar.qualitygate.wait", true)
     }
 }
 
