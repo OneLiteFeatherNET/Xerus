@@ -11,7 +11,7 @@ adventure = "4.12.0"
 junit = "5.9.2"
 mockito = "5.1.1"
 # Quality Check
-sonarqube = "3.5.0.2730"
+sonarqube = "4.0.0.2929"
 # Minestom
 minestom = "master-SNAPSHOT"
 
