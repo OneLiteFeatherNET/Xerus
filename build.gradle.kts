@@ -1,11 +1,12 @@
 plugins {
     java
     alias(libs.plugins.sonarqube)
+    jacoco
 }
 
 group = "org.example" // TODO: Change me
 val baseVersion = "0.0.1-SNAPSHOT" // TODO: Change me
-val sonarKey = "insert-sonar-key" // TODO: Change me
+val sonarKey = "dungeon_zosma_AYRjIidNwVDHzVoeOyqG" // TODO: Change me
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -31,17 +32,30 @@ tasks {
         options.release.set(17)
     }
 
+    jacocoTestReport {
+        dependsOn(rootProject.tasks.test)
+        reports {
+            xml.required.set(true)
+        }
+    }
+
     test {
+        finalizedBy(rootProject.tasks.jacocoTestReport)
         useJUnitPlatform()
         testLogging {
             events("passed", "skipped", "failed")
         }
+    }
+
+    getByName("sonar") {
+        dependsOn(rootProject.tasks.test)
     }
 }
 
 sonarqube {
     properties {
         property("sonar.projectKey", sonarKey)
+        property("sonar.qualitygate.wait", true)
     }
 }
 
