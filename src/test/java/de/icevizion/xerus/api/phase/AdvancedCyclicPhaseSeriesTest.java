@@ -2,7 +2,10 @@ package de.icevizion.xerus.api.phase;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Patrick Zdarsky / Rxcki
@@ -12,7 +15,7 @@ class AdvancedCyclicPhaseSeriesTest {
 
     @Test
     void testSkipIteration() {
-        /*var phaseSeries = new CyclicPhaseSeries<SimplePhase>();
+        var phaseSeries = new CyclicPhaseSeries<SimplePhase>();
         var phase1 = Mockito.spy(new SimplePhase("Phase #1"));
         var phase2 = new SimplePhase("Phase #2");
 
@@ -20,7 +23,10 @@ class AdvancedCyclicPhaseSeriesTest {
         phaseSeries.add(phase2);
         phaseSeries.setMaxIterations(2);
 
-        phaseSeries.start();
+        assertEquals("Phase #1", phaseSeries.get(0).getName());
+        assertEquals(2, phaseSeries.getMaxIterations());
+
+        /*phaseSeries.start();
 
         assertEquals(phase1, phaseSeries.getCurrentPhase());
 
