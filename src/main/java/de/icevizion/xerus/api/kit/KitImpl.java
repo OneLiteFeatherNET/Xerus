@@ -3,17 +3,11 @@ package de.icevizion.xerus.api.kit;
 import de.icevizion.aves.item.IItem;
 import de.icevizion.aves.util.Players;
 import net.minestom.server.entity.Player;
-import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.inventory.PlayerInventory;
-import net.minestom.server.utils.validate.Check;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.EnumMap;
 import java.util.Locale;
 import java.util.Objects;
-
-import static net.minestom.server.inventory.PlayerInventory.*;
 
 /**
  * @author theEvilReaper
@@ -24,6 +18,7 @@ public class KitImpl extends BaseKit {
 
     private final String name;
     private final String description;
+
     public KitImpl(@NotNull String name, @Nullable String description, boolean armorItems) {
         super(armorItems);
         this.name = name;
@@ -32,7 +27,7 @@ public class KitImpl extends BaseKit {
 
     @Override
     public void setEquipment(@NotNull Player player, Locale locale, int... shiftedSlots) {
-        Players.updateArmorItems(player, armorItems.values().toArray(new IItem[0]), locale);
+        Players.updateArmorItems(player, armorItems.values().toArray(IItem[]::new), locale);
     }
 
     @Override
