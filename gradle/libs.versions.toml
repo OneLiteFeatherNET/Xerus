@@ -16,7 +16,7 @@ minestom = "master-SNAPSHOT"
 # Strigifomres
 strigiformes = "e89dd8352c"
 # Aves
-aves = "1.2.0-SNAPSHOT+fd3f254d"
+aves = "1.2.0+e27b7048"
 # Mockito Core
 mockitoCore = "4.6.1"
 # Mockito Junit
