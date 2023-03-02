@@ -2,13 +2,9 @@ package de.icevizion.xerus.api.kit;
 
 import at.rxcki.strigiformes.MessageProvider;
 import at.rxcki.strigiformes.TranslatedObjectCache;
-import de.icevizion.aves.item.IItem;
-import de.icevizion.aves.util.Players;
 import net.minestom.server.entity.Player;
-import net.minestom.server.utils.validate.Check;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.Objects;
