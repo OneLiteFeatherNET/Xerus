@@ -32,7 +32,7 @@ public class KitImpl extends BaseKit {
 
     @Override
     public void setEquipment(@NotNull Player player, Locale locale, int... shiftedSlots) {
-        Players.updateEquipment(player, armorItems.values().toArray(IItem[]::new), items, locale, shiftedSlots);
+        Players.updateArmorItems(player, armorItems.values().toArray(new IItem[0]), locale);
     }
 
     @Override
