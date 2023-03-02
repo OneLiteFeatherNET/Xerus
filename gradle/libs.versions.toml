@@ -18,16 +18,12 @@ minestom = "master-SNAPSHOT"
 strigiformes = "e89dd8352c"
 # Aves
 aves = "1.2.0+e27b7048"
-# Mockito Core
-mockitoCore = "4.6.1"
-# Mockito Junit
-mockitoJunit = "4.6.1"
 
 [libraries]
 # Mockito Core
-mockitoCore = { group = "org.mockito", name = "mockito-core", version.ref = "mockitoCore" }
+mockitoCore = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
 # Mockito Junit
-mockitoJunit = { group = "org.mockito", name = "mockito-junit-jupiter", version.ref = "mockitoJunit" }
+mockitoJunit = { group = "org.mockito", name = "mockito-junit-jupiter", version.ref = "mockito" }
 # Aves
 aves = { group = "de.icevizion.lib", name = "Aves", version.ref = "aves"}
 # Strigiformes
@@ -42,8 +38,6 @@ sentryJul = { group = "io.sentry", name = "sentry-jul", version.ref = "sentry" }
 # Testing
 junitApi = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit" }
 junitEngine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit" }
-mockitoCore = { group = "org.mockito", name = "mockito-core", version.ref = "mockito"}
-mockitoJunit = { group = "org.mockito", name = "mockito-junit-jupiter", version.ref = "mockito"}
 
 [bundles]
 
