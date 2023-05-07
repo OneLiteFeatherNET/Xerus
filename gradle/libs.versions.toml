@@ -2,16 +2,16 @@ metadata.format.version = "1.1"
 
 [versions]
 # Error Tracking
-sentry = "6.14.0"
+sentry = "6.18.0"
 # Plugins
 shadow = "7.1.2"
 # Chat
-adventure = "4.12.0"
+adventure = "4.13.1"
 # Testing
-junit = "5.9.2"
-mockito = "5.1.1"
+junit = "5.9.3"
+mockito = "5.3.1"
 # Quality Check
-sonarqube = "3.5.0.2730"
+sonarqube = "4.0.0.2929"
 # Minestom
 minestom = "master-SNAPSHOT"
 # Strigifomres
