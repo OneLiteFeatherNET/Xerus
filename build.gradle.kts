@@ -60,7 +60,8 @@ tasks {
 
 sonarqube {
     properties {
-        property("sonar.projectKey", sonarKey)
+        property("sonar.projectKey", "dungeon_zosma_AYm_wAIFq35l90nqW9Qs")
+        property("sonar.projectName", "Zosma")
         property("sonar.qualitygate.wait", true)
     }
 }
