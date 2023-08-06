@@ -30,7 +30,7 @@ aves = { group = "de.icevizion.lib", name = "Aves", version.ref = "aves"}
 strigiformes = { group = "com.github.PatrickZdarsky", name = "Strigiformes", version.ref = "strigiformes" }
 # Minestom
 minestom = { group = "net.onelitefeather.microtus", name = "Minestom", version.ref = "minestom"}
-minestom-test = { group = "net.onelitefeather.microtus", name = "testing", version.ref = "minestom" }
+minestom-test = { group = "net.onelitefeather.microtus.testing", name = "testing", version.ref = "minestom" }
 # Chat
 adventureMinimessage = { group = "net.kyori", name = "adventure-text-minimessage", version.ref = "adventure" }
 # Error Tracking
