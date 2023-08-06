@@ -52,6 +52,7 @@ dependencies {
     compileOnly(libs.minestom)
 
     testImplementation(libs.minestom)
+    testImplementation(libs.minestom.test)
     testImplementation(libs.junitApi)
     testImplementation(libs.mockitoCore)
     testImplementation(libs.mockitoJunit)
