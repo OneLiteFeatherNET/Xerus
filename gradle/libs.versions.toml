@@ -13,7 +13,7 @@ mockito = "5.1.1"
 # Quality Check
 sonarqube = "3.5.0.2730"
 # Minestom
-minestom = "master-SNAPSHOT"
+minestom = "1.1.0"
 # Strigifomres
 strigiformes = "e89dd8352c"
 # Aves
@@ -29,7 +29,8 @@ aves = { group = "de.icevizion.lib", name = "Aves", version.ref = "aves"}
 # Strigiformes
 strigiformes = { group = "com.github.PatrickZdarsky", name = "Strigiformes", version.ref = "strigiformes" }
 # Minestom
-minestom = { group = "com.github.Minestom", name = "Minestom", version.ref = "minestom"}
+minestom = { group = "net.onelitefeather.microtus", name = "Minestom", version.ref = "minestom"}
+minestom-test = { group = "net.onelitefeather.microtus", name = "testing", version.ref = "minestom" }
 # Chat
 adventureMinimessage = { group = "net.kyori", name = "adventure-text-minimessage", version.ref = "adventure" }
 # Error Tracking
