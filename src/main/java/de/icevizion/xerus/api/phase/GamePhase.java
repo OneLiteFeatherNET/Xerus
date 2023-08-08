@@ -45,13 +45,16 @@ public abstract class GamePhase extends Phase {
     public void start() {
         super.start();
 
-        MinecraftServer.getGlobalEventHandler().addChild(phaseNode);
+        if (phaseNode != null) {
+            MinecraftServer.getGlobalEventHandler().addChild(phaseNode);
+        }
     }
 
     @Override
     public void finish() {
         super.finish();
-
-        MinecraftServer.getGlobalEventHandler().removeChild(phaseNode);
+        if (phaseNode != null) {
+            MinecraftServer.getGlobalEventHandler().removeChild(phaseNode);
+        }
     }
 }
