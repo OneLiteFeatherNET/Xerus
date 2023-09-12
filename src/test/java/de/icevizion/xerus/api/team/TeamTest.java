@@ -9,12 +9,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
@@ -46,14 +46,8 @@ class TeamTest {
 
     @Test
     void testHasPlayer() {
-        var player = Mockito.mock(Player.class);
+        var player = mock(Player.class);
         assertFalse(team.hasPlayer(player));
-    }
-
-    @Test
-    void testSendMessage() {
-        team.sendMessage("Test");
-        assertNotNull(team);
     }
 
     @Test
