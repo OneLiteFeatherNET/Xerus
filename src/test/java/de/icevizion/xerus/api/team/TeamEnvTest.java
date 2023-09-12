@@ -1,6 +1,7 @@
 package de.icevizion.xerus.api.team;
 
 import de.icevizion.xerus.api.ColorData;
+import de.icevizion.xerus.api.team.event.MultiPlayerTeamEvent;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
@@ -63,5 +64,29 @@ class TeamEnvTest {
         for (Player testPlayer : this.testPlayers) {
             assertEquals(GameMode.CREATIVE, testPlayer.getGameMode());
         }
+    }
+
+    @Test
+    void testPlayersAddWithGivenPlayers(@NotNull Env env) {
+        var additionalPlayers = new HashSet<Player>();
+        for (int i = 0; i < 2; i++) {
+            additionalPlayers.add(env.createPlayer(instance, Pos.ZERO));
+        }
+        this.team.addPlayers(additionalPlayers);
+        Set<Player> playersToAdd = new HashSet<>(additionalPlayers);
+        playersToAdd.addAll(this.testPlayers);
+
+        assertEquals(7, playersToAdd.size());
+        var listener = env.listen(MultiPlayerTeamEvent.class);
+
+        listener.followup(event -> {
+            assertEquals(this.testPlayers.size(), event.getPlayers().size());
+            assertTrue(playersToAdd.containsAll(this.testPlayers));
+        });
+        this.team.addPlayers(playersToAdd);
+        for (Player additionalPlayer : additionalPlayers) {
+            additionalPlayer.remove();
+        }
+        additionalPlayers.clear();
     }
 }
