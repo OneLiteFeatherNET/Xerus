@@ -9,6 +9,7 @@ import de.icevizion.xerus.api.team.event.PlayerTeamEvent;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
+import net.minestom.server.event.EventDispatcher;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -78,7 +79,7 @@ public interface Team extends Joinable {
     /**
      * Add certain players to a team.
      * @param players the set with the players to add
-     *  @param consumer a consumer which is called to execute some logic
+     * @param consumer a consumer which is called to execute some logic
      */
     @Override
     default void addPlayers(@NotNull Set<Player> players, @Nullable Consumer<Player> consumer) {
@@ -92,9 +93,7 @@ public interface Team extends Joinable {
           }
           return false;
         });
-
-        MinecraftServer.getGlobalEventHandler().call(new MultiPlayerTeamEvent<>(
-                this, players, TeamAction.ADD));
+        EventDispatcher.call(new MultiPlayerTeamEvent<>(this, players, TeamAction.ADD));
     }
 
     /**
