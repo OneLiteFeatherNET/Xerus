@@ -6,18 +6,23 @@ import de.icevizion.xerus.api.ColorData;
 import de.icevizion.xerus.api.team.event.MultiPlayerTeamEvent;
 import de.icevizion.xerus.api.team.event.TeamAction;
 import de.icevizion.xerus.api.team.event.PlayerTeamEvent;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.UnknownNullability;
 
 import java.util.Locale;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
+ * The Team interface represents a blueprint for managing a team or a similar group in a software application.
+ * It defines essential methods for organizing and interacting with a team of players or members.
  * @author theEvilReaper
- * @version 1.0.2
+ * @version 1.0.3
  * @since 1.1.6
  **/
 public interface Team extends Joinable {
@@ -31,61 +36,100 @@ public interface Team extends Joinable {
         return new TeamBuilder();
     }
 
+    /**
+     * Creates a new instance from the {@link Builder} to create a team.
+     * @param name the name of the team
+     * @param colorData the {@link ColorData} to set
+     * @return the created instance
+     */
     @Contract(value = "_, _ -> new", pure = true)
     static @NotNull Team of(@NotNull String name, @NotNull ColorData colorData) {
         return builder().name(name).colorData(colorData).build();
     }
 
+    /**
+     * Creates a new instance from the {@link Builder} to create a team.
+     * @param name the name of the team
+     * @param colorData the {@link ColorData} to set
+     * @param capacity the capacity of the team
+     * @return the created instance
+     */
     @Contract(value = "_, _, _ -> new", pure = true)
     static @NotNull Team of(@NotNull String name, @NotNull ColorData colorData, int capacity) {
         return builder().name(name).colorData(colorData).capacity(capacity).build();
     }
 
     /**
-     * Add specific player to a specific team
-     * @param paramPlayer the player to add
+     * Add a single {@link Player} entry to a structure.
+     * @param player the player to add
+     * @param consumer a consumer which is called to execute some logic
      */
     @Override
-    default void addPlayer(@NotNull Player paramPlayer) {
-        if (getPlayers().add(paramPlayer)) {
+    default void addPlayer(@NotNull Player player, @Nullable Consumer<Player> consumer) {
+        if (getPlayers().add(player)) {
             MinecraftServer.getGlobalEventHandler().call(new PlayerTeamEvent<>(
-                    paramPlayer, this, TeamAction.ADD));
+                    player, this, TeamAction.ADD));
+            if (consumer != null) {
+                consumer.accept(player);
+            }
         }
     }
 
     /**
      * Add certain players to a team.
      * @param players the set with the players to add
+     *  @param consumer a consumer which is called to execute some logic
      */
     @Override
-    default void addPlayers(@NotNull Set<Player> players) {
+    default void addPlayers(@NotNull Set<Player> players, @Nullable Consumer<Player> consumer) {
         if (players.isEmpty()) return;
 
-        players.removeIf(player -> !getPlayers().add(player));
+        players.removeIf(player -> {
+          if (!getPlayers().add(player)) return true;
+
+          if (consumer != null) {
+              consumer.accept(player);
+          }
+          return false;
+        });
 
         MinecraftServer.getGlobalEventHandler().call(new MultiPlayerTeamEvent<>(
                 this, players, TeamAction.ADD));
     }
 
     /**
-     * Remove specific player from a team.
+     * Remove a single {@link Player} entry from a structure.
      * @param paramPlayer the player to remove
+     * @param consumer a consumer which is called to execute some logic
      */
     @Override
-    default void removePlayer(@NotNull Player paramPlayer) {
+    default void removePlayer(@NotNull Player paramPlayer, @Nullable Consumer<Player> consumer) {
         if (getPlayers().remove(paramPlayer)) {
             MinecraftServer.getGlobalEventHandler().call(new PlayerTeamEvent<>(
                     paramPlayer, this, TeamAction.REMOVE));
+            if (consumer != null) {
+                consumer.accept(paramPlayer);
+            }
         }
     }
 
     /**
      * Remove certain players from a team.
      * @param players The set of players to remove
+     * @param consumer a consumer which is called to execute some logic
      */
     @Override
-    default void removePlayers(@NotNull Set<Player> players) {
+    default void removePlayers(@NotNull Set<Player> players, @Nullable Consumer<Player> consumer) {
         if (players.isEmpty()) return;
+
+        players.removeIf(player -> {
+            if (!getPlayers().remove(player)) return true;
+
+            if (consumer != null) {
+                consumer.accept(player);
+            }
+            return false;
+        });
 
         players.removeIf(player -> !getPlayers().remove(player));
 
@@ -116,12 +160,12 @@ public interface Team extends Joinable {
 
     /**
      * Send a specific message to each player in the team.
-     * @param message The message who should send
+     * @param component The message wraps as {@link Component} who should send
      */
-    default void sendMessage(@NotNull String message) {
-        if (message.trim().isEmpty()) return;
+    default void sendMessage(@NotNull Component component) {
+        if (isEmpty()) return;
         for (Player player : getPlayers()) {
-            player.sendMessage(message);
+            player.sendMessage(component);
         }
     }
 
@@ -137,20 +181,19 @@ public interface Team extends Joinable {
      * Returns the identifier of the team.
      * @return the underlying value
      */
-    @NotNull
-    String getIdentifier();
+    @NotNull String getIdentifier();
 
     /**
      * Returns the name of the team.
      * @return The name of the team
      */
-    String getName(Locale locale);
+    @UnknownNullability String getName(Locale locale);
 
     /**
      * Returns the name of the team.
      * @return The name of the team
      */
-    default String getName() {
+    default @NotNull String getName() {
         return getName(null);
     }
 
@@ -158,13 +201,13 @@ public interface Team extends Joinable {
      * Returns the name with the color.
      * @return The name with the color
      */
-    String getColoredName(Locale locale);
+    @UnknownNullability String getColoredName(Locale locale);
 
     /**
      * Returns the name with the color.
      * @return The name with the color
      */
-    default String getColoredName() {
+    default @NotNull String getColoredName() {
         return getColoredName(null);
     }
 
@@ -172,8 +215,15 @@ public interface Team extends Joinable {
      * Returns the given color data from the team.
      * @return the color data
      */
-    @NotNull
-    ColorData getColorData();
+    @NotNull ColorData getColorData();
+
+    /**
+     * Returns a boolean indicator if the team contains entries or not.
+     * @return true when the team has no entries otherwise false
+     */
+    default boolean isEmpty() {
+        return this.getPlayers().isEmpty();
+    }
 
     /**
      * Returns the maximum capacity of the team.
@@ -191,15 +241,13 @@ public interface Team extends Joinable {
      * Returns the icon from the team.
      * @return the underlying icon
      */
-    @Nullable
-    IItem getIcon();
+    @Nullable IItem getIcon();
 
     /**
      * Returns a set which includes all current players in the team
      * @return the given set
      */
-    @NotNull
-    Set<Player> getPlayers();
+    @NotNull Set<Player> getPlayers();
 
     /**
      * The interface defines all relevant method for a builder pattern.
@@ -240,6 +288,5 @@ public interface Team extends Joinable {
          * @return the builder instance
          */
         @NotNull Team build();
-
     }
 }
