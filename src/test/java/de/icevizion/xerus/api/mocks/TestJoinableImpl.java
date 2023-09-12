@@ -3,9 +3,11 @@ package de.icevizion.xerus.api.mocks;
 import de.icevizion.xerus.api.Joinable;
 import net.minestom.server.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public class TestJoinableImpl implements Joinable {
 
@@ -21,8 +23,22 @@ public class TestJoinableImpl implements Joinable {
     }
 
     @Override
+    public void addPlayer(@NotNull Player paramPlayer, @Nullable Consumer<Player> consumer) {
+        this.players.add(paramPlayer);
+
+        if (consumer != null) {
+            consumer.accept(paramPlayer);
+        }
+    }
+
+    @Override
     public void addPlayers(@NotNull Set<Player> players) {
         this.players.addAll(players);
+    }
+
+    @Override
+    public void addPlayers(@NotNull Set<Player> players, @Nullable Consumer<Player> consumer) {
+
     }
 
     @Override
@@ -31,8 +47,18 @@ public class TestJoinableImpl implements Joinable {
     }
 
     @Override
+    public void removePlayer(@NotNull Player paramPlayer, @Nullable Consumer<Player> consumer) {
+
+    }
+
+    @Override
     public void removePlayers(@NotNull Set<Player> players) {
         this.players.removeAll(players);
+    }
+
+    @Override
+    public void removePlayers(@NotNull Set<Player> players, @Nullable Consumer<Player> consumer) {
+
     }
 
     public Set<Player> getPlayers() {
