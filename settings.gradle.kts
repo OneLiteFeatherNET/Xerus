@@ -46,6 +46,7 @@ dependencyResolutionManagement {
             library("aves", "de.icevizion.lib", "Aves").version("1.3.1+dc3a1da8")
             library("strigiformes", "com.github.PatrickZdarsky", "Strigiformes").version("e89dd8352c")
 
+            plugin("shadow", "com.github.johnrengelman.shadow").version("8.1.1")
             plugin("sonarqube", "org.sonarqube").version("4.0.0.2929")
         }
     }
