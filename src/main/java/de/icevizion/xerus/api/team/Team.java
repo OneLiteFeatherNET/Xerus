@@ -4,10 +4,8 @@ import de.icevizion.aves.item.IItem;
 import de.icevizion.xerus.api.Joinable;
 import de.icevizion.xerus.api.ColorData;
 import de.icevizion.xerus.api.team.event.MultiPlayerTeamEvent;
-import de.icevizion.xerus.api.team.event.TeamAction;
 import de.icevizion.xerus.api.team.event.PlayerTeamEvent;
 import net.kyori.adventure.text.Component;
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.EventDispatcher;
 import org.jetbrains.annotations.Contract;
@@ -15,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.UnknownNullability;
 
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -27,6 +26,8 @@ import java.util.function.Consumer;
  * @since 1.1.6
  **/
 public interface Team extends Joinable {
+
+    Runnable EMPTY = () -> { };
 
     /**
      * Creates a new instance from the {@link TeamImpl.Builder} interface.
@@ -68,11 +69,8 @@ public interface Team extends Joinable {
     @Override
     default void addPlayer(@NotNull Player player, @Nullable Consumer<Player> consumer) {
         if (getPlayers().add(player)) {
-            MinecraftServer.getGlobalEventHandler().call(new PlayerTeamEvent<>(
-                    player, this, TeamAction.ADD));
-            if (consumer != null) {
-                consumer.accept(player);
-            }
+            var teamEvent = PlayerTeamEvent.addEvent(player, this);
+            EventDispatcher.callCancellable(teamEvent, consumer != null ? () -> consumer.accept(player) : EMPTY);
         }
     }
 
@@ -84,16 +82,9 @@ public interface Team extends Joinable {
     @Override
     default void addPlayers(@NotNull Set<Player> players, @Nullable Consumer<Player> consumer) {
         if (players.isEmpty()) return;
-
-        players.removeIf(player -> {
-          if (!getPlayers().add(player)) return true;
-
-          if (consumer != null) {
-              consumer.accept(player);
-          }
-          return false;
-        });
-        EventDispatcher.call(new MultiPlayerTeamEvent<>(this, players, TeamAction.ADD));
+        players.removeIf(player -> !getPlayers().add(player));
+        Runnable successCallback = consumer == null ? EMPTY : () -> getPlayers().forEach(consumer);
+        EventDispatcher.callCancellable(MultiPlayerTeamEvent.addEvent(this, players), successCallback);
     }
 
     /**
@@ -104,11 +95,8 @@ public interface Team extends Joinable {
     @Override
     default void removePlayer(@NotNull Player paramPlayer, @Nullable Consumer<Player> consumer) {
         if (getPlayers().remove(paramPlayer)) {
-            MinecraftServer.getGlobalEventHandler().call(new PlayerTeamEvent<>(
-                    paramPlayer, this, TeamAction.REMOVE));
-            if (consumer != null) {
-                consumer.accept(paramPlayer);
-            }
+            var event = PlayerTeamEvent.removeEvent(paramPlayer, this);
+            EventDispatcher.callCancellable(event, consumer == null ? EMPTY : () -> consumer.accept(paramPlayer));
         }
     }
 
@@ -120,20 +108,9 @@ public interface Team extends Joinable {
     @Override
     default void removePlayers(@NotNull Set<Player> players, @Nullable Consumer<Player> consumer) {
         if (players.isEmpty()) return;
-
-        players.removeIf(player -> {
-            if (!getPlayers().remove(player)) return true;
-
-            if (consumer != null) {
-                consumer.accept(player);
-            }
-            return false;
-        });
-
-        players.removeIf(player -> !getPlayers().remove(player));
-
-        MinecraftServer.getGlobalEventHandler().call(new MultiPlayerTeamEvent<>(
-                this, players, TeamAction.ADD));
+        players.removeIf(player -> getPlayers().contains(player));
+        Runnable successCallback = consumer == null ? EMPTY : () -> getPlayers().forEach(consumer);
+        EventDispatcher.callCancellable(MultiPlayerTeamEvent.removeEvent(this, players), successCallback);
     }
 
     /**
