@@ -8,11 +8,11 @@ class TeamImplActionTest {
 
     @Test
     void testAddAction() {
-        assertSame(TeamAction.ADD, TeamAction.ADD);
+        assertSame(TeamEvent.Action.ADD, TeamEvent.Action.ADD);
     }
 
     @Test
     void testRemoveAction() {
-        assertSame(TeamAction.REMOVE, TeamAction.REMOVE);
+        assertSame(TeamEvent.Action.REMOVE, TeamEvent.Action.REMOVE);
     }
 }

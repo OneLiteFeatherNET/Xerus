@@ -22,14 +22,13 @@ class TeamEnvTest {
 
     static final int TEST_AMOUNT = 5;
     Instance instance;
-    Set<Player> testPlayers;
+    Set<Player> testPlayers = new HashSet<>();
     Team team;
 
     @BeforeAll
     void initTeam(@NotNull Env env) {
         this.instance = env.createFlatInstance();
         this.team = Team.builder().name("TestTeam").colorData(ColorData.BLACK).capacity(5).build();
-        this.testPlayers = new HashSet<>();
         for (int i = 0; i < TEST_AMOUNT; i++) {
             this.testPlayers.add(env.createPlayer(instance, Pos.ZERO));
         }
@@ -50,7 +49,9 @@ class TeamEnvTest {
     @Test
     void testPlayersAddWithConsumer(@NotNull Env env) {
         assertTrue(this.team.isEmpty());
-        this.team.addPlayers(testPlayers, player -> player.setGameMode(GameMode.CREATIVE));
+        this.team.addPlayers(new HashSet<>(this.testPlayers), player -> {
+            player.setGameMode(GameMode.CREATIVE);
+        });
         for (Player testPlayer : this.testPlayers) {
             assertEquals(GameMode.CREATIVE, testPlayer.getGameMode());
         }
@@ -59,10 +60,10 @@ class TeamEnvTest {
     @Test
     void testPlayersRemoveWithConsumer(@NotNull Env env) {
         this.team.getPlayers().addAll(testPlayers);
-        this.team.removePlayers(testPlayers, player -> player.setGameMode(GameMode.ADVENTURE));
+        this.team.removePlayers(new HashSet<>(this.testPlayers), player -> player.setGameMode(GameMode.ADVENTURE));
 
         for (Player testPlayer : this.testPlayers) {
-            assertEquals(GameMode.CREATIVE, testPlayer.getGameMode());
+            assertEquals(GameMode.ADVENTURE, testPlayer.getGameMode());
         }
     }
 
@@ -74,7 +75,8 @@ class TeamEnvTest {
         }
         this.team.addPlayers(additionalPlayers);
         Set<Player> playersToAdd = new HashSet<>(additionalPlayers);
-        playersToAdd.addAll(this.testPlayers);
+        playersToAdd.addAll(additionalPlayers);
+        playersToAdd.addAll(new HashSet<>(this.testPlayers));
 
         assertEquals(7, playersToAdd.size());
         var listener = env.listen(MultiPlayerTeamEvent.class);

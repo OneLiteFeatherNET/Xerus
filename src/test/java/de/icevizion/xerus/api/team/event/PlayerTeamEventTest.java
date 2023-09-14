@@ -19,10 +19,10 @@ class PlayerTeamEventTest {
         var mockedTeam = Mockito.mock(TeamImpl.class);
         var mockedPlayer = Mockito.mock(Player.class);
 
-        var event = new PlayerTeamEvent<>(mockedPlayer, mockedTeam, TeamAction.ADD);
+        var event = PlayerTeamEvent.addEvent(mockedPlayer, mockedTeam);
 
         assertNotSame(UUID.randomUUID(), event.getPlayer().getUuid());
-        assertSame(TeamAction.ADD, event.getTeamAction());
+        assertSame(TeamEvent.Action.ADD, event.getAction());
         assertSame(mockedTeam, event.getTeam());
 
         event.setCancelled(true);
