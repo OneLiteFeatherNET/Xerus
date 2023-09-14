@@ -4,6 +4,7 @@ import de.icevizion.xerus.api.team.Team;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.trait.CancellableEvent;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -15,25 +16,39 @@ import java.util.Set;
  * @version 1.0.0
  * @since 1.0.11
  **/
-public class MultiPlayerTeamEvent<T extends Team> implements Event, CancellableEvent {
+public class MultiPlayerTeamEvent<T extends Team> extends TeamEvent<T> implements Event, CancellableEvent {
 
-    private final T team;
     private final Set<Player> players;
-    private final TeamAction teamAction;
     private boolean cancelled;
 
     /**
-     * Event is called when multiple players interact with a team.
-     * @param team the team which is involved in the event
-     * @param players the set with the players who are involved in the event
-     * @param teamAction the action for the event
-     * @param cancelled if the event is cancelled or not
+     * Creates a new instance of {@link MultiPlayerTeamEvent} representing the addition of multiple players to a team.
+     *
+     * @param team    The team to which players are being added.
+     * @param players A set of players being added to the team.
+     * @param <T>     The type of team (must extend the Team class).
+     * @return A new MultiPlayerTeamEvent instance indicating the addition of multiple players to the team.
+     * @throws NullPointerException if 'team' or 'players' is null.
      */
-    public MultiPlayerTeamEvent(@NotNull T team, @NotNull Set<Player> players, @NotNull TeamAction teamAction, boolean cancelled) {
-        this.team = team;
-        this.players = players;
-        this.teamAction = teamAction;
-        this.cancelled = cancelled;
+    @Contract(value = "_, _ -> new", pure = true)
+    public static <T extends Team> @NotNull MultiPlayerTeamEvent<T> addEvent(@NotNull T team, @NotNull Set<Player> players) {
+        return new MultiPlayerTeamEvent<>(team, players, TeamEvent.Action.ADD);
+    }
+
+    /**
+     * Creates a new instance of {@link MultiPlayerTeamEvent} representing the removal of multiple players from a team.
+     *
+     * @param team    The team from which players are being removed.
+     * @param players A set of players being removed from the team.
+     * @param <T>     The type of team (must extend the Team class).
+     * @return A new MultiPlayerTeamEvent instance indicating the removal of multiple players from the team.
+     * @throws NullPointerException if 'team' or 'players' is null.
+     */
+    @Contract(value = "_, _ -> new", pure = true)
+    public static <T extends Team> @NotNull MultiPlayerTeamEvent<T> removeEvent(
+            @NotNull T team,
+            @NotNull Set<Player> players) {
+        return new MultiPlayerTeamEvent<>(team, players, TeamEvent.Action.REMOVE);
     }
 
     /**
@@ -42,10 +57,9 @@ public class MultiPlayerTeamEvent<T extends Team> implements Event, CancellableE
      * @param players the set with the players who are involved in the event
      * @param teamAction the action for the event
      */
-    public MultiPlayerTeamEvent(@NotNull T team, @NotNull Set<Player> players, @NotNull TeamAction teamAction) {
-        this.team = team;
+    MultiPlayerTeamEvent(@NotNull T team, @NotNull Set<Player> players, @NotNull TeamEvent.Action teamAction) {
+        super(team, teamAction);
         this.players = players;
-        this.teamAction = teamAction;
     }
 
     /**
@@ -58,30 +72,12 @@ public class MultiPlayerTeamEvent<T extends Team> implements Event, CancellableE
     }
 
     /**
-     * Returns an indikator if the event is cancelled or not.
+     * Returns an indicator if the event is cancelled or not.
      * @return True if the game is cancelled otherwise false
      */
     @Override
     public boolean isCancelled() {
         return cancelled;
-    }
-
-    /**
-     * Receive the used team from the event.
-     * @return the used team
-     */
-    @NotNull
-    public T getTeam() {
-        return team;
-    }
-
-    /**
-     * Returns the used team action.
-     * @return the team action
-     */
-    @NotNull
-    public TeamAction getTeamAction() {
-        return teamAction;
     }
 
     /**
