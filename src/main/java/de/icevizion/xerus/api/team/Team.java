@@ -28,7 +28,18 @@ public interface Team extends Joinable {
      */
     @Contract(value = " -> new", pure = true)
     static @NotNull Builder builder() {
-        return new TeamBuilder();
+        return new TeamBuilder(null);
+    }
+
+    /**
+     * Creates a new instance from a {@link Team.Builder} to create a new team.
+     * This method allows to set a {@link TeamCreator} to create custom teams over the builder
+     * @param creator the creator to use
+     * @return the builder instance
+     */
+    @Contract(value = "_ -> new", pure = true)
+    static @NotNull Builder builder(@NotNull TeamCreator creator) {
+        return new TeamBuilder(creator);
     }
 
     @Contract(value = "_, _ -> new", pure = true)
