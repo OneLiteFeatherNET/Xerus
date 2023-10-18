@@ -14,14 +14,13 @@ import org.jetbrains.annotations.Nullable;
  */
 public non-sealed class TeamBuilder implements Team.Builder {
 
+    private final TeamCreator teamCreator;
     private String name;
     private ColorData colorData;
-    private IItem icon;
     private int capacity = TeamImpl.DEFAULT_CAPACITY;
-    private final TeamCreator teamCreator;
 
     protected TeamBuilder(@Nullable TeamCreator teamCreator) {
-        this.teamCreator = teamCreator;
+        this.teamCreator = teamCreator == null ? DefaultTeamCreator::createDefaultTeam : teamCreator;
     }
 
     /**
@@ -48,17 +47,6 @@ public non-sealed class TeamBuilder implements Team.Builder {
     }
 
     /**
-     * Set the icon for the team.
-     * @param icon the icon to set
-     * @return the builder instance
-     */
-    @Override
-    public Team.@NotNull Builder icon(@NotNull IItem icon) {
-        this.icon = icon;
-        return this;
-    }
-
-    /**
      * Set the initial capacity for the underlying structure which holds the players from a team.
      * @param capacity the capacity to set
      * @return the builder instance
@@ -76,15 +64,6 @@ public non-sealed class TeamBuilder implements Team.Builder {
      */
     @Override
     public @NotNull Team build() {
-        if (this.teamCreator != null) {
-            return this.buildWithCreator();
-        }
-        var team = new TeamImpl(name, colorData, capacity);
-        team.setIcon(icon);
-        return team;
-    }
-
-    private @NotNull Team buildWithCreator() {
         return this.teamCreator.createTeam(name, colorData, capacity);
     }
 }
