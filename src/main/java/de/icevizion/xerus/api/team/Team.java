@@ -1,6 +1,5 @@
 package de.icevizion.xerus.api.team;
 
-import de.icevizion.aves.item.IItem;
 import de.icevizion.xerus.api.Joinable;
 import de.icevizion.xerus.api.ColorData;
 import de.icevizion.xerus.api.team.event.MultiPlayerTeamEvent;
@@ -225,12 +224,6 @@ public interface Team extends Joinable {
     int getCurrentSize();
 
     /**
-     * Returns the icon from the team.
-     * @return the underlying icon
-     */
-    @Nullable IItem getIcon();
-
-    /**
      * Returns a set which includes all current players in the team
      * @return the given set
      */
@@ -254,13 +247,6 @@ public interface Team extends Joinable {
          * @return the builder instance
          */
         @NotNull Builder colorData(@NotNull ColorData colorData);
-
-        /**
-         * Set the icon to the team.
-         * @param icon the icon to set
-         * @return the builder instance
-         */
-        @NotNull Builder icon(@NotNull IItem icon);
 
         /**
          * Set the maximum size for the team.
