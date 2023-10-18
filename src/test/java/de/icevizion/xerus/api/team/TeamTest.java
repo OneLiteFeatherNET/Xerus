@@ -27,7 +27,6 @@ class TeamTest {
         this.team = Team.builder()
                 .name("Team A")
                 .colorData(ColorData.AQUA)
-                .icon(new Item(ItemStack.builder(Material.ACACIA_FENCE).build()))
                 .build();
     }
 
@@ -61,11 +60,6 @@ class TeamTest {
         assertEquals("Team A", this.team.getIdentifier());
         assertNotEquals("Team C", this.team.getName(Locale.ENGLISH));
         assertEquals("Team A", this.team.getName());
-    }
-
-    @Test
-    void testGetIcon() {
-        assertNotNull(this.team.getIcon());
     }
 
     @Test
