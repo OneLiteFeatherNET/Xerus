@@ -12,19 +12,19 @@ import java.util.Optional;
  * @version 1.0.3
  * @since 1.0.0
  **/
-public interface TeamService<TEAM extends Team> {
+public interface TeamService<T extends Team> {
 
     /**
      * Add a team to the service.
-     * @param team The team to add
+     * @param t The team to add
      */
-    void add(@NotNull TEAM team);
+    void add(@NotNull T t);
 
     /**
      * Remove a team from the service.
-     * @param team The team to remove
+     * @param t The team to remove
      */
-    void remove(@NotNull TEAM team);
+    void remove(@NotNull T t);
 
     /**
      * Removes the team by his given identifier.
@@ -51,24 +51,24 @@ public interface TeamService<TEAM extends Team> {
      * @param identifier of the team
      * @return The team in an {@link Optional}
      */
-    Optional<TEAM> getTeam(@NotNull String identifier);
+    Optional<T> getTeam(@NotNull String identifier);
 
     /**
      * Returns the team based on the given player.
      * @param player The player from which the team is determined
      * @return The team in an {@link Optional}
      */
-    Optional<TEAM> getTeam(@NotNull Player player);
+    Optional<T> getTeam(@NotNull Player player);
 
     /**
      * Returns the team with the fewest players.
      * @return the smallest team
      */
-    Optional<TEAM> getSmallestTeam();
+    Optional<T> getSmallestTeam();
 
     /**
      * Returns a list with all current available teams.
      * @return The underlying list
      */
-    List<TEAM> getTeams();
+    List<T> getTeams();
 }
