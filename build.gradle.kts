@@ -2,8 +2,8 @@ plugins {
     java
     `java-library`
     `maven-publish`
-    alias(libs.plugins.sonarqube)
     jacoco
+    alias(libs.plugins.sonarqube)
 }
 
 group = "net.theevilreaper.xerus"
@@ -54,11 +54,11 @@ dependencies {
 
     testImplementation(libs.minestom)
     testImplementation(libs.minestom.test)
-    testImplementation(libs.junitApi)
-    testImplementation(libs.mockitoCore)
-    testImplementation(libs.mockitoJunit)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.junit)
     testImplementation(libs.aves)
-    testRuntimeOnly(libs.junitEngine)
+    testRuntimeOnly(libs.junit.jupiter.engine)
 }
 
 tasks {

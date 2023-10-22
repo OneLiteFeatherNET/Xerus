@@ -26,10 +26,7 @@ public class TranslatedTeam implements Team {
     private final Set<Player> players;
     private final ColorData colorData;
     private final String key;
-
     private int capacity;
-
-    private IItem icon;
 
     /**
      * Creates a new instance from the team.
@@ -114,15 +111,6 @@ public class TranslatedTeam implements Team {
         return capacity == -1 || players.size() < capacity;
     }
 
-    /**
-     * Override or set the icon for the team.
-     * The icon must be a {@link net.minestom.server.item.ItemStack}
-     * @param icon The {@link IItem} to set
-     */
-    public void setIcon(IItem icon) {
-        this.icon = icon;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -190,16 +178,6 @@ public class TranslatedTeam implements Team {
     @Override
     public int getCurrentSize() {
         return players.size();
-    }
-
-    /**
-     * Returns the icon from the team.
-     * @return The {@link net.minestom.server.item.ItemStack} which represents the icon
-     */
-    @Nullable
-    @Override
-    public IItem getIcon() {
-        return icon;
     }
 
     /**
