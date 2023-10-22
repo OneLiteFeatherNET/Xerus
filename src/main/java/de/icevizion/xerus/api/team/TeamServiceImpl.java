@@ -12,9 +12,9 @@ import java.util.Optional;
  * @since 1.0.0
  * @version 1.0.3
  */
-public class TeamServiceImpl<TEAM extends Team> implements TeamService<TEAM> {
+public class TeamServiceImpl<T extends Team> implements TeamService<T> {
 
-    private final List<TEAM> teams;
+    private final List<T> teams;
 
     /**
      * Creates a new instance from the {@link TeamServiceImpl}.
@@ -36,7 +36,7 @@ public class TeamServiceImpl<TEAM extends Team> implements TeamService<TEAM> {
      * @param team The team to add
      */
     @Override
-    public void add(@NotNull TEAM team) {
+    public void add(@NotNull T team) {
         this.teams.add(team);
     }
 
@@ -45,7 +45,7 @@ public class TeamServiceImpl<TEAM extends Team> implements TeamService<TEAM> {
      * @param team The team to remove
      */
     @Override
-    public void remove(@NotNull TEAM team) {
+    public void remove(@NotNull T team) {
         this.teams.remove(team);
     }
 
@@ -79,7 +79,7 @@ public class TeamServiceImpl<TEAM extends Team> implements TeamService<TEAM> {
      * @return The team in an {@link Optional}
      */
     @Override
-    public Optional<TEAM> getTeam(@NotNull String identifier) {
+    public Optional<T> getTeam(@NotNull String identifier) {
         int i = 0;
 
         while (i < teams.size() && !teams.get(i).getIdentifier().equals(identifier)) {
@@ -115,8 +115,8 @@ public class TeamServiceImpl<TEAM extends Team> implements TeamService<TEAM> {
      * @return The team in an {@link Optional}
      */
     @Override
-    public Optional<TEAM> getTeam(@NotNull Player player) {
-        TEAM team = null;
+    public Optional<T> getTeam(@NotNull Player player) {
+        T team = null;
 
         for (int i = 0; i < getTeams().size() && team == null; i++) {
             if (getTeams().get(i).hasPlayer(player)) {
@@ -132,7 +132,7 @@ public class TeamServiceImpl<TEAM extends Team> implements TeamService<TEAM> {
      * @return the smallest team
      */
     @Override
-    public Optional<TEAM> getSmallestTeam() {
+    public Optional<T> getSmallestTeam() {
         if (!teams.isEmpty()) {
             int i = 1;
             var team = teams.get(0);
@@ -153,7 +153,7 @@ public class TeamServiceImpl<TEAM extends Team> implements TeamService<TEAM> {
      * @return The underlying list
      */
     @Override
-    public List<TEAM> getTeams() {
+    public List<T> getTeams() {
         return teams;
     }
 }
