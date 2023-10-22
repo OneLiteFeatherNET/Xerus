@@ -3,6 +3,7 @@ package de.icevizion.xerus.api.team;
 import de.icevizion.aves.item.IItem;
 import de.icevizion.xerus.api.ColorData;
 import net.minestom.server.entity.Player;
+import net.minestom.server.utils.validate.Check;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,7 +24,6 @@ public class TeamImpl implements Team {
     private final String name;
     private final ColorData colorData;
     private int capacity;
-    private IItem icon;
 
     /**
      * Creates a new instance from the team.
@@ -48,6 +48,7 @@ public class TeamImpl implements Team {
      */
     @Override
     public void setCapacity(int capacity) {
+        Check.argCondition(capacity < 0, "The capacity of the can't be neagtive");
         this.capacity = capacity;
     }
 
@@ -58,15 +59,6 @@ public class TeamImpl implements Team {
     @Override
     public boolean canJoin() {
         return capacity == DEFAULT_CAPACITY || players.size() != capacity;
-    }
-
-    /**
-     * Override or set the icon for the team.
-     * The icon must be a {@link net.minestom.server.item.ItemStack}
-     * @param icon The {@link net.minestom.server.item.ItemStack} which represents the icon
-     */
-    public void setIcon(IItem icon) {
-        this.icon = icon;
     }
 
     @Override
@@ -134,15 +126,6 @@ public class TeamImpl implements Team {
     @Override
     public int getCurrentSize() {
         return players.size();
-    }
-
-    /**
-     * Returns the icon from the team.
-     * @return The {@link net.minestom.server.item.ItemStack} which represents the icon
-     */
-    @Override
-    public @Nullable IItem getIcon() {
-        return icon;
     }
 
     /**

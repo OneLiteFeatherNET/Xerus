@@ -10,10 +10,10 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.Set;
+import org.jetbrains.annotations.UnknownNullability;
 
 /**
  * @author theEvilReaper
@@ -28,7 +28,18 @@ public interface Team extends Joinable {
      */
     @Contract(value = " -> new", pure = true)
     static @NotNull Builder builder() {
-        return new TeamBuilder();
+        return new TeamBuilder(null);
+    }
+
+    /**
+     * Creates a new instance from a {@link Team.Builder} to create a new team.
+     * This method allows to set a {@link TeamCreator} to create custom teams over the builder
+     * @param creator the creator to use
+     * @return the builder instance
+     */
+    @Contract(value = "_ -> new", pure = true)
+    static @NotNull Builder builder(@NotNull TeamCreator creator) {
+        return new TeamBuilder(creator);
     }
 
     @Contract(value = "_, _ -> new", pure = true)
@@ -137,14 +148,13 @@ public interface Team extends Joinable {
      * Returns the identifier of the team.
      * @return the underlying value
      */
-    @NotNull
-    String getIdentifier();
+    @NotNull String getIdentifier();
 
     /**
      * Returns the name of the team.
      * @return The name of the team
      */
-    String getName(Locale locale);
+    @UnknownNullability String getName(Locale locale);
 
     /**
      * Returns the name of the team.
@@ -172,8 +182,7 @@ public interface Team extends Joinable {
      * Returns the given color data from the team.
      * @return the color data
      */
-    @NotNull
-    ColorData getColorData();
+    @NotNull ColorData getColorData();
 
     /**
      * Returns the maximum capacity of the team.
@@ -188,18 +197,10 @@ public interface Team extends Joinable {
     int getCurrentSize();
 
     /**
-     * Returns the icon from the team.
-     * @return the underlying icon
-     */
-    @Nullable
-    IItem getIcon();
-
-    /**
      * Returns a set which includes all current players in the team
      * @return the given set
      */
-    @NotNull
-    Set<Player> getPlayers();
+    @NotNull Set<Player> getPlayers();
 
     /**
      * The interface defines all relevant method for a builder pattern.
@@ -219,13 +220,6 @@ public interface Team extends Joinable {
          * @return the builder instance
          */
         @NotNull Builder colorData(@NotNull ColorData colorData);
-
-        /**
-         * Set the icon to the team.
-         * @param icon the icon to set
-         * @return the builder instance
-         */
-        @NotNull Builder icon(@NotNull IItem icon);
 
         /**
          * Set the maximum size for the team.

@@ -4,6 +4,7 @@ import de.icevizion.aves.item.IItem;
 import de.icevizion.xerus.api.ColorData;
 import net.minestom.server.utils.validate.Check;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * The class is the implementation for {@link Team.Builder} interface.
@@ -13,10 +14,14 @@ import org.jetbrains.annotations.NotNull;
  */
 public non-sealed class TeamBuilder implements Team.Builder {
 
+    private final TeamCreator teamCreator;
     private String name;
     private ColorData colorData;
-    private IItem icon;
     private int capacity = TeamImpl.DEFAULT_CAPACITY;
+
+    protected TeamBuilder(@Nullable TeamCreator teamCreator) {
+        this.teamCreator = teamCreator == null ? DefaultTeamCreator::createDefaultTeam : teamCreator;
+    }
 
     /**
      * Set the name for a team.
@@ -42,17 +47,6 @@ public non-sealed class TeamBuilder implements Team.Builder {
     }
 
     /**
-     * Set the icon for the team.
-     * @param icon the icon to set
-     * @return the builder instance
-     */
-    @Override
-    public Team.@NotNull Builder icon(@NotNull IItem icon) {
-        this.icon = icon;
-        return this;
-    }
-
-    /**
      * Set the initial capacity for the underlying structure which holds the players from a team.
      * @param capacity the capacity to set
      * @return the builder instance
@@ -70,8 +64,6 @@ public non-sealed class TeamBuilder implements Team.Builder {
      */
     @Override
     public @NotNull Team build() {
-        var team = new TeamImpl(name, colorData, capacity);
-        team.setIcon(icon);
-        return team;
+        return this.teamCreator.createTeam(name, colorData, capacity);
     }
 }
