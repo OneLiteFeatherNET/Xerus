@@ -1,6 +1,5 @@
 package de.icevizion.xerus.api.team;
 
-import de.icevizion.aves.item.IItem;
 import de.icevizion.xerus.api.ColorData;
 import net.minestom.server.utils.validate.Check;
 import org.jetbrains.annotations.NotNull;
