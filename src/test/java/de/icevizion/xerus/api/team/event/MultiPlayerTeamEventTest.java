@@ -19,16 +19,17 @@ class MultiPlayerTeamEventTest {
 
     @Test
     void testEventConstructor() {
-        var event = new MultiPlayerTeamEvent<>(mockedTeamImpl, Set.of(mockedPlayer), TeamAction.ADD, true);
+        var event = MultiPlayerTeamEvent.addEvent(mockedTeamImpl, Set.of(mockedPlayer));
+        event.setCancelled(true);
         assertTrue(event.isCancelled());
     }
 
     @Test
     void testPlayerMultiTeamEvent() {
-        var event = new MultiPlayerTeamEvent<>(mockedTeamImpl, Set.of(mockedPlayer), TeamAction.ADD);
+        var event = MultiPlayerTeamEvent.addEvent(mockedTeamImpl, Set.of(mockedPlayer));
 
         assertNotSame(3, event.getPlayers().size());
-        assertSame(TeamAction.ADD, event.getTeamAction());
+        assertSame(TeamEvent.Action.ADD, event.getAction());
         assertSame(mockedTeamImpl, event.getTeam());
 
         event.setCancelled(true);
