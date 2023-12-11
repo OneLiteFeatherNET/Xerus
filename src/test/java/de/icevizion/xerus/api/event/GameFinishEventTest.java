@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameFinishEventTest {
 
     @Test
-    void testEventConstruction() {
+    void testEventConstruction(@NotNull Env env) {
         var gameFinishEvent = new GameFinishEvent<>(FinishReason.UNKNOWN);
         assertNotNull(gameFinishEvent);
         assertEquals(FinishReason.class, gameFinishEvent.getReason().getClass());
