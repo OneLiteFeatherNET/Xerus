@@ -28,7 +28,6 @@ class GameFinishEventTest {
         });
 
         EventDispatcher.call(new GameFinishEvent<>(FinishReason.ALL_DEAD));
-
     }
 
     private enum FinishReason {
