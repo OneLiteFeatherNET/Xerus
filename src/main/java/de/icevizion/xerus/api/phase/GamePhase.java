@@ -43,6 +43,7 @@ public abstract class GamePhase extends Phase {
         }
         var eventListener = EventListener.of(eventClass, listener);
         this.listenerHashMap.put(eventClass, EventListener.of(eventClass,listener));
+        this.phaseNode.addListener(eventListener);
         return eventListener;
     }
 
@@ -56,7 +57,7 @@ public abstract class GamePhase extends Phase {
             phaseNode = EventNode.all(getName() + "Node");
             this.listenerHashMap = new HashMap<>();
         }
-        this.listenerHashMap.put(eventClass, CANCEL_LISTENER);
+        this.phaseNode.addListener(this.listenerHashMap.put(eventClass, CANCEL_LISTENER));
     }
 
     /**
