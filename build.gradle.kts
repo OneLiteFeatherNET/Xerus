@@ -11,8 +11,9 @@ val baseVersion = "1.2.0-SNAPSHOT"
 val sonarKey = "dungeon_projects_xerus_AYKjiRt9dAa6ziWsmMZw"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 repositories {
@@ -64,7 +65,7 @@ dependencies {
 tasks {
     compileJava {
         options.encoding = "UTF-8"
-        options.release.set(17)
+        options.release.set(21)
     }
 
     jacocoTestReport {
@@ -77,6 +78,7 @@ tasks {
     test {
         finalizedBy(rootProject.tasks.jacocoTestReport)
         useJUnitPlatform()
+        jvmArgs("-Dminestom.inside-test=true")
         testLogging {
             events("passed", "skipped", "failed")
         }
