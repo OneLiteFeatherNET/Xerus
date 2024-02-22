@@ -64,7 +64,7 @@ public class TeamDistributor<T extends Team> implements ITeamDistributor<T> {
             if (team == null) return;
 
             for (DistributionPlayer player : distributionTeam.getPlayers()) {
-                var realPlayer = CONNECTION_MANAGER.getPlayer(player.uuid());
+                var realPlayer = CONNECTION_MANAGER.getOnlinePlayerByUuid(player.uuid());
 
                 if (realPlayer == null) continue;
                 team.addPlayer(realPlayer);
