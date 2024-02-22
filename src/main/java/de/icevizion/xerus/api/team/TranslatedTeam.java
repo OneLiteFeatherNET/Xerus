@@ -2,17 +2,17 @@ package de.icevizion.xerus.api.team;
 
 import at.rxcki.strigiformes.MessageProvider;
 import at.rxcki.strigiformes.TranslatedObjectCache;
-import de.icevizion.aves.item.IItem;
 import de.icevizion.xerus.api.ColorData;
 import net.minestom.server.entity.Player;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
+
+import static de.icevizion.xerus.api.team.TeamImpl.DEFAULT_CAPACITY;
 
 /**
  * @author theEvilReaper
@@ -40,7 +40,11 @@ public class TranslatedTeam implements Team {
         this.key = key;
         this.colorData = colorData;
         this.capacity = initialCapacity;
-        this.players = new HashSet<>(initialCapacity);
+        if (initialCapacity == DEFAULT_CAPACITY) {
+            this.players = new HashSet<>();
+        } else {
+            this.players = HashSet.newHashSet(initialCapacity);
+        }
         this.nameCache = createCache();
     }
 

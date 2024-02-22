@@ -9,7 +9,7 @@ public abstract class TeamEvent<T extends Team> implements Event {
     private final T team;
     private final Action action;
 
-    public TeamEvent(@NotNull T team, @NotNull Action action) {
+    protected TeamEvent(@NotNull T team, @NotNull Action action) {
         this.team = team;
         this.action = action;
     }

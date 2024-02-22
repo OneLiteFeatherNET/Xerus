@@ -1,11 +1,9 @@
 package de.icevizion.xerus.api.team;
 
-import de.icevizion.aves.item.IItem;
 import de.icevizion.xerus.api.ColorData;
 import net.minestom.server.entity.Player;
 import net.minestom.server.utils.validate.Check;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -38,7 +36,7 @@ public class TeamImpl implements Team {
         if (initialCapacity == DEFAULT_CAPACITY) {
             this.players = new HashSet<>();
         } else {
-            this.players = new HashSet<>(initialCapacity);
+            this.players = HashSet.newHashSet(initialCapacity);
         }
     }
 
