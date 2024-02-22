@@ -21,7 +21,7 @@ class KitTest {
 
     @BeforeAll
     void init() {
-        this.dummyItem = new Item(ItemStack.AIR);
+        this.dummyItem = Item.of(ItemStack.AIR);
         this.kit = Kit.of("TestKit", true);
     }
 
@@ -34,7 +34,7 @@ class KitTest {
     void testSetArmorItems() {
         var kit = new KitImpl("Test", null, false);
         assertThrows(NullPointerException.class, () -> kit.setArmorItem(ArmorSlot.BOOTS, dummyItem));
-        kit.setItem(0, new Item(ItemStack.builder(Material.STONE).build()));
+        kit.setItem(0, Item.of(ItemStack.builder(Material.STONE).build()));
         assertNotNull(kit);
     }
 
