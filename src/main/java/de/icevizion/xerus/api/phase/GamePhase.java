@@ -37,8 +37,8 @@ public abstract class GamePhase extends Phase {
      * @param <T> the class must extends from an event
      */
     public <T extends Event> EventListener<T> addListener(@NotNull Class<T> eventClass, @NotNull Consumer<T> listener) {
-        if (phaseNode == null && listenerHashMap == null) {
-            phaseNode = EventNode.all(getName() + "Node");
+        if (this.phaseNode == null && listenerHashMap == null) {
+            this.phaseNode = EventNode.all(getName() + "Node");
             this.listenerHashMap = new HashMap<>();
         }
         var eventListener = EventListener.of(eventClass, listener);
