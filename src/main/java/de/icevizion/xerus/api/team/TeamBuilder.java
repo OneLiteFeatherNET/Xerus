@@ -2,28 +2,43 @@ package de.icevizion.xerus.api.team;
 
 import de.icevizion.xerus.api.ColorData;
 import net.minestom.server.utils.validate.Check;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
- * The class is the implementation for {@link Team.Builder} interface.
+ * The class represents the implementation of the {@link Team.Builder} interface.
+ *
  * @author theEvilReaper
- * @since 1.2.0
  * @version 1.0.0
+ * @since 1.2.0
  */
-public non-sealed class TeamBuilder implements Team.Builder {
+@ApiStatus.NonExtendable
+public final class TeamBuilder implements Team.Builder {
 
     private final TeamCreator teamCreator;
     private String name;
     private ColorData colorData;
     private int capacity = TeamImpl.DEFAULT_CAPACITY;
 
-    protected TeamBuilder(@Nullable TeamCreator teamCreator) {
-        this.teamCreator = teamCreator == null ? DefaultTeamCreator::createDefaultTeam : teamCreator;
+    /**
+     * Creates a new instance from the {@link TeamBuilder}.
+     *
+     * @param teamCreator the creator for the team
+     */
+    TeamBuilder(@NotNull TeamCreator teamCreator) {
+        this.teamCreator = teamCreator;
+    }
+
+    /**
+     * Creates a new instance from the {@link TeamBuilder} with the default implementation of the {@link TeamCreator} interface.
+     */
+    TeamBuilder() {
+        this(DefaultTeamCreator::createDefaultTeam);
     }
 
     /**
      * Set the name for a team.
+     *
      * @param name the new name set
      * @return the builder instance
      */
@@ -36,6 +51,7 @@ public non-sealed class TeamBuilder implements Team.Builder {
 
     /**
      * Set the {@link ColorData} for the team.
+     *
      * @param colorData the {@link ColorData} to set
      * @return the builder instance
      */
@@ -47,6 +63,7 @@ public non-sealed class TeamBuilder implements Team.Builder {
 
     /**
      * Set the initial capacity for the underlying structure which holds the players from a team.
+     *
      * @param capacity the capacity to set
      * @return the builder instance
      */
@@ -59,6 +76,7 @@ public non-sealed class TeamBuilder implements Team.Builder {
 
     /**
      * Returns a new instance from a {@link Team}.
+     *
      * @return the created instance
      */
     @Override

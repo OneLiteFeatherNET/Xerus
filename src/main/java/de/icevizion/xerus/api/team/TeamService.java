@@ -2,6 +2,7 @@ package de.icevizion.xerus.api.team;
 
 import net.minestom.server.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
@@ -51,24 +52,24 @@ public interface TeamService<T extends Team> {
      * @param identifier of the team
      * @return The team in an {@link Optional}
      */
-    Optional<T> getTeam(@NotNull String identifier);
+    Optional<@Nullable T> getTeam(@NotNull String identifier);
 
     /**
      * Returns the team based on the given player.
      * @param player The player from which the team is determined
      * @return The team in an {@link Optional}
      */
-    Optional<T> getTeam(@NotNull Player player);
+    Optional<@Nullable T> getTeam(@NotNull Player player);
 
     /**
      * Returns the team with the fewest players.
      * @return the smallest team
      */
-    Optional<T> getSmallestTeam();
+    Optional<@Nullable T> getSmallestTeam();
 
     /**
      * Returns a list with all current available teams.
      * @return The underlying list
      */
-    List<T> getTeams();
+    @NotNull List<T> getTeams();
 }
