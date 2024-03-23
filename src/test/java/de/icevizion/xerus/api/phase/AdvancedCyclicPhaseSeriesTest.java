@@ -23,7 +23,7 @@ class AdvancedCyclicPhaseSeriesTest {
         phaseSeries.add(phase2);
         phaseSeries.setMaxIterations(2);
 
-        assertEquals("Phase #1", phaseSeries.get(0).getName());
+        assertEquals("Phase #1", phaseSeries.getFirst().getName());
         assertEquals(2, phaseSeries.getMaxIterations());
 
         /*phaseSeries.start();

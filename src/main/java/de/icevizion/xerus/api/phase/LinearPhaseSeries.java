@@ -29,7 +29,7 @@ public class LinearPhaseSeries<T extends Phase> extends PhaseCollection<T> {
 
     @Override
     public void onStart() {
-        setCurrentPhase(get(0));
+        setCurrentPhase(getFirst());
         startCurrentPhase();
     }
 

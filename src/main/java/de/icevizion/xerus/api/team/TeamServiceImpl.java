@@ -135,7 +135,7 @@ public class TeamServiceImpl<T extends Team> implements TeamService<T> {
     public Optional<T> getSmallestTeam() {
         if (!teams.isEmpty()) {
             int i = 1;
-            var team = teams.get(0);
+            var team = teams.getFirst();
 
             while (i < teams.size() && teams.get(i).getCurrentSize() < team.getCurrentSize()) {
                 team = teams.get(i);
