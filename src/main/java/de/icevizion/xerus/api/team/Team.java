@@ -25,7 +25,7 @@ import java.util.function.Consumer;
  **/
 public interface Team extends Joinable {
 
-    Runnable EMPTY = () -> { };
+    @NotNull Runnable EMPTY = () -> { };
 
     /**
      * Creates a new instance from the {@link TeamImpl.Builder} interface.
@@ -33,7 +33,7 @@ public interface Team extends Joinable {
      */
     @Contract(value = " -> new", pure = true)
     static @NotNull Builder builder() {
-        return new TeamBuilder(null);
+        return new TeamBuilder();
     }
 
     /**

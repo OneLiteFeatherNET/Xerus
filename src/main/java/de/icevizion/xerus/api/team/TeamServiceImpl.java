@@ -1,7 +1,9 @@
 package de.icevizion.xerus.api.team;
 
 import net.minestom.server.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,8 @@ import java.util.Optional;
  * @since 1.0.0
  * @version 1.0.3
  */
-public class TeamServiceImpl<T extends Team> implements TeamService<T> {
+@ApiStatus.NonExtendable
+public final class TeamServiceImpl<T extends Team> implements TeamService<T> {
 
     private final List<T> teams;
 
@@ -79,7 +82,7 @@ public class TeamServiceImpl<T extends Team> implements TeamService<T> {
      * @return The team in an {@link Optional}
      */
     @Override
-    public Optional<T> getTeam(@NotNull String identifier) {
+    public Optional<@Nullable T> getTeam(@NotNull String identifier) {
         int i = 0;
 
         while (i < teams.size() && !teams.get(i).getIdentifier().equals(identifier)) {
@@ -115,7 +118,7 @@ public class TeamServiceImpl<T extends Team> implements TeamService<T> {
      * @return The team in an {@link Optional}
      */
     @Override
-    public Optional<T> getTeam(@NotNull Player player) {
+    public Optional<@Nullable T> getTeam(@NotNull Player player) {
         T team = null;
 
         for (int i = 0; i < getTeams().size() && team == null; i++) {
@@ -132,7 +135,7 @@ public class TeamServiceImpl<T extends Team> implements TeamService<T> {
      * @return the smallest team
      */
     @Override
-    public Optional<T> getSmallestTeam() {
+    public Optional<@Nullable T> getSmallestTeam() {
         if (!teams.isEmpty()) {
             int i = 1;
             var team = teams.getFirst();
@@ -153,7 +156,7 @@ public class TeamServiceImpl<T extends Team> implements TeamService<T> {
      * @return The underlying list
      */
     @Override
-    public List<T> getTeams() {
+    public @NotNull List<T> getTeams() {
         return teams;
     }
 }
