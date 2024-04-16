@@ -1,5 +1,5 @@
 # Xerus - Core Game Library
-![Xerus](./.github/assets/xerus.jpg)
+![Xerus](.gitlab/assets/xerus.jpg)
 
 # Features
 - Kits (translated or non translated)
