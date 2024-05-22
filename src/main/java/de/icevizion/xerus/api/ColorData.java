@@ -5,10 +5,12 @@ import net.minestom.server.color.Color;
 import net.minestom.server.color.DyeColor;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The class combines all colors of DyeColor, ChatColor and the wool blocks into enum values.
  * So for each color you have all the matching values.
+ *
  * @author theEvilReaper
  * @version 1.0.1
  * @since 1.0.0
@@ -22,9 +24,9 @@ public enum ColorData {
             ItemStack.builder(Material.CYAN_WOOL).build(), "colorCyan", DyeColor.CYAN.color()),
     BLACK(NamedTextColor.BLACK, DyeColor.BLACK,
             ItemStack.builder(Material.BLACK_WOOL).build(), "colorBlack", DyeColor.BLACK.color()),
-    BLUE(NamedTextColor.BLUE,  DyeColor.LIGHT_BLUE,
+    BLUE(NamedTextColor.BLUE, DyeColor.LIGHT_BLUE,
             ItemStack.builder(Material.BLUE_WOOL).build(), "colorBlue", DyeColor.BLUE.color()),
-    DARK_BLUE(NamedTextColor.DARK_BLUE,  DyeColor.BLUE,
+    DARK_BLUE(NamedTextColor.DARK_BLUE, DyeColor.BLUE,
             ItemStack.builder(Material.BLUE_WOOL).build(), "colorDarkBlue", DyeColor.BLUE.color()),
     GOLD(NamedTextColor.GOLD, DyeColor.ORANGE,
             ItemStack.builder(Material.ORANGE_WOOL).build(), "colorOrange", DyeColor.ORANGE.color()),
@@ -33,7 +35,7 @@ public enum ColorData {
     DARK_GREY(NamedTextColor.DARK_GRAY, DyeColor.GRAY,
             ItemStack.builder(Material.GRAY_WOOL).build(), "colorDarkGray", DyeColor.GRAY.color()),
     GREEN(NamedTextColor.DARK_GREEN, DyeColor.GREEN,
-            ItemStack.builder(Material.GREEN_WOOL).build() , "colorGreen", DyeColor.GREEN.color()),
+            ItemStack.builder(Material.GREEN_WOOL).build(), "colorGreen", DyeColor.GREEN.color()),
     LIGHT_GREEN(NamedTextColor.GREEN, DyeColor.LIME,
             ItemStack.builder(Material.LIME_WOOL).build(), "colorLime", DyeColor.LIME.color()),
     PURPLE(NamedTextColor.DARK_PURPLE, DyeColor.PURPLE,
@@ -58,7 +60,21 @@ public enum ColorData {
     private final Color color;
     private final String translateKey;
 
-    ColorData(NamedTextColor chatColor, DyeColor dyeColor, ItemStack stack, String translateKey, Color color) {
+    /**
+     * Creates a new instance for an enum entry.
+     * @param chatColor the chat color for the wool
+     * @param dyeColor the dye color for the wool
+     * @param stack the item stack for the wool
+     * @param translateKey the key for the translation
+     * @param color the color for the wool
+     */
+    ColorData(
+            @NotNull NamedTextColor chatColor,
+            @NotNull DyeColor dyeColor,
+            @NotNull ItemStack stack,
+            @NotNull String translateKey,
+            @NotNull Color color
+    ) {
         this.chatColor = chatColor;
         this.dyeColor = dyeColor;
         this.stack = stack;
@@ -68,41 +84,46 @@ public enum ColorData {
 
     /**
      * Returns the {@link DyeColor} from an enum entry.
+     *
      * @return the underlying dyeColor
      */
-    public DyeColor getDyeColor() {
+    public @NotNull DyeColor getDyeColor() {
         return dyeColor;
     }
 
     /**
      * Returns the {@link ItemStack} from an enum entry.
+     *
      * @return the underlying stack
      */
-    public ItemStack getStack() {
+    public @NotNull ItemStack getStack() {
         return stack;
     }
 
     /**
      * Returns the {@link NamedTextColor} from an enum entry.
+     *
      * @return the underlying chatColor
      */
-    public NamedTextColor getChatColor() {
+    public @NotNull NamedTextColor getChatColor() {
         return chatColor;
     }
 
     /**
      * Returns the key for the translation.
+     *
      * @return the underlying translation key
      */
-    public String getTranslateKey() {
+    public @NotNull String getTranslateKey() {
         return translateKey;
     }
 
     /**
      * Returns the {@link Color} from an enum entry.
+     *
      * @return the underlying color
      */
-    public Color getColor() {
+    public @NotNull Color getColor() {
         return color;
     }
 
@@ -110,7 +131,10 @@ public enum ColorData {
      * Returns an array which contains all given color data values.
      * Please use this method because its reduce defensive copies from the array,
      * because values() returns each call a new array!
+     *
      * @return an array with the color data values
      */
-    public static ColorData[] getValues() { return VALUES; }
+    public static @NotNull ColorData[] getValues() {
+        return VALUES;
+    }
 }
