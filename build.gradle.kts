@@ -1,14 +1,8 @@
 plugins {
     java
-<<<<<<< HEAD
     `java-library`
     `maven-publish`
     jacoco
-    alias(libs.plugins.sonarqube)
-=======
-    jacoco
-    alias(libs.plugins.sonar)
->>>>>>> 7741d099b81e6dca1926a2d6314c327977a32002
 }
 
 group = "net.theevilreaper.xerus"
@@ -26,19 +20,13 @@ dependencies {
 
     compileOnly(libs.aves)
     compileOnly(libs.minestom)
-    testImplementation(libs.minestom.test)
     testImplementation(libs.minestom)
-<<<<<<< HEAD
     testImplementation(libs.minestom.test)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.junit)
     testImplementation(libs.aves)
     testRuntimeOnly(libs.junit.jupiter.engine)
-=======
-    testImplementation(libs.junit.api)
-    testRuntimeOnly(libs.junit.engine)
->>>>>>> 7741d099b81e6dca1926a2d6314c327977a32002
 }
 
 tasks {
@@ -68,19 +56,10 @@ tasks {
     }
 }
 
-sonarqube {
-    properties {
-        property("sonar.projectKey", "dungeon_zosma_AYm_wAIFq35l90nqW9Qs")
-        property("sonar.projectName", "Zosma")
-        property("sonar.qualitygate.wait", true)
-    }
-}
-
 version = if (System.getenv().containsKey("CI")) {
     "${baseVersion}+${System.getenv("CI_COMMIT_SHORT_SHA")}"
 } else {
     baseVersion
-<<<<<<< HEAD
 }
 
 publishing {
@@ -107,6 +86,4 @@ publishing {
             }
         }
     }
-=======
->>>>>>> 7741d099b81e6dca1926a2d6314c327977a32002
 }
