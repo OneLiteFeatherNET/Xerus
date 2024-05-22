@@ -24,11 +24,11 @@ dependencies {
 
     testImplementation(libs.minestom)
     testImplementation(libs.minestom.test)
-    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.api)
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.junit)
     testImplementation(libs.aves)
-    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(libs.junit.engine)
 }
 
 tasks {
@@ -51,10 +51,6 @@ tasks {
         testLogging {
             events("passed", "skipped", "failed")
         }
-    }
-
-    getByName("sonar") {
-        dependsOn(rootProject.tasks.test)
     }
 }
 
