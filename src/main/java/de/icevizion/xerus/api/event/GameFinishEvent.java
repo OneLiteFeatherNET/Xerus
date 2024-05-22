@@ -12,30 +12,12 @@ import org.jetbrains.annotations.NotNull;
  * You can create a subclass of this event as follows:
  * {@code
  * public class CustomGameEndEvent extends GameEndEvent<CustomGameData> {
- *    // Additional customizations for your game's end event
+ * // Additional customizations for your game's end event
  * }
  * @param <T> The generic structure representing the end-game condition data
  * @author theEvilReaper
  * @version 1.0.0
  * @since 1.2.0
  */
-public class GameFinishEvent<T> implements Event {
-
-    private final T reason;
-
-    /**
-     * Creates a new instance from the event.
-     * @param reason the reason to set
-     */
-    public GameFinishEvent(@NotNull T reason) {
-        this.reason = reason;
-    }
-
-    /**
-     * Returns the reason why game is over.
-     * @return the involved reason
-     */
-    public @NotNull T getReason() {
-        return reason;
-    }
+public record GameFinishEvent<T>(@NotNull T reason) implements Event {
 }

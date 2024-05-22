@@ -15,7 +15,7 @@ class GameFinishEventTest {
     void testEventConstruction(@NotNull Env env) {
         var gameFinishEvent = new GameFinishEvent<>(FinishReason.UNKNOWN);
         assertNotNull(gameFinishEvent);
-        assertEquals(FinishReason.class, gameFinishEvent.getReason().getClass());
+        assertEquals(FinishReason.class, gameFinishEvent.reason().getClass());
     }
 
     @Test
@@ -23,8 +23,8 @@ class GameFinishEventTest {
         var listener = env.listen(GameFinishEvent.class);
 
         listener.followup(gameFinishEvent -> {
-            assertNotEquals(FinishReason.TEAM_WIN, gameFinishEvent.getReason());
-            assertEquals(FinishReason.ALL_DEAD, gameFinishEvent.getReason());
+            assertNotEquals(FinishReason.TEAM_WIN, gameFinishEvent.reason());
+            assertEquals(FinishReason.ALL_DEAD, gameFinishEvent.reason());
         });
 
         EventDispatcher.call(new GameFinishEvent<>(FinishReason.ALL_DEAD));
