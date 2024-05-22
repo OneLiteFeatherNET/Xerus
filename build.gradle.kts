@@ -58,14 +58,6 @@ tasks {
     }
 }
 
-sonarqube {
-    properties {
-        property("sonar.projectKey", "dungeon_zosma_AYm_wAIFq35l90nqW9Qs")
-        property("sonar.projectName", "Zosma")
-        property("sonar.qualitygate.wait", true)
-    }
-}
-
 version = if (System.getenv().containsKey("CI")) {
     "${baseVersion}+${System.getenv("CI_COMMIT_SHORT_SHA")}"
 } else {
