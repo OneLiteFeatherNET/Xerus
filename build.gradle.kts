@@ -3,7 +3,6 @@ plugins {
     `java-library`
     `maven-publish`
     jacoco
-    alias(libs.plugins.sonarqube)
 }
 
 group = "net.theevilreaper.xerus"
@@ -11,17 +10,17 @@ val baseVersion = "1.2.0-SNAPSHOT"
 val sonarKey = "dungeon_projects_xerus_AYKjiRt9dAa6ziWsmMZw"
 
 java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
+   toolchain {
+         languageVersion.set(JavaLanguageVersion.of(21))
+   }
 }
 
 dependencies {
-    implementation(libs.strigiformes)
+    implementation(platform(libs.dungeon.base.bom))
 
     compileOnly(libs.aves)
     compileOnly(libs.minestom)
-
+    testImplementation(platform(libs.dungeon.base.bom))
     testImplementation(libs.minestom)
     testImplementation(libs.minestom.test)
     testImplementation(libs.junit.api)
