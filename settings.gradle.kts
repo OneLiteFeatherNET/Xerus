@@ -1,8 +1,16 @@
 rootProject.name = "Xerus"
 
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven("https://eldonexus.de/repository/maven-public/")
+    }
+}
+
 dependencyResolutionManagement {
     repositories {
         mavenCentral()
+        maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
         maven("https://jitpack.io")
         maven {
             val groupdId = 28 // Gitlab Group
@@ -62,14 +70,17 @@ dependencyResolutionManagement {
 
     versionCatalogs {
         create("libs") {
-            library("dungeon.base.bom", "net.theevilreaper.dungeon.bom", "base").version("1.0.0")
-            library("minestom", "net.onelitefeather.microtus", "Minestom").withoutVersion()
+            version("aves", "1.4.6")
+            version("publishdata", "1.4.0")
+            library("dungeon.base.bom", "net.theevilreaper.dungeon.bom", "base").version("1.0.4")
+            library("minestom", "net.onelitefeather.microtus", "Microtus").withoutVersion()
             library("minestom-test", "net.onelitefeather.microtus.testing", "testing").withoutVersion()
-            library("adventure.minimessage", "net.kyori", "adventure-text-minimessage").withoutVersion()
+            library("aves", "de.icevizion.lib", "aves").versionRef("aves")
             library("junit.api", "org.junit.jupiter", "junit-jupiter-api").withoutVersion()
             library("junit.engine", "org.junit.jupiter", "junit-jupiter-engine").withoutVersion()
             library("mockito.core", "org.mockito", "mockito-core").withoutVersion()
             library("mockito.junit", "org.mockito", "mockito-junit-jupiter").withoutVersion()
+            library("strigiformes", "com.github.PatrickZdarsky", "Strigiformes").version("e89dd8352c")
 
             plugin("shadow", "com.github.johnrengelman.shadow").version("8.1.1")
             plugin("sonarqube", "org.sonarqube").version("4.0.0.2929")
