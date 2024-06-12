@@ -21,9 +21,7 @@ import java.util.Optional;
 public final class KitServiceImpl implements KitService {
 
     private static final Logger KIT_LOGGER = LoggerFactory.getLogger(KitServiceImpl.class);
-
     private final List<Kit> kits;
-
     private final Map<Player, Kit> usedKits;
 
     public KitServiceImpl() {
