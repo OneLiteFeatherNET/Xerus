@@ -10,12 +10,13 @@ val baseVersion = "1.2.0-SNAPSHOT"
 val sonarKey = "dungeon_projects_xerus_AYKjiRt9dAa6ziWsmMZw"
 
 java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
+   toolchain {
+         languageVersion.set(JavaLanguageVersion.of(21))
+   }
 }
 
 dependencies {
+    testImplementation(platform(libs.dungeon.base.bom))
     implementation(libs.strigiformes)
 
     compileOnly(libs.aves)
