@@ -24,6 +24,10 @@ public interface Kit extends Equipable {
         return new KitImpl(name, null, armorItems);
     }
 
+    /**
+     * Set the icon for the kit.
+     * @param item the item to set
+     */
     void setIcon(@NotNull IItem item);
 
     /**

@@ -31,7 +31,6 @@ public abstract class Game extends Extension {
      * Creates an event call for the give event.
      * @param event The event to call
      */
-
     public void callEvent(@NotNull Event event) {
         EVENT_HANDLER.call(event);
     }
@@ -41,7 +40,6 @@ public abstract class Game extends Extension {
      * Register a command to the plugin.
      * @param commandExecutor The executor for the command
      */
-
     public void registerCommand(@NotNull Command commandExecutor) {
         COMMAND_MANAGER.register(commandExecutor);
     }
