@@ -2,17 +2,20 @@ package de.icevizion.xerus.api.event;
 
 import net.minestom.server.event.EventDispatcher;
 import net.minestom.testing.Env;
-import net.minestom.testing.EnvTest;
+import net.minestom.testing.environment.TestEnvironmentCleaner;
+import net.minestom.testing.environment.TestEnvironmentParameterResolver;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@EnvTest
+@ExtendWith(TestEnvironmentCleaner.class)
+@ExtendWith(TestEnvironmentParameterResolver.class)
 class GameFinishEventTest {
 
     @Test
-    void testEventConstruction(@NotNull Env env) {
+    void testEventConstruction() {
         var gameFinishEvent = new GameFinishEvent<>(FinishReason.UNKNOWN);
         assertNotNull(gameFinishEvent);
         assertEquals(FinishReason.class, gameFinishEvent.reason().getClass());

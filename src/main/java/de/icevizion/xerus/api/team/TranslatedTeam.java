@@ -1,14 +1,17 @@
 package de.icevizion.xerus.api.team;
 
-import at.rxcki.strigiformes.MessageProvider;
-import at.rxcki.strigiformes.TranslatedObjectCache;
 import de.icevizion.xerus.api.ColorData;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.Style;
+import net.kyori.adventure.translation.GlobalTranslator;
 import net.minestom.server.entity.Player;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -21,8 +24,7 @@ import static de.icevizion.xerus.api.team.TeamImpl.DEFAULT_CAPACITY;
  **/
 public class TranslatedTeam implements Team {
 
-    private final MessageProvider messageProvider;
-    private final TranslatedObjectCache<String> nameCache;
+    private final Map<Locale, Component> nameCache;
     private final Set<Player> players;
     private final ColorData colorData;
     private final String key;
@@ -30,13 +32,12 @@ public class TranslatedTeam implements Team {
 
     /**
      * Creates a new instance from the team.
-     * @param messageProvider Valid instance to an {@link MessageProvider}
+     *
      * @param initialCapacity for the team
-     * @param key for the name of the team
-     * @param colorData for the team
+     * @param key             for the name of the team
+     * @param colorData       for the team
      */
-    public TranslatedTeam(MessageProvider messageProvider, String key, int initialCapacity, ColorData colorData) {
-        this.messageProvider = messageProvider;
+    public TranslatedTeam(@NotNull String key, @NotNull ColorData colorData, int initialCapacity) {
         this.key = key;
         this.colorData = colorData;
         this.capacity = initialCapacity;
@@ -45,60 +46,51 @@ public class TranslatedTeam implements Team {
         } else {
             this.players = HashSet.newHashSet(initialCapacity);
         }
-        this.nameCache = createCache();
+        this.nameCache = new HashMap<>();
     }
 
     /**
      * Creates a new instance from the team.
-     * @param messageProvider Valid instance to an {@link MessageProvider}
-     * @param key for the name of the team
+     *
+     * @param key       for the name of the team
      * @param colorData for the team
      */
-    public TranslatedTeam(MessageProvider messageProvider, String key, ColorData colorData) {
-        this.messageProvider = messageProvider;
+    public TranslatedTeam(@NotNull String key, @NotNull ColorData colorData) {
         this.key = key;
         this.colorData = colorData;
         this.capacity = -1;
         this.players = new HashSet<>();
-        this.nameCache = createCache();
+        this.nameCache = new HashMap<>();
     }
 
     /**
      * Creates a new instance from the team.
-     * @param messageProvider Valid instance to an {@link MessageProvider}
-     * @param key for the name of the team
-     * @param capacity the size of the team.
-     * @param colorData the {@link ColorData} for the team
-     * @return the created object
-     */
-    @Contract("_, _, _, _ -> new")
-    public static @NotNull TranslatedTeam of(MessageProvider messageProvider, String key, int capacity, ColorData colorData) {
-        return new TranslatedTeam(messageProvider, key, capacity, colorData);
-    }
-
-    /**
-     * Creates a new instance from the team.
-     * @param messageProvider Valid instance to an {@link MessageProvider}
-     * @param key for the name of the team
+     *
+     * @param key       for the name of the team
+     * @param capacity  the size of the team.
      * @param colorData the {@link ColorData} for the team
      * @return the created object
      */
     @Contract("_, _, _ -> new")
-    public static @NotNull TranslatedTeam of(MessageProvider messageProvider, String key, ColorData colorData) {
-        return new TranslatedTeam(messageProvider, key, colorData);
+    public static @NotNull TranslatedTeam of(@NotNull String key, @NotNull ColorData colorData, int capacity) {
+        return new TranslatedTeam(key, colorData, capacity);
     }
 
     /**
-     * Creates the cache for the name.
-     * @return the created cache instance
+     * Creates a new instance from the team.
+     *
+     * @param key       for the name of the team
+     * @param colorData the {@link ColorData} for the team
+     * @return the created object
      */
-    @Contract(value = " -> new", pure = true)
-    private @NotNull TranslatedObjectCache<String> createCache() {
-        return new TranslatedObjectCache<>(locale -> messageProvider.getTextProvider().getString(key, locale));
+    @Contract("_, _ -> new")
+    public static @NotNull TranslatedTeam of(@NotNull String key, @NotNull ColorData colorData) {
+        return new TranslatedTeam(key, colorData);
     }
 
     /**
      * Set / overwrite the capacity of the team.
+     *
      * @param capacity The capacity to set
      */
     @Override
@@ -108,6 +100,7 @@ public class TranslatedTeam implements Team {
 
     /**
      * Checks if a player can join a team or not.
+     *
      * @return true when a player can join otherwise false
      */
     @Override
@@ -131,6 +124,7 @@ public class TranslatedTeam implements Team {
 
     /**
      * Returns the identifier of the team.
+     *
      * @return the underlying value
      */
     @Override
@@ -141,24 +135,31 @@ public class TranslatedTeam implements Team {
 
     /**
      * Returns the name of the team.
+     *
      * @return The name of the team
      */
     @Override
-    public String getName(Locale locale) {
-        return nameCache.get(locale);
+    public Component getName(Locale locale) {
+        return nameCache.computeIfAbsent(locale, locale1 -> {
+            final Component rawComponent = Component.translatable(key);
+            return GlobalTranslator.render(rawComponent, locale1);
+        });
     }
 
     /**
      * Returns the name with the color.
+     *
      * @return The name with the color
      */
     @Override
-    public String getColoredName(Locale locale) {
-        return getColorData().getColor() + nameCache.get(locale);
+    public Component getColoredName(Locale locale) {
+        final Component name = getName(locale);
+        return name.style(Style.style(colorData.getChatColor()));
     }
 
     /**
      * Returns the given color data from the team.
+     *
      * @return the color data
      */
     @Override
@@ -168,6 +169,7 @@ public class TranslatedTeam implements Team {
 
     /**
      * Returns the maximum capacity of the team.
+     *
      * @return -1 when no capacity is set otherwise the capacity
      */
     @Override
@@ -177,6 +179,7 @@ public class TranslatedTeam implements Team {
 
     /**
      * Returns the current size of the team.
+     *
      * @return the current size
      */
     @Override
@@ -186,10 +189,10 @@ public class TranslatedTeam implements Team {
 
     /**
      * Returns a set with all current players in the team.
+     *
      * @return The underlying set with the players
      */
-    @NotNull
-    public Set<Player> getPlayers() {
+    public @NotNull Set<Player> getPlayers() {
         return players;
     }
 }

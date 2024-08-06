@@ -35,7 +35,7 @@ public class TeamDistributor<T extends Team> implements ITeamDistributor<T> {
         DistributionTeam[] dTeams = new DistributionTeam[teams.size()];
         for (int i = 0; i < teams.size(); i++) {
             var currentTeam = teams.get(i);
-            dTeams[i] = DistributionTeam.of(currentTeam.getName());
+            dTeams[i] = DistributionTeam.of(currentTeam.getIdentifier());
             if (teams.get(i).getCurrentSize() > 0) {
                 for (Player player : currentTeam.getPlayers())
                     dTeams[i].add(DistributionPlayer.of(player.getUuid(), eloFunction.applyAsInt(player)));

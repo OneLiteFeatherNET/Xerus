@@ -37,10 +37,7 @@ public abstract class GamePhase extends Phase {
      * @param <T> the class must extends from an event
      */
     public <T extends Event> EventListener<T> addListener(@NotNull Class<T> eventClass, @NotNull Consumer<T> listener) {
-        if (this.phaseNode == null && listenerHashMap == null) {
-            this.phaseNode = EventNode.all(getName() + "Node");
-            this.listenerHashMap = new HashMap<>();
-        }
+        this.verifyValueIntegrity();
         var eventListener = EventListener.of(eventClass, listener);
         this.listenerHashMap.put(eventClass, EventListener.of(eventClass,listener));
         this.phaseNode.addListener(eventListener);
@@ -53,10 +50,7 @@ public abstract class GamePhase extends Phase {
      * @param <C> the event class must inherit from the {@link CancellableEvent}
      */
     public <C extends CancellableEvent> void addCancelListener(@NotNull Class<C> eventClass) {
-        if (phaseNode == null && listenerHashMap == null) {
-            phaseNode = EventNode.all(getName() + "Node");
-            this.listenerHashMap = new HashMap<>();
-        }
+        this.verifyValueIntegrity();
         this.phaseNode.addListener(this.listenerHashMap.put(eventClass, CANCEL_LISTENER));
     }
 
@@ -105,6 +99,19 @@ public abstract class GamePhase extends Phase {
         super.finish();
         if (phaseNode != null) {
             MinecraftServer.getGlobalEventHandler().removeChild(phaseNode);
+        }
+    }
+
+    /**
+     * Verifies the integrity of some important values.
+     */
+    private void verifyValueIntegrity() {
+        if (this.phaseNode == null) {
+            this.phaseNode = EventNode.all(getName() + "Node");
+        }
+
+        if (this.listenerHashMap == null) {
+            this.listenerHashMap = new HashMap<>();
         }
     }
 }

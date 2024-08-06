@@ -2,19 +2,12 @@ package de.icevizion.xerus.api.phase;
 
 import de.icevizion.xerus.api.mocks.TestTickingPhase;
 import net.minestom.server.timer.Scheduler;
-import net.minestom.server.timer.SchedulerManager;
-import net.minestom.server.timer.Task;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.awt.*;
 import java.time.temporal.ChronoUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(MockitoExtension.class)
 class TickingPhaseTest {
 
     @Test

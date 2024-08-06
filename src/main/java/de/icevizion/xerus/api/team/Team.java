@@ -172,13 +172,13 @@ public interface Team extends Joinable {
      * Returns the name of the team.
      * @return The name of the team
      */
-    @UnknownNullability String getName(Locale locale);
+    @UnknownNullability Component getName(Locale locale);
 
     /**
      * Returns the name of the team.
      * @return The name of the team
      */
-    default @NotNull String getName() {
+    default @NotNull Component getName() {
         return getName(null);
     }
 
@@ -186,13 +186,13 @@ public interface Team extends Joinable {
      * Returns the name with the color.
      * @return The name with the color
      */
-    @UnknownNullability String getColoredName(Locale locale);
+    @UnknownNullability Component getColoredName(Locale locale);
 
     /**
      * Returns the name with the color.
      * @return The name with the color
      */
-    default @NotNull String getColoredName() {
+    default @NotNull Component getColoredName() {
         return getColoredName(null);
     }
 

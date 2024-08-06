@@ -1,6 +1,8 @@
 package de.icevizion.xerus.api.team;
 
 import de.icevizion.xerus.api.ColorData;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.utils.validate.Check;
 import org.jetbrains.annotations.NotNull;
@@ -22,6 +24,7 @@ public class TeamImpl implements Team {
     private final String name;
     private final ColorData colorData;
     private int capacity;
+    private final Component component;
 
     /**
      * Creates a new instance from the team.
@@ -31,6 +34,7 @@ public class TeamImpl implements Team {
      */
     protected TeamImpl(@NotNull String name, @NotNull ColorData colorData, int initialCapacity) {
         this.name = name;
+        this.component = Component.text(name, colorData.getChatColor());
         this.colorData = colorData;
         this.capacity = initialCapacity;
         if (initialCapacity == DEFAULT_CAPACITY) {
@@ -78,7 +82,7 @@ public class TeamImpl implements Team {
      */
     @Override
     public @NotNull String getIdentifier() {
-        return getName(null);
+        return PlainTextComponentSerializer.plainText().serialize(getName(null));
     }
 
     /**
@@ -86,8 +90,8 @@ public class TeamImpl implements Team {
      * @return The name of the team
      */
     @Override
-    public String getName(Locale ignored) {
-        return name;
+    public Component getName(Locale ignored) {
+        return Component.text(name);
     }
 
     /**
@@ -95,8 +99,8 @@ public class TeamImpl implements Team {
      * @return The name with the color
      */
     @Override
-    public String getColoredName(Locale ignored) {
-        return getColorData().getChatColor() + name;
+    public Component getColoredName(Locale ignored) {
+        return component;
     }
 
     /**
