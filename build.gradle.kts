@@ -1,26 +1,32 @@
 plugins {
     java
+    `java-library`
+    `maven-publish`
     jacoco
-    alias(libs.plugins.sonar)
+    alias(libs.plugins.publishdata)
 }
 
-group = "org.example" // TODO: Change me
-val baseVersion = "0.0.1-SNAPSHOT" // TODO: Change me
-val sonarKey = "dungeon_zosma_AYRjIidNwVDHzVoeOyqG" // TODO: Change me
+group = "net.theevilreaper.xerus"
+val baseVersion = "1.2.0"
+val sonarKey = "dungeon_projects_xerus_AYKjiRt9dAa6ziWsmMZw"
 
 java {
-   toolchain {
-         languageVersion.set(JavaLanguageVersion.of(21))
-   }
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
 }
 
 dependencies {
     implementation(platform(libs.dungeon.base.bom))
     compileOnly(libs.minestom)
+    compileOnly(libs.aves)
     testImplementation(platform(libs.dungeon.base.bom))
-    testImplementation(libs.minestom.test)
     testImplementation(libs.minestom)
+    testImplementation(libs.minestom.test)
     testImplementation(libs.junit.api)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.junit)
+    testImplementation(libs.aves)
     testRuntimeOnly(libs.junit.engine)
 }
 
@@ -40,21 +46,10 @@ tasks {
     test {
         finalizedBy(rootProject.tasks.jacocoTestReport)
         useJUnitPlatform()
+        jvmArgs("-Dminestom.inside-test=true")
         testLogging {
             events("passed", "skipped", "failed")
         }
-    }
-
-    getByName("sonar") {
-        dependsOn(rootProject.tasks.test)
-    }
-}
-
-sonarqube {
-    properties {
-        property("sonar.projectKey", "dungeon_zosma_AYm_wAIFq35l90nqW9Qs")
-        property("sonar.projectName", "Zosma")
-        property("sonar.qualitygate.wait", true)
     }
 }
 
@@ -62,4 +57,35 @@ version = if (System.getenv().containsKey("CI")) {
     "${baseVersion}+${System.getenv("CI_COMMIT_SHORT_SHA")}"
 } else {
     baseVersion
+}
+
+publishData {
+    addBuildData()
+    useGitlabReposForProject("16", "https://gitlab.themeinerlp.dev/")
+    publishTask("jar")
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            // configure the publication as defined previously.
+            publishData.configurePublication(this)
+            version = publishData.getVersion(false)
+        }
+    }
+    repositories {
+        maven {
+            credentials(HttpHeaderCredentials::class) {
+                name = "Job-Token"
+                value = System.getenv("CI_JOB_TOKEN")
+            }
+            authentication {
+                create("header", HttpHeaderAuthentication::class)
+            }
+
+            name = "Gitlab"
+            // Get the detected repository from the publish data
+            url = uri(publishData.getRepository())
+        }
+    }
 }
