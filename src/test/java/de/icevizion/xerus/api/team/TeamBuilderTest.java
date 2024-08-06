@@ -1,6 +1,7 @@
 package de.icevizion.xerus.api.team;
 
 import de.icevizion.xerus.api.ColorData;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 
@@ -13,12 +14,13 @@ class TeamBuilderTest {
     @Test
     void testCreationWithATeamCreator() {
         var builder = Team.builder(this::createTestTeam)
+                .colorData(ColorData.BLACK)
                 .name("Test");
 
         var team = builder.build();
 
-        assertEquals("Test", team.getName());
-        assertTrue(team instanceof TestTeam);
+        assertEquals("Test", PlainTextComponentSerializer.plainText().serialize(team.getName()));
+        assertInstanceOf(TestTeam.class, team);
         assertEquals(TEST_VALUE, ((TestTeam) team).getValue());
     }
 
@@ -39,7 +41,7 @@ class TeamBuilderTest {
          * @param colorData       for the team
          * @param initialCapacity for the team
          */
-        protected TestTeam(@NotNull String name, @NotNull ColorData colorData, int initialCapacity) {
+        TestTeam(@NotNull String name, @NotNull ColorData colorData, int initialCapacity) {
             super(name, colorData, initialCapacity);
 
         }

@@ -2,6 +2,8 @@ package de.icevizion.xerus.api.kit;
 
 import de.icevizion.aves.item.IItem;
 import de.icevizion.aves.util.Players;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.minestom.server.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -16,10 +18,10 @@ import java.util.Objects;
  **/
 public class KitImpl extends BaseKit {
 
-    private final String name;
-    private final String description;
+    private final Component name;
+    private final Component description;
 
-    public KitImpl(@NotNull String name, @Nullable String description, boolean armorItems) {
+    public KitImpl(@NotNull Component name, @Nullable Component description, boolean armorItems) {
         super(armorItems);
         this.name = name;
         this.description = description;
@@ -49,7 +51,7 @@ public class KitImpl extends BaseKit {
      * @return the given name from the kit
      */
     @Override
-    public String getName(@Nullable Locale ignored) {
+    public Component getName(@Nullable Locale ignored) {
        return name;
     }
 
@@ -59,7 +61,7 @@ public class KitImpl extends BaseKit {
      * @return the given description as string
      */
     @Override
-    public String getDescription(@Nullable Locale ignored) {
+    public Component getDescription(@Nullable Locale ignored) {
         return description;
     }
 
@@ -70,6 +72,6 @@ public class KitImpl extends BaseKit {
      */
     @Override
     public String getIdentifier() {
-        return getName(null);
+        return PlainTextComponentSerializer.plainText().serialize(getName(null));
     }
 }

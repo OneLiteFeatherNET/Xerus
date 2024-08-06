@@ -2,6 +2,7 @@ package de.icevizion.xerus.api.kit;
 
 import de.icevizion.aves.item.IItem;
 import de.icevizion.xerus.api.Equipable;
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -20,7 +21,7 @@ public interface Kit extends Equipable {
     int MAX_ARMOR_ITEMS = 4;
 
     @Contract(value = "_, _ -> new", pure = true)
-    static @NotNull KitImpl of(@NotNull String name, boolean armorItems) {
+    static @NotNull KitImpl of(@NotNull Component name, boolean armorItems) {
         return new KitImpl(name, null, armorItems);
     }
 
@@ -66,26 +67,26 @@ public interface Kit extends Equipable {
      * Gets the name of the kit.
      * @return the underlying value
      */
-    default String getName() { return getName(null); }
+    default Component getName() { return getName(null); }
 
     /**
      * Returns the name of the kit.
      * @return the underlying value
      */
-    String getName(@UnknownNullability Locale locale);
+    Component getName(@UnknownNullability Locale locale);
 
     /**
      * Returns the description from the kit.
      * @return the underlying value
      */
-    default String getDescription() { return getDescription(null); }
+    default Component getDescription() { return getDescription(null); }
 
     /**
      * Returns the description from the kit.
      * @param locale The locale to determine the right description
      * @return The underlying value
      */
-    String getDescription(@UnknownNullability Locale locale);
+    Component getDescription(@UnknownNullability Locale locale);
 
     /**
      * Returns the icon from the kit.

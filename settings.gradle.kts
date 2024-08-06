@@ -70,7 +70,7 @@ dependencyResolutionManagement {
 
     versionCatalogs {
         create("libs") {
-            version("aves", "1.4.6")
+            version("aves", "1.5.2")
             version("publishdata", "1.4.0")
             library("dungeon.base.bom", "net.theevilreaper.dungeon.bom", "base").version("1.0.4")
             library("minestom", "net.onelitefeather.microtus", "Microtus").withoutVersion()
@@ -80,10 +80,8 @@ dependencyResolutionManagement {
             library("junit.engine", "org.junit.jupiter", "junit-jupiter-engine").withoutVersion()
             library("mockito.core", "org.mockito", "mockito-core").withoutVersion()
             library("mockito.junit", "org.mockito", "mockito-junit-jupiter").withoutVersion()
-            library("strigiformes", "com.github.PatrickZdarsky", "Strigiformes").version("e89dd8352c")
 
-            plugin("shadow", "com.github.johnrengelman.shadow").version("8.1.1")
-            plugin("sonarqube", "org.sonarqube").version("4.0.0.2929")
+            plugin("publishdata", "de.chojo.publishdata").versionRef("publishdata")
         }
     }
 }

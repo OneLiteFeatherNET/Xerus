@@ -3,12 +3,11 @@ plugins {
     `java-library`
     `maven-publish`
     jacoco
-    alias(libs.plugins.shadow)
     alias(libs.plugins.publishdata)
 }
 
 group = "net.theevilreaper.xerus"
-val baseVersion = "1.2.0-SNAPSHOT"
+val baseVersion = "1.2.0"
 val sonarKey = "dungeon_projects_xerus_AYKjiRt9dAa6ziWsmMZw"
 
 java {
@@ -19,9 +18,8 @@ java {
 
 dependencies {
     implementation(platform(libs.dungeon.base.bom))
-
-    compileOnly(libs.aves)
     compileOnly(libs.minestom)
+    compileOnly(libs.aves)
     testImplementation(platform(libs.dungeon.base.bom))
     testImplementation(libs.minestom)
     testImplementation(libs.minestom.test)
@@ -64,7 +62,6 @@ version = if (System.getenv().containsKey("CI")) {
 publishData {
     addBuildData()
     useGitlabReposForProject("16", "https://gitlab.themeinerlp.dev/")
-    publishTask("shadowJar")
     publishTask("jar")
 }
 
