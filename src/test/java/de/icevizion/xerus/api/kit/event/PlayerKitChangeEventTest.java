@@ -1,23 +1,28 @@
 package de.icevizion.xerus.api.kit.event;
 
 import de.icevizion.xerus.api.kit.Kit;
-import net.minestom.server.entity.Player;
+import net.kyori.adventure.text.Component;
+import net.minestom.server.coordinate.Pos;
+import net.minestom.testing.Env;
+import net.minestom.testing.environment.TestEnvironmentCleaner;
+import net.minestom.testing.environment.TestEnvironmentParameterResolver;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(TestEnvironmentCleaner.class)
+@ExtendWith(TestEnvironmentParameterResolver.class)
 class PlayerKitChangeEventTest {
 
     @Test
-    void testPlayerKitChangeEvent() {
-        var player = Mockito.mock(Player.class);
-        Kit newKit = Kit.of("NewKit", false);
+    void testPlayerKitChangeEvent(@NotNull Env env) {
+        var instance = env.createFlatInstance();
+        var player = env.createPlayer(instance, Pos.ZERO);
+        Kit newKit = Kit.of(Component.text("NewKit"), false);
         var event = new PlayerKitChangeEvent(player, null, newKit);
         assertNotSame(UUID.randomUUID(), event.getPlayer().getUuid());
         assertNull(event.getCurrentKit());

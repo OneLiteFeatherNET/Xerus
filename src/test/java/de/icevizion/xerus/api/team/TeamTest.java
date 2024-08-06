@@ -1,15 +1,11 @@
 package de.icevizion.xerus.api.team;
 
-import de.icevizion.aves.item.Item;
 import de.icevizion.xerus.api.ColorData;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.minestom.server.entity.Player;
-import net.minestom.server.item.ItemStack;
-import net.minestom.server.item.Material;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Locale;
 
@@ -17,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@ExtendWith(MockitoExtension.class)
 class TeamTest {
 
     Team team;
@@ -39,8 +34,8 @@ class TeamTest {
 
     @Test
     void testCanJoin() {
-        var team = Team.builder().name("Team C").capacity(10).colorData(ColorData.AQUA).build();
-        assertTrue(team.canJoin());
+        var currentTeam = Team.builder().name("Team C").capacity(10).colorData(ColorData.AQUA).build();
+        assertTrue(currentTeam.canJoin());
     }
 
     @Test
@@ -52,8 +47,8 @@ class TeamTest {
     @Test
     void testNameOrIdentifierMethods() {
         assertEquals("Team A", this.team.getIdentifier());
-        assertNotEquals("Team C", this.team.getName(Locale.ENGLISH));
-        assertEquals("Team A", this.team.getName());
+        assertNotEquals("Team C", PlainTextComponentSerializer.plainText().serialize(this.team.getName(Locale.ENGLISH)));
+        assertEquals("Team A", PlainTextComponentSerializer.plainText().serialize(this.team.getName()));
     }
 
     @Test

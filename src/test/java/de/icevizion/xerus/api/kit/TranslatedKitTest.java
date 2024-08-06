@@ -1,35 +1,42 @@
 package de.icevizion.xerus.api.kit;
 
-import at.rxcki.strigiformes.MessageProvider;
-import org.junit.jupiter.api.BeforeAll;
+import de.icevizion.aves.i18n.AvesTranslationRegistry;
+import de.icevizion.aves.i18n.TextData;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import net.kyori.adventure.translation.GlobalTranslator;
+import net.kyori.adventure.translation.TranslationRegistry;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.text.MessageFormat;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@ExtendWith(MockitoExtension.class)
 class TranslatedKitTest {
 
-    MessageProvider messageProvider;
+    @Test
+    void testTranslatedKit() {
+        var kit = TranslatedKit.of("key", true);
+        kit.setDescription(new TextData("description"));
+        var translator = new AvesTranslationRegistry(TranslationRegistry.create(Key.key("test", "test")));
+        translator.register("description", Locale.ENGLISH, new MessageFormat("fakeData"));
+        GlobalTranslator.translator().addSource(translator);
 
-    @BeforeAll
-    void init() {
-        this.messageProvider = Mockito.mock(MessageProvider.class);
+        assertEquals("fakeData", PlainTextComponentSerializer.plainText().serialize(kit.getDescription(Locale.ENGLISH)));
+        assertNotNull(kit);
+
     }
 
     @Test
     void testKitConstructor() {
-        var kit = new TranslatedKit(messageProvider, "key", true);
+        var kit = new TranslatedKit("key", true);
         assertNotNull(kit);
     }
 
     @Test
     void testStaticKitCreation() {
-        var kit = TranslatedKit.of(messageProvider, "Test", true);
+        var kit = TranslatedKit.of("Test", true);
         assertNotNull(kit);
     }
 }

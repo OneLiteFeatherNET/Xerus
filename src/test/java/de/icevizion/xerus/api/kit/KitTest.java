@@ -2,6 +2,8 @@ package de.icevizion.xerus.api.kit;
 
 import de.icevizion.aves.item.IItem;
 import de.icevizion.aves.item.Item;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import org.junit.jupiter.api.BeforeAll;
@@ -16,13 +18,15 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class KitTest {
 
+    static final Component NAME = Component.text("TestKit");
+
     IItem dummyItem;
     Kit kit;
 
     @BeforeAll
     void init() {
         this.dummyItem = Item.of(ItemStack.AIR);
-        this.kit = Kit.of("TestKit", true);
+        this.kit = Kit.of(NAME, true);
     }
 
     @Test
@@ -32,10 +36,10 @@ class KitTest {
 
     @Test
     void testSetArmorItems() {
-        var kit = new KitImpl("Test", null, false);
-        assertThrows(NullPointerException.class, () -> kit.setArmorItem(ArmorSlot.BOOTS, dummyItem));
-        kit.setItem(0, Item.of(ItemStack.builder(Material.STONE).build()));
-        assertNotNull(kit);
+        var testKit = new KitImpl(NAME, null, false);
+        assertThrows(NullPointerException.class, () -> testKit.setArmorItem(ArmorSlot.BOOTS, dummyItem));
+        testKit.setItem(0, Item.of(ItemStack.builder(Material.STONE).build()));
+        assertNotNull(testKit);
     }
 
     @Test
@@ -45,12 +49,12 @@ class KitTest {
 
     @Test
     void testGetName() {
-        assertEquals("TestKit", this.kit.getName());
+        assertEquals("TestKit", PlainTextComponentSerializer.plainText().serialize(this.kit.getName()));
     }
 
     @Test
     void testGetNameWithLocale() {
-        assertEquals("TestKit", this.kit.getName(Locale.ENGLISH));
+        assertEquals("TestKit", PlainTextComponentSerializer.plainText().serialize(this.kit.getName(Locale.ENGLISH)));
     }
 
     @Test

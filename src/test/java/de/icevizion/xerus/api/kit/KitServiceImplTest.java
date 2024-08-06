@@ -1,5 +1,6 @@
 package de.icevizion.xerus.api.kit;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.entity.Player;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
@@ -28,8 +29,9 @@ class KitServiceImplTest {
 
     @BeforeAll
     void init() {
+        final Component name = Component.text("TestKit");
         this.testPlayer = Mockito.mock(Player.class);
-        this.defaultKit = new KitImpl("TestKit", "TestKit", true);
+        this.defaultKit = new KitImpl(name, name, true);
         this.kitService = new KitServiceImpl();
         this.kitService.add(defaultKit);
     }
@@ -44,7 +46,8 @@ class KitServiceImplTest {
     @Order(2)
     @Test
     void testAddKit() {
-        this.kitService.add(new KitImpl("Test", "Test", false));
+        final var name = Component.text("Test");
+        this.kitService.add(new KitImpl(name, name, false));
         assertSame(2, this.kitService.getKits().size());
     }
 
