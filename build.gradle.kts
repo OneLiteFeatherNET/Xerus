@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "net.theevilreaper.xerus"
-val baseVersion = "1.2.0"
+val baseVersion = "1.2.2"
 val sonarKey = "dungeon_projects_xerus_AYKjiRt9dAa6ziWsmMZw"
 
 java {
