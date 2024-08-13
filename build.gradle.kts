@@ -61,7 +61,7 @@ version = if (System.getenv().containsKey("CI")) {
 
 publishData {
     addBuildData()
-    useGitlabReposForProject("89", "https://gitlab.themeinerlp.dev/")
+    useGitlabReposForProject("89", "https://gitlab.onelitefeather.dev/")
     publishTask("jar")
 }
 
