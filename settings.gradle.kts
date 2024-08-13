@@ -18,7 +18,7 @@ dependencyResolutionManagement {
                 val ciApiv4Url = System.getenv("CI_API_V4_URL")
                 uri("$ciApiv4Url/groups/$groupdId/-/packages/maven")
             } else {
-                uri("https://gitlab.themeinerlp.dev/api/v4/groups/$groupdId/-/packages/maven")
+                uri("https://gitlab.onelitefeather.dev/api/v4/groups/$groupdId/-/packages/maven")
             }
             name = "GitLab"
             credentials(HttpHeaderCredentials::class.java) {
