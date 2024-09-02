@@ -18,7 +18,7 @@ dependencyResolutionManagement {
                 val ciApiv4Url = System.getenv("CI_API_V4_URL")
                 uri("$ciApiv4Url/groups/$groupdId/-/packages/maven")
             } else {
-                uri("https://gitlab.themeinerlp.dev/api/v4/groups/$groupdId/-/packages/maven")
+                uri("https://gitlab.onelitefeather.dev/api/v4/groups/$groupdId/-/packages/maven")
             }
             name = "GitLab"
             credentials(HttpHeaderCredentials::class.java) {
@@ -60,7 +60,7 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         create("libs") {
-            version("aves", "1.5.2")
+            version("aves", "1.5.3")
             version("publishdata", "1.4.0")
             library("dungeon.base.bom", "net.theevilreaper.dungeon.bom", "base").version("1.0.4")
             library("minestom", "net.onelitefeather.microtus", "Microtus").withoutVersion()
