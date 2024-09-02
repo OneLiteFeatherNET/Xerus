@@ -72,7 +72,7 @@ dependencyResolutionManagement {
         create("libs") {
             version("aves", "1.5.3")
             version("publishdata", "1.4.0")
-            library("dungeon.base.bom", "net.theevilreaper.dungeon.bom", "base").version("1.0.4")
+            library("dungeon.base.bom", "net.theevilreaper.dungeon.bom", "base").version("1.0.6")
             library("minestom", "net.onelitefeather.microtus", "Microtus").withoutVersion()
             library("minestom-test", "net.onelitefeather.microtus.testing", "testing").withoutVersion()
             library("aves", "de.icevizion.lib", "aves").versionRef("aves")
