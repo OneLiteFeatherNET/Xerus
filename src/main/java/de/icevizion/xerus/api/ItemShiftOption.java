@@ -14,31 +14,20 @@ import java.util.Locale;
  * @since 1.2.0
  **/
 @FunctionalInterface
-public interface Equipable {
+public interface ItemShiftOption {
 
     /**
      * Sets an equipment to a specific player.
-     * @param player The player who receives the equipment
-     * @param locale The locale to determine the right items
-     * @param shiftedSlots Specifies whether the items should be added in a different order
+     * @param player the player who receives the equipment
+     * @param locale the locale to determine the right items
+     * @param shiftedSlots specifies whether the items should be added in a different order
      */
     void setEquipment(@NotNull Player player, Locale locale, int... shiftedSlots);
 
     /**
      * Sets an equipment to an specific player.
-     * @param players The player who receives the equipment
-     */
-    default void setEquipment(@NotNull List<Player> players) {
-        if (players.isEmpty()) return;
-        for (int i = 0; i < players.size(); i++) {
-            this.setEquipment(players.get(i));
-        }
-    }
-
-    /**
-     * Sets an equipment to an specific player.
-     * @param player The player who receives the equipment
-     * @param shiftedSlots Array containing shifted slots for the items
+     * @param player the player who receives the equipment
+     * @param shiftedSlots array containing shifted slots for the items
      */
     default void setEquipment(@NotNull Player player, int... shiftedSlots) {
         Check.argCondition(player.getInstance() == null, "The instance from a player can not be null");
@@ -47,8 +36,8 @@ public interface Equipable {
 
     /**
      * Sets an equipment to an specific player.
-     * @param players The players who receive the equipment
-     * @param shiftedSlots Array containing shifted slots for the items
+     * @param players the players who receive the equipment
+     * @param shiftedSlots array containing shifted slots for the items
      */
     default void setEquipment(@NotNull List<Player> players, int... shiftedSlots) {
         if (players.isEmpty()) return;

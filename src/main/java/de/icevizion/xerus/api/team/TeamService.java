@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * The class includes all relevant method for a team service.
  * @author theEvilReaper
- * @version 1.0.3
+ * @version 1.0.4
  * @since 1.0.0
  **/
 public interface TeamService<T extends Team> {
@@ -66,6 +66,14 @@ public interface TeamService<T extends Team> {
      * @return the smallest team
      */
     Optional<@Nullable T> getSmallestTeam();
+
+    /**
+     * Returns an indication of whether the service has teams.
+     * @return true if the service has teams otherwise false
+     */
+    default boolean hasTeams() {
+        return !getTeams().isEmpty();
+    }
 
     /**
      * Returns a list with all current available teams.
