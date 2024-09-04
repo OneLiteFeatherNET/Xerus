@@ -13,29 +13,11 @@ import java.util.List;
  *
  * Taken from: <a href="https://github.com/Tobi208/TeamSplitterFX">...</a>
  */
-public class DistributionTeam {
 
-    private final String name;
-    private final List<DistributionPlayer> ps;
+public record DistributionTeam(@NotNull String name, List<DistributionPlayer> players) {
 
     public DistributionTeam(@NotNull String name) {
-        this.name = name;
-        this.ps = new ArrayList<>();
-    }
-
-    public DistributionTeam(@NotNull String name, List<DistributionPlayer> ps) {
-        this.name = name;
-        this.ps = ps;
-    }
-
-    @Contract(value = "_ -> new", pure = true)
-    public static @NotNull DistributionTeam of(@NotNull String name) {
-        return new DistributionTeam(name);
-    }
-
-    @Contract(value = "_, _ -> new", pure = true)
-    public static @NotNull DistributionTeam of(@NotNull String name, @NotNull List<DistributionPlayer> ps) {
-        return new DistributionTeam(name, ps);
+        this(name, new ArrayList<>());
     }
 
     /*------------*
@@ -48,10 +30,10 @@ public class DistributionTeam {
     int sum() {
         int sum = 0;
 
-        if (ps.isEmpty()) return sum;
+        if (players.isEmpty()) return sum;
 
-        for (int i = 0; i < ps.size(); i++) {
-            sum += ps.get(i).elo();
+        for (int i = 0; i < players.size(); i++) {
+            sum += players.get(i).elo();
         }
         return sum;
     }
@@ -61,20 +43,14 @@ public class DistributionTeam {
      *---------*/
 
     public int length() {
-        return ps.size();
+        return players.size();
     }
 
-    public void add(DistributionPlayer p) {
-        ps.add(p);
+    public void addAll(@NotNull List<DistributionPlayer> players) {
+        this.players.addAll(players);
     }
 
-    @NotNull
-    public List<DistributionPlayer> getPlayers() {
-        return ps;
-    }
-
-    @NotNull
-    public String getName() {
-        return name;
+    public void add(@NotNull DistributionPlayer player) {
+        players.add(player);
     }
 }

@@ -1,36 +1,57 @@
 package de.icevizion.xerus.api.team.event;
 
-import de.icevizion.xerus.api.team.TeamImpl;
+import de.icevizion.xerus.api.ColorData;
+import de.icevizion.xerus.api.team.Team;
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
+import net.minestom.server.instance.Instance;
+import net.minestom.testing.Env;
+import net.minestom.testing.extension.MicrotusExtension;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(MicrotusExtension.class)
 class MultiPlayerTeamEventTest {
 
-    static TeamImpl mockedTeamImpl = Mockito.mock(TeamImpl.class);
-    static Player mockedPlayer = Mockito.mock(Player.class);
+    private Team team;
+
+    @BeforeEach
+    void init() {
+        this.team = Team.of("TestTeam", ColorData.BLUE);
+    }
+
+    @AfterEach
+    void cleanUp() {
+        this.team.clearPlayers();
+    }
 
     @Test
-    void testEventConstructor() {
-        var event = MultiPlayerTeamEvent.addEvent(mockedTeamImpl, Set.of(mockedPlayer));
+    void testEventConstructor(Env env) {
+        final Instance instance = env.createFlatInstance();
+        final Player player = env.createPlayer(instance, Pos.ZERO);
+        var event = MultiPlayerTeamEvent.addEvent(this.team, Set.of(player));
         event.setCancelled(true);
         assertTrue(event.isCancelled());
     }
 
     @Test
-    void testPlayerMultiTeamEvent() {
-        var event = MultiPlayerTeamEvent.addEvent(mockedTeamImpl, Set.of(mockedPlayer));
-
+    void testPlayerMultiTeamEvent(Env env) {
+        final Instance instance = env.createFlatInstance();
+        final Set<Player> players = HashSet.newHashSet(3);
+        for (int i = 0; i <= 3; i++) {
+            players.add(env.createPlayer(instance, Pos.ZERO));
+        }
+        final MultiPlayerTeamEvent<Team> event = MultiPlayerTeamEvent.addEvent(this.team, players);
         assertNotSame(3, event.getPlayers().size());
         assertSame(TeamEvent.Action.ADD, event.getAction());
-        assertSame(mockedTeamImpl, event.getTeam());
+        assertSame(this.team, event.getTeam());
 
         event.setCancelled(true);
 

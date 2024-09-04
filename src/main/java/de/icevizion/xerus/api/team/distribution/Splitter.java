@@ -96,7 +96,7 @@ public class Splitter {
 
     /**
      * compare quality of contenting constellation of teams
-     * to the currently best constellation of teams
+     * to currently the best constellation of teams
      *
      * @param cts contenting team constellation
      */
@@ -200,13 +200,12 @@ public class Splitter {
     /**
      * @return deep cloned teams array
      */
-    @NotNull
-    private DistributionTeam[] deepClone(@NotNull DistributionTeam[] ts) {
+    private @NotNull DistributionTeam[] deepClone(@NotNull DistributionTeam[] ts) {
         DistributionTeam[] nts = new DistributionTeam[tn];
         for (int i = 0; i < tn; i++) {
-            nts[i] = new DistributionTeam(ts[i].getName());
-            for (DistributionPlayer p : ts[i].getPlayers())
-                nts[i].add(p);
+            final DistributionTeam team = new DistributionTeam(ts[i].name());
+            team.addAll(ts[i].players());
+            nts[i] = team;
         }
         return nts;
     }

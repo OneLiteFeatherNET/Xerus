@@ -1,17 +1,20 @@
 package de.icevizion.xerus.api.team;
 
 import de.icevizion.xerus.api.ColorData;
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
+import net.minestom.server.instance.Instance;
+import net.minestom.testing.Env;
+import net.minestom.testing.extension.MicrotusExtension;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(MicrotusExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TeamImplServiceTest {
 
@@ -26,28 +29,34 @@ class TeamImplServiceTest {
         this.teamService.add(defaultTeamImpl);
     }
 
-    @Test
-    void testOtherConstructor() {
-        var service = new TeamServiceImpl<>(3);
-        assertNotNull(service);
+    @AfterEach
+    void tearDown() {
+        this.defaultTeamImpl.clearPlayers();
+
+        if (this.teamService.getTeams().isEmpty()) {
+            this.teamService.add(defaultTeamImpl);
+        }
     }
 
     @Test
-    void testGetTeamByPlayer() {
-        var testPlayer = Mockito.mock(Player.class);
-        assertFalse(teamService.getTeam(testPlayer).isPresent());
+    void testGetTeamByPlayer(Env env) {
+        final Instance instance = env.createFlatInstance();
+        final Player player = env.createPlayer(instance, Pos.ZERO);
+        assertFalse(teamService.getTeam(player).isPresent());
+        player.remove();
+        env.destroyInstance(instance);
     }
 
     @Test
     void testGetTeams() {
+        assertTrue(this.teamService.hasTeams());
         assertSame(1, this.teamService.getTeams().size());
     }
 
     @Test
     void testRemoveTeam() {
         this.teamService.remove(defaultTeamImpl);
-        assertTrue(this.teamService.getTeams().isEmpty());
-        this.teamService.add(defaultTeamImpl);
+        assertFalse(this.teamService.hasTeams());
     }
 
     @Test
@@ -59,7 +68,6 @@ class TeamImplServiceTest {
     @Test
     void testClearMethod() {
         this.teamService.clear();
-        assertTrue(this.teamService.getTeams().isEmpty());
-        this.teamService.add(defaultTeamImpl);
+        assertFalse(this.teamService.hasTeams());
     }
 }

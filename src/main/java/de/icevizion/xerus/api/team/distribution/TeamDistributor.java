@@ -35,10 +35,10 @@ public class TeamDistributor<T extends Team> implements ITeamDistributor<T> {
         DistributionTeam[] dTeams = new DistributionTeam[teams.size()];
         for (int i = 0; i < teams.size(); i++) {
             var currentTeam = teams.get(i);
-            dTeams[i] = DistributionTeam.of(currentTeam.getIdentifier());
+            dTeams[i] = new DistributionTeam(currentTeam.getIdentifier());
             if (teams.get(i).getCurrentSize() > 0) {
                 for (Player player : currentTeam.getPlayers())
-                    dTeams[i].add(DistributionPlayer.of(player.getUuid(), eloFunction.applyAsInt(player)));
+                    dTeams[i].add(new DistributionPlayer(player.getUuid(), eloFunction.applyAsInt(player)));
             }
         }
 
@@ -46,7 +46,7 @@ public class TeamDistributor<T extends Team> implements ITeamDistributor<T> {
         DistributionPlayer[] dPlayers = new DistributionPlayer[players.size()];
         for (int i = 0; i < players.size(); i++) {
             var player = players.get(i);
-            dPlayers[i] = DistributionPlayer.of(player.getUuid(), eloFunction.applyAsInt(player));
+            dPlayers[i] = new DistributionPlayer(player.getUuid(), eloFunction.applyAsInt(player));
         }
 
         //Distribute
@@ -57,14 +57,14 @@ public class TeamDistributor<T extends Team> implements ITeamDistributor<T> {
             Team team = null;
 
             for (int i = 0; i < teams.size() && team == null; i++) {
-                if (!teams.get(i).getName().equals(distributionTeam.getName())) continue;
+                if (!teams.get(i).getName().equals(distributionTeam.name())) continue;
                 team = teams.get(i);
             }
 
             if (team == null) return;
 
-            for (DistributionPlayer player : distributionTeam.getPlayers()) {
-                var realPlayer = CONNECTION_MANAGER.getOnlinePlayerByUuid(player.uuid());
+            for (DistributionPlayer player : distributionTeam.players()) {
+                final Player realPlayer = CONNECTION_MANAGER.getOnlinePlayerByUuid(player.uuid());
 
                 if (realPlayer == null) continue;
                 team.addPlayer(realPlayer);
