@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "net.theevilreaper.xerus"
-val baseVersion = "1.2.2"
+version = "1.3.0"
 val sonarKey = "dungeon_projects_xerus_AYKjiRt9dAa6ziWsmMZw"
 
 java {
@@ -51,12 +51,6 @@ tasks {
             events("passed", "skipped", "failed")
         }
     }
-}
-
-version = if (System.getenv().containsKey("CI")) {
-    "${baseVersion}+${System.getenv("CI_COMMIT_SHORT_SHA")}"
-} else {
-    baseVersion
 }
 
 publishData {

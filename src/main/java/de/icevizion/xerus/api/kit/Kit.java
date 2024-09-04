@@ -1,7 +1,7 @@
 package de.icevizion.xerus.api.kit;
 
 import de.icevizion.aves.item.IItem;
-import de.icevizion.xerus.api.Equipable;
+import de.icevizion.xerus.api.ItemShiftOption;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -16,10 +16,16 @@ import java.util.Locale;
  * @version 1.0.0
  * @since 1.2.0
  **/
-public interface Kit extends Equipable {
+public interface Kit extends ItemShiftOption {
 
     int MAX_ARMOR_ITEMS = 4;
 
+    /**
+     * Creates a new instance of the kit.
+     * @param name The name of the kit
+     * @param armorItems Whether the kit should contain armor items
+     * @return The created instance
+     */
     @Contract(value = "_, _ -> new", pure = true)
     static @NotNull KitImpl of(@NotNull Component name, boolean armorItems) {
         return new KitImpl(name, null, armorItems);
