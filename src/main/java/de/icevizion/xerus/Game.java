@@ -8,6 +8,7 @@ import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.extensions.Extension;
 import org.jetbrains.annotations.NotNull;
 
+@Deprecated(since = "1.3.0", forRemoval = true)
 public abstract class Game extends Extension {
 
     private static final CommandManager COMMAND_MANAGER = MinecraftServer.getCommandManager();
