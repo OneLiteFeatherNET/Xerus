@@ -8,7 +8,6 @@ plugins {
 
 group = "net.theevilreaper.xerus"
 version = "1.3.0"
-val sonarKey = "dungeon_projects_xerus_AYKjiRt9dAa6ziWsmMZw"
 
 java {
     toolchain {
