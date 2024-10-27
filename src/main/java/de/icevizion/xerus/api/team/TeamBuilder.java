@@ -17,7 +17,7 @@ public final class TeamBuilder implements Team.Builder {
 
     private final TeamCreator teamCreator;
     private String name;
-    private ColorData colorData;
+    private ColorData colorData = ColorData.BLACK;
     private int capacity = TeamImpl.DEFAULT_CAPACITY;
 
     /**
