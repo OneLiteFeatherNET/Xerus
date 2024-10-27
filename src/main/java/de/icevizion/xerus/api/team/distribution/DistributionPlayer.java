@@ -1,6 +1,5 @@
 package de.icevizion.xerus.api.team.distribution;
 
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
