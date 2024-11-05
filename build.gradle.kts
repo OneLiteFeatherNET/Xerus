@@ -16,10 +16,10 @@ java {
 }
 
 dependencies {
-    implementation(platform(libs.dungeon.base.bom))
+    implementation(platform(libs.bom.base))
     compileOnly(libs.minestom)
     compileOnly(libs.aves)
-    testImplementation(platform(libs.dungeon.base.bom))
+    testImplementation(platform(libs.bom.base))
     testImplementation(libs.minestom)
     testImplementation(libs.minestom.test)
     testImplementation(libs.junit.api)
