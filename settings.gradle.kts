@@ -62,7 +62,7 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
             version("bom", "1.1.1")
-            version("aves", "1.5.3")
+            version("aves", "1.6.0")
             version("publishdata", "1.4.0")
 
             library("bom.base", "net.theevilreaper.dungeon.bom", "base").versionRef("bom")
@@ -73,6 +73,7 @@ dependencyResolutionManagement {
             library("junit.engine", "org.junit.jupiter", "junit-jupiter-engine").withoutVersion()
             library("mockito.core", "org.mockito", "mockito-core").withoutVersion()
             library("mockito.junit", "org.mockito", "mockito-junit-jupiter").withoutVersion()
+
             plugin("publishdata", "de.chojo.publishdata").versionRef("publishdata")
         }
     }
