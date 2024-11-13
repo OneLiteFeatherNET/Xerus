@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
  * public class CustomGameEndEvent extends GameEndEvent<CustomGameData> {
  * // Additional customizations for your game's end event
  * }
- *
+ * <p>
  * @param <T> The generic structure representing the end-game condition data
  * @author theEvilReaper
  * @version 1.0.0
