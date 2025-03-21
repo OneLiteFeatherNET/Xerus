@@ -35,7 +35,7 @@ dependencyResolutionManagement {
             version("aves", "1.6.0")
             version("publishdata", "1.4.0")
 
-            library("bom.base", "net.theevilreaper.dungeon.bom", "base").versionRef("bom")
+            library("bom.base", "net.theevilreaper.mycelium.bom", "mycelium-bom").versionRef("bom")
             library("minestom", "net.onelitefeather.microtus", "Microtus").withoutVersion()
             library("minestom-test", "net.onelitefeather.microtus.testing", "testing").withoutVersion()
             library("aves", "de.icevizion.lib", "aves").versionRef("aves")
