@@ -9,55 +9,25 @@ pluginManagement {
 
 dependencyResolutionManagement {
     repositories {
-        mavenCentral()
         maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-        maven("https://jitpack.io")
         maven {
-            val groupdId = "dungeon" // Gitlab Group
-            url = if (System.getenv().containsKey("CI")) {
-                val ciApiv4Url = System.getenv("CI_API_V4_URL")
-                uri("$ciApiv4Url/groups/$groupdId/-/packages/maven")
+            name = "OneLiteFeatherRepository"
+            url = uri("https://repo.onelitefeather.dev/onelitefeather")
+            if (System.getenv("CI") != null) {
+                credentials {
+                    username = System.getenv("ONELITEFEATHER_MAVEN_USERNAME")
+                    password = System.getenv("ONELITEFEATHER_MAVEN_PASSWORD")
+                }
             } else {
-                uri("https://gitlab.onelitefeather.dev/api/v4/groups/$groupdId/-/packages/maven")
-            }
-            name = "GitLab"
-            credentials(HttpHeaderCredentials::class.java) {
-                name = if (System.getenv().containsKey("CI")) {
-                    "Job-Token"
-                } else {
-                    "Private-Token"
-                }
-                value = if (System.getenv().containsKey("CI")) {
-                    System.getenv("CI_JOB_TOKEN")
-                } else {
-                    val gitLabPrivateToken: String? by settings
-                    gitLabPrivateToken
-                }
-            }
-            authentication {
-                create<HttpHeaderAuthentication>("header")
-            }
-        }
-    }
-    if (System.getenv("CI") != null) {
-        repositoriesMode = RepositoriesMode.PREFER_SETTINGS
-        repositories {
-            maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-            maven("https://repo.htl-md.schule/repository/Gitlab-Runner/")
-            maven {
-                val groupdId = 28 // Gitlab Group
-                val ciApiv4Url = System.getenv("CI_API_V4_URL")
-                url = uri("$ciApiv4Url/groups/$groupdId/-/packages/maven")
-                name = "GitLab"
-                credentials(HttpHeaderCredentials::class.java) {
-                    name = "Job-Token"
-                    value = System.getenv("CI_JOB_TOKEN")
-                }
+                credentials(PasswordCredentials::class)
                 authentication {
-                    create<HttpHeaderAuthentication>("header")
+                    create<BasicAuthentication>("basic")
                 }
             }
         }
+        maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+        mavenCentral()
+        maven("https://jitpack.io")
     }
     versionCatalogs {
         create("libs") {
