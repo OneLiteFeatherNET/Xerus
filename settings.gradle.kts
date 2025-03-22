@@ -32,7 +32,7 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
             version("bom", "1.1.2")
-            version("aves", "1.6.0")
+            version("aves", "1.6.1-SNAPSHOT")
             version("publishdata", "1.4.0")
 
             library("bom.base", "net.theevilreaper.mycelium.bom", "mycelium-bom").versionRef("bom")
