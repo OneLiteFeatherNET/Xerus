@@ -1,4 +1,4 @@
-rootProject.name = "Xerus"
+rootProject.name = "xerus"
 
 pluginManagement {
     repositories {
@@ -25,14 +25,12 @@ dependencyResolutionManagement {
                 }
             }
         }
-        maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
         mavenCentral()
-        maven("https://jitpack.io")
     }
     versionCatalogs {
         create("libs") {
             version("bom", "1.1.2")
-            version("aves", "1.6.1-SNAPSHOT")
+            version("aves", "1.6.1")
             version("publishdata", "1.4.0")
 
             library("bom.base", "net.theevilreaper.mycelium.bom", "mycelium-bom").versionRef("bom")
