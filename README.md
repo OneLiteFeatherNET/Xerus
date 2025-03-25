@@ -1,6 +1,6 @@
 # Xerus - Core Game Library
 
-![Xerus](.gitlab/assets/xerus.jpg)
+![Xerus](.github/assets/xerus.jpg)
 
 > [!CAUTION]
 >
