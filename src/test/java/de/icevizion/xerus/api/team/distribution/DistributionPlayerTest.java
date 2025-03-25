@@ -18,7 +18,7 @@ class DistributionPlayerTest {
 
     @Test
     void testStaticCreation() {
-        var player = DistributionPlayer.of(UUID.randomUUID(), 1);
+        var player = new DistributionPlayer(UUID.randomUUID(), 1);
         assertNotEquals(0, player.elo());
         assertNotSame(UUID.randomUUID(), player.uuid());
     }

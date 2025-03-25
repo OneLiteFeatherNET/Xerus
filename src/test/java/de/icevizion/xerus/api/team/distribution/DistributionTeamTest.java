@@ -15,42 +15,42 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class DistributionTeamTest {
 
-    private final DistributionTeam blueTeam = DistributionTeam.of("blue");
+    private final DistributionTeam blueTeam = new DistributionTeam("blue");
 
     @Test
     void testTeamWithName() {
         var team = new DistributionTeam("Test");
-        assertSame("Test", team.getName());
+        assertSame("Test", team.name());
     }
 
     @Order(1)
     @Test
     void testWithNameAndPlayers() {
-        var team = new DistributionTeam("Yellow", List.of(DistributionPlayer.of(UUID.randomUUID(), 1)));
+        var team = new DistributionTeam("Yellow", List.of(new DistributionPlayer(UUID.randomUUID(), 1)));
 
-        assertSame("Yellow", team.getName());
-        assertFalse(team.getPlayers().isEmpty());
+        assertSame("Yellow", team.name());
+        assertFalse(team.players().isEmpty());
     }
 
     @Order(2)
     @Test
     void testStaticCreationWithName() {
-        var team = DistributionTeam.of("Hallo");
-        assertNotSame("Test", team.getName());
+        var team = new DistributionTeam("Hallo");
+        assertNotSame("Test", team.name());
     }
 
     @Order(3)
     @Test
     void testStaticCreationWithNameAndPlayers() {
-        var team = DistributionTeam.of("Red", List.of());
-        assertSame("Red", team.getName());
+        var team = new DistributionTeam("Red", List.of());
+        assertSame("Red", team.name());
         assertSame(0, team.length());
     }
 
     @Order(4)
     @Test
     void testAddPlayer() {
-        blueTeam.add(DistributionPlayer.of(UUID.randomUUID(), -10));
+        blueTeam.add(new DistributionPlayer(UUID.randomUUID(), -10));
         assertSame(1, blueTeam.length());
     }
 

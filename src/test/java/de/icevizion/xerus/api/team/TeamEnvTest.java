@@ -7,16 +7,17 @@ import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.Instance;
 import net.minestom.testing.Env;
-import net.minestom.testing.EnvTest;
+import net.minestom.testing.extension.MicrotusExtension;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@EnvTest
+@ExtendWith(MicrotusExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TeamEnvTest {
 

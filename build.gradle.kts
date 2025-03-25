@@ -7,8 +7,7 @@ plugins {
 }
 
 group = "net.theevilreaper.xerus"
-val baseVersion = "1.2.2"
-val sonarKey = "dungeon_projects_xerus_AYKjiRt9dAa6ziWsmMZw"
+version = "1.3.0"
 
 java {
     toolchain {
@@ -17,10 +16,10 @@ java {
 }
 
 dependencies {
-    implementation(platform(libs.dungeon.base.bom))
+    implementation(platform(libs.bom.base))
     compileOnly(libs.minestom)
     compileOnly(libs.aves)
-    testImplementation(platform(libs.dungeon.base.bom))
+    testImplementation(platform(libs.bom.base))
     testImplementation(libs.minestom)
     testImplementation(libs.minestom.test)
     testImplementation(libs.junit.api)
@@ -53,17 +52,13 @@ tasks {
     }
 }
 
-version = if (System.getenv().containsKey("CI")) {
-    "${baseVersion}+${System.getenv("CI_COMMIT_SHORT_SHA")}"
-} else {
-    baseVersion
-}
-
 publishData {
-    addBuildData()
-    useGitlabReposForProject("89", "https://gitlab.onelitefeather.dev/")
+    addMainRepo("https://repo.onelitefeather.dev/onelitefeather-releases")
+    addMasterRepo("https://repo.onelitefeather.dev/onelitefeather-releases")
+    addSnapshotRepo("https://repo.onelitefeather.dev/onelitefeather-snapshots")
     publishTask("jar")
 }
+
 
 publishing {
     publications {
@@ -75,15 +70,15 @@ publishing {
     }
     repositories {
         maven {
-            credentials(HttpHeaderCredentials::class) {
-                name = "Job-Token"
-                value = System.getenv("CI_JOB_TOKEN")
-            }
             authentication {
-                create("header", HttpHeaderAuthentication::class)
+                credentials(PasswordCredentials::class) {
+                    // Those credentials need to be set under "Settings -> Secrets -> Actions" in your repository
+                    username = System.getenv("ONELITEFEATHER_MAVEN_USERNAME")
+                    password = System.getenv("ONELITEFEATHER_MAVEN_PASSWORD")
+                }
             }
 
-            name = "Gitlab"
+            name = "OneLiteFeatherRepository"
             // Get the detected repository from the publish data
             url = uri(publishData.getRepository())
         }

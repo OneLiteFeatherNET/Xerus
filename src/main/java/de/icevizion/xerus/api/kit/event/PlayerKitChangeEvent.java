@@ -36,9 +36,8 @@ public final class PlayerKitChangeEvent implements PlayerEvent, CancellableEvent
      * Returns the player which is involved with this event.
      * @return the involved player
      */
-    @NotNull
     @Override
-    public Player getPlayer() {
+    public @NotNull Player getPlayer() {
         return player;
     }
 
@@ -68,8 +67,7 @@ public final class PlayerKitChangeEvent implements PlayerEvent, CancellableEvent
      * If the kit is null then the player has no kit yet
      * @return the current kit
      */
-    @Nullable
-    public Kit getCurrentKit() {
+    public @Nullable Kit getCurrentKit() {
         return currentKit;
     }
 
@@ -77,8 +75,7 @@ public final class PlayerKitChangeEvent implements PlayerEvent, CancellableEvent
      * Returns the new kit for a player
      * @return the new kit
      */
-    @NotNull
-    public Kit getNewKit() {
+    public @NotNull Kit getNewKit() {
         return newKit;
     }
 }

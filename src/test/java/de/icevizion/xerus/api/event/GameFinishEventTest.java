@@ -2,23 +2,21 @@ package de.icevizion.xerus.api.event;
 
 import net.minestom.server.event.EventDispatcher;
 import net.minestom.testing.Env;
-import net.minestom.testing.environment.TestEnvironmentCleaner;
-import net.minestom.testing.environment.TestEnvironmentParameterResolver;
+import net.minestom.testing.extension.MicrotusExtension;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(TestEnvironmentCleaner.class)
-@ExtendWith(TestEnvironmentParameterResolver.class)
+@ExtendWith(MicrotusExtension.class)
 class GameFinishEventTest {
 
     @Test
     void testEventConstruction() {
         var gameFinishEvent = new GameFinishEvent<>(FinishReason.UNKNOWN);
         assertNotNull(gameFinishEvent);
-        assertEquals(FinishReason.class, gameFinishEvent.reason().getClass());
+        assertEquals(FinishReason.class, gameFinishEvent.getReason().getClass());
     }
 
     @Test
@@ -26,8 +24,8 @@ class GameFinishEventTest {
         var listener = env.listen(GameFinishEvent.class);
 
         listener.followup(gameFinishEvent -> {
-            assertNotEquals(FinishReason.TEAM_WIN, gameFinishEvent.reason());
-            assertEquals(FinishReason.ALL_DEAD, gameFinishEvent.reason());
+            assertNotEquals(FinishReason.TEAM_WIN, gameFinishEvent.getReason());
+            assertEquals(FinishReason.ALL_DEAD, gameFinishEvent.getReason());
         });
 
         EventDispatcher.call(new GameFinishEvent<>(FinishReason.ALL_DEAD));
