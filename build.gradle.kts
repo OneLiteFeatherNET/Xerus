@@ -19,13 +19,16 @@ dependencies {
     implementation(platform(libs.bom.base))
     compileOnly(libs.minestom)
     compileOnly(libs.aves)
+    compileOnly(libs.adventure)
     testImplementation(platform(libs.bom.base))
     testImplementation(libs.minestom)
-    testImplementation(libs.minestom.test)
+    testImplementation(libs.aves)
+    testImplementation(libs.cyano)
+    testImplementation(libs.adventure)
     testImplementation(libs.junit.api)
+    testImplementation(libs.junit.platform.launcher)
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.junit)
-    testImplementation(libs.aves)
     testRuntimeOnly(libs.junit.engine)
 }
 
