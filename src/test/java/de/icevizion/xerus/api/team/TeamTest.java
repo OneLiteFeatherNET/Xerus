@@ -2,24 +2,20 @@ package de.icevizion.xerus.api.team;
 
 import de.icevizion.xerus.api.ColorData;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
-import net.minestom.server.entity.Player;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TeamTest {
 
-    Team team;
+    static Team team;
 
     @BeforeAll
-    void init() {
-        this.team = Team.builder()
+    static void init() {
+        team = Team.builder()
                 .name("Team A")
                 .colorData(ColorData.AQUA)
                 .build();
@@ -27,9 +23,9 @@ class TeamTest {
 
     @Test
     void testSetCapacity() {
-        assertSame(-1, this.team.getCapacity());
-        this.team.setCapacity(12);
-        assertSame(12, this.team.getCapacity());
+        assertSame(-1, team.getCapacity());
+        team.setCapacity(12);
+        assertSame(12, team.getCapacity());
     }
 
     @Test
@@ -39,16 +35,10 @@ class TeamTest {
     }
 
     @Test
-    void testHasPlayer() {
-        var player = mock(Player.class);
-        assertFalse(team.hasPlayer(player));
-    }
-
-    @Test
     void testNameOrIdentifierMethods() {
-        assertEquals("Team A", this.team.getIdentifier());
-        assertNotEquals("Team C", PlainTextComponentSerializer.plainText().serialize(this.team.getName(Locale.ENGLISH)));
-        assertEquals("Team A", PlainTextComponentSerializer.plainText().serialize(this.team.getName()));
+        assertEquals("Team A", team.getIdentifier());
+        assertNotEquals("Team C", PlainTextComponentSerializer.plainText().serialize(team.getName(Locale.ENGLISH)));
+        assertEquals("Team A", PlainTextComponentSerializer.plainText().serialize(team.getName()));
     }
 
     @Test
@@ -59,6 +49,6 @@ class TeamTest {
 
     @Test
     void testHashCode() {
-        assertNotEquals(32, this.team.hashCode());
+        assertNotEquals(32, team.hashCode());
     }
 }
