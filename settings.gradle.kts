@@ -30,14 +30,14 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
             version("bom", "1.2.3")
-            version("aves", "1.6.1")
+            version("aves", "1.8.0")
             version("publishdata", "1.4.0")
 
             library("bom.base", "net.onelitefeather", "mycelium-bom").versionRef("bom")
             library("adventure", "net.kyori", "adventure-text-minimessage").withoutVersion()
             library("minestom", "net.minestom", "minestom-snapshots").withoutVersion()
             library("cyano", "net.onelitefeather", "cyano").withoutVersion()
-            library("aves", "de.icevizion.lib", "aves").versionRef("aves")
+            library("aves", "net.theevilreaper", "aves").versionRef("aves")
             library("junit.api", "org.junit.jupiter", "junit-jupiter-api").withoutVersion()
             library("junit.engine", "org.junit.jupiter", "junit-jupiter-engine").withoutVersion()
             library("mockito.core", "org.mockito", "mockito-core").withoutVersion()
