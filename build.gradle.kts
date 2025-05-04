@@ -6,8 +6,8 @@ plugins {
     alias(libs.plugins.publishdata)
 }
 
-group = "net.theevilreaper.xerus"
-version = "1.4.0"
+group = "net.theevilreaper"
+version = "1.5.0"
 
 java {
     toolchain {
