@@ -3,7 +3,6 @@ package net.theevilreaper.xerus.api;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.color.Color;
 import net.minestom.server.color.DyeColor;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,74 +11,57 @@ import org.jetbrains.annotations.NotNull;
  * So for each color you have all the matching values.
  *
  * @author theEvilReaper
- * @version 1.0.1
+ * @version 1.5.0
  * @since 1.0.0
  */
 @SuppressWarnings("java:S3252")
 public enum ColorData {
 
-    AQUA(NamedTextColor.AQUA, DyeColor.LIGHT_BLUE,
-            ItemStack.builder(Material.LIGHT_BLUE_WOOL).build(), "colorAqua", DyeColor.LIGHT_BLUE.color()),
-    DARK_AQUA(NamedTextColor.DARK_AQUA, DyeColor.CYAN,
-            ItemStack.builder(Material.CYAN_WOOL).build(), "colorCyan", DyeColor.CYAN.color()),
-    BLACK(NamedTextColor.BLACK, DyeColor.BLACK,
-            ItemStack.builder(Material.BLACK_WOOL).build(), "colorBlack", DyeColor.BLACK.color()),
-    BLUE(NamedTextColor.BLUE, DyeColor.LIGHT_BLUE,
-            ItemStack.builder(Material.BLUE_WOOL).build(), "colorBlue", DyeColor.BLUE.color()),
-    DARK_BLUE(NamedTextColor.DARK_BLUE, DyeColor.BLUE,
-            ItemStack.builder(Material.BLUE_WOOL).build(), "colorDarkBlue", DyeColor.BLUE.color()),
-    GOLD(NamedTextColor.GOLD, DyeColor.ORANGE,
-            ItemStack.builder(Material.ORANGE_WOOL).build(), "colorOrange", DyeColor.ORANGE.color()),
-    GRAY(NamedTextColor.GRAY, DyeColor.GRAY,
-            ItemStack.builder(Material.LIGHT_GRAY_WOOL).build(), "colorLightGray", DyeColor.GRAY.color()),
-    DARK_GREY(NamedTextColor.DARK_GRAY, DyeColor.GRAY,
-            ItemStack.builder(Material.GRAY_WOOL).build(), "colorDarkGray", DyeColor.GRAY.color()),
-    GREEN(NamedTextColor.DARK_GREEN, DyeColor.GREEN,
-            ItemStack.builder(Material.GREEN_WOOL).build(), "colorGreen", DyeColor.GREEN.color()),
-    LIGHT_GREEN(NamedTextColor.GREEN, DyeColor.LIME,
-            ItemStack.builder(Material.LIME_WOOL).build(), "colorLime", DyeColor.LIME.color()),
-    PURPLE(NamedTextColor.DARK_PURPLE, DyeColor.PURPLE,
-            ItemStack.builder(Material.PURPLE_WOOL).build(), "colorPurple", DyeColor.PURPLE.color()),
-    LIGHT_PURPLE(NamedTextColor.LIGHT_PURPLE, DyeColor.MAGENTA,
-            ItemStack.builder(Material.MAGENTA_WOOL).build(), "colorMagenta", DyeColor.MAGENTA.color()),
-    RED(NamedTextColor.RED, DyeColor.RED,
-            ItemStack.builder(Material.RED_WOOL).build(), "colorRed", DyeColor.RED.color()),
-    DARK_RED(NamedTextColor.DARK_RED, DyeColor.RED,
-            ItemStack.builder(Material.RED_WOOL).build(), "colorDarkRed", DyeColor.RED.color()),
-    YELLOW(NamedTextColor.YELLOW, DyeColor.YELLOW,
-            ItemStack.builder(Material.YELLOW_WOOL).build(), "colorYellow", DyeColor.YELLOW.color()),
-    WHITE(NamedTextColor.WHITE, DyeColor.WHITE,
-            ItemStack.builder(Material.WHITE_WOOL).build(), "colorWhite", DyeColor.WHITE.color());
+    AQUA(NamedTextColor.AQUA, DyeColor.LIGHT_BLUE, Material.LIGHT_BLUE_WOOL, "colorAqua"),
+    DARK_AQUA(NamedTextColor.DARK_AQUA, DyeColor.CYAN, Material.CYAN_WOOL, "colorCyan"),
+    BLACK(NamedTextColor.BLACK, DyeColor.BLACK, Material.BLACK_WOOL, "colorBlack"),
+    BLUE(NamedTextColor.BLUE, DyeColor.LIGHT_BLUE, Material.BLUE_WOOL, "colorBlue"),
+    DARK_BLUE(NamedTextColor.DARK_BLUE, DyeColor.BLUE, Material.BLUE_WOOL, "colorDarkBlue"),
+    GOLD(NamedTextColor.GOLD, DyeColor.ORANGE, Material.ORANGE_WOOL, "colorOrange"),
+    GRAY(NamedTextColor.GRAY, DyeColor.GRAY, Material.LIGHT_GRAY_WOOL, "colorLightGray"),
+    DARK_GREY(NamedTextColor.DARK_GRAY, DyeColor.GRAY, Material.GRAY_WOOL, "colorDarkGray"),
+    GREEN(NamedTextColor.DARK_GREEN, DyeColor.GREEN, Material.GREEN_WOOL, "colorGreen"),
+    LIGHT_GREEN(NamedTextColor.GREEN, DyeColor.LIME, Material.LIME_WOOL, "colorLime"),
+    PURPLE(NamedTextColor.DARK_PURPLE, DyeColor.PURPLE, Material.PURPLE_WOOL, "colorPurple"),
+    LIGHT_PURPLE(NamedTextColor.LIGHT_PURPLE, DyeColor.MAGENTA, Material.MAGENTA_WOOL, "colorMagenta"),
+    RED(NamedTextColor.RED, DyeColor.RED, Material.RED_WOOL, "colorRed"),
+    DARK_RED(NamedTextColor.DARK_RED, DyeColor.RED, Material.RED_WOOL, "colorDarkRed"),
+    YELLOW(NamedTextColor.YELLOW, DyeColor.YELLOW, Material.YELLOW_WOOL, "colorYellow"),
+    WHITE(NamedTextColor.WHITE, DyeColor.WHITE, Material.WHITE_WOOL, "colorWhite")
+
+    ;
 
     //Reduce defensive copies from the array, because values() returns each call a new array!
     private static final ColorData[] VALUES = values();
 
     private final NamedTextColor chatColor;
     private final DyeColor dyeColor;
-    private final ItemStack stack;
-    private final Color color;
+    private final Material material;
     private final String translateKey;
 
     /**
      * Creates a new instance for an enum entry.
-     * @param chatColor the chat color for the wool
-     * @param dyeColor the dye color for the wool
-     * @param stack the item stack for the wool
+     *
+     * @param chatColor    the chat color for the wool
+     * @param dyeColor     the dye color for the wool
+     * @param material     the material for the wool
      * @param translateKey the key for the translation
-     * @param color the color for the wool
      */
     ColorData(
             @NotNull NamedTextColor chatColor,
             @NotNull DyeColor dyeColor,
-            @NotNull ItemStack stack,
-            @NotNull String translateKey,
-            @NotNull Color color
+            @NotNull Material material,
+            @NotNull String translateKey
     ) {
         this.chatColor = chatColor;
         this.dyeColor = dyeColor;
-        this.stack = stack;
+        this.material = material;
         this.translateKey = translateKey;
-        this.color = color;
     }
 
     /**
@@ -92,12 +74,12 @@ public enum ColorData {
     }
 
     /**
-     * Returns the {@link ItemStack} from an enum entry.
+     * Returns the {@link Material} from an enum entry.
      *
-     * @return the underlying stack
+     * @return the underlying material
      */
-    public @NotNull ItemStack getStack() {
-        return stack;
+    public @NotNull Material getMaterial() {
+        return material;
     }
 
     /**
@@ -124,7 +106,7 @@ public enum ColorData {
      * @return the underlying color
      */
     public @NotNull Color getColor() {
-        return color;
+        return this.dyeColor.color();
     }
 
     /**
