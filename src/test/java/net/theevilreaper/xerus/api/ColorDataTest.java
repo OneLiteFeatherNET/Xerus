@@ -17,7 +17,7 @@ class ColorDataTest {
         assertNotNull(aquaData);
         assertSame(DyeColor.LIGHT_BLUE, aquaData.getDyeColor());
         assertSame(NamedTextColor.AQUA, aquaData.getChatColor());
-        assertNotSame(Material.ACACIA_FENCE, aquaData.getStack().material());
+        assertNotSame(Material.ACACIA_FENCE, aquaData.getMaterial());
         assertSame("colorAqua", aquaData.getTranslateKey());
         assertNotSame(new Color(10, 2, 45), aquaData.getColor());
     }

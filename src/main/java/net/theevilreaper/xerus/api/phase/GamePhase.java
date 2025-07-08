@@ -4,9 +4,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.EventListener;
 import net.minestom.server.event.EventNode;
-import net.minestom.server.event.trait.CancellableEvent;
 import net.minestom.server.utils.validate.Check;
-import net.theevilreaper.aves.inventory.util.InventoryConstants;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -20,8 +18,6 @@ import java.util.function.Consumer;
  */
 public abstract class GamePhase extends Phase {
 
-    protected static final EventListener<CancellableEvent> CANCEL_LISTENER =
-            EventListener.of(CancellableEvent.class, InventoryConstants.CANCELLABLE_EVENT);
     private EventNode<Event> phaseNode;
     private HashMap<Class<? extends Event>, EventListener<? extends Event>> listenerHashMap;
 
@@ -42,16 +38,6 @@ public abstract class GamePhase extends Phase {
         this.listenerHashMap.put(eventClass, EventListener.of(eventClass,listener));
         this.phaseNode.addListener(eventListener);
         return eventListener;
-    }
-
-    /**
-     * Add a new {@link EventListener} to the phase which is automatically cancelled.
-     * @param eventClass the class which should be added
-     * @param <C> the event class must inherit from the {@link CancellableEvent}
-     */
-    public <C extends CancellableEvent> void addCancelListener(@NotNull Class<C> eventClass) {
-        this.verifyValueIntegrity();
-        this.phaseNode.addListener(this.listenerHashMap.put(eventClass, CANCEL_LISTENER));
     }
 
     /**
