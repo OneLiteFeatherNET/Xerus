@@ -27,7 +27,6 @@ dependencyResolutionManagement {
         }
         mavenCentral()
     }
-
     versionCatalogs {
         create("libs") {
             version("bom", "1.3.0")
