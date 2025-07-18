@@ -33,4 +33,4 @@ If that is the case, you can add the Xerus library to your project using the fol
 `net.theevilreaper.xerus:xerus:<version>`.
 Replace `<version>` with the desired version of the library.
 When you need a specific version, please check
-the [Release Page](https://gitlab.onelitefeather.dev/dungeon/libs/xerus/-/releases)
+the [Release Page](https://github.com/OneLiteFeatherNET/Xerus/releases)
