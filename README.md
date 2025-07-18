@@ -28,9 +28,14 @@ context. Failing to do so may result in unexpected behavior or unintended side e
 
 ## Getting Started
 
-The usage of Xerus requires the Minestom / Microtus dependencies are included in your project.
-If that is the case, you can add the Xerus library to your project using the following dependency:
-`net.theevilreaper.xerus:xerus:<version>`.
-Replace `<version>` with the desired version of the library.
-When you need a specific version, please check
+To use **Xerus**, you must first have [**Minestom**](https://github.com/Minestom/Minestom) set up in your project.  
+Once that's done, add the following dependency to your `build.gradle.kts` file:
+
+```kotlin
+dependencies {
+    implementation("net.theevilreaper:xerus:<version>")
+}
+```
+
+Replace <version> with the desired version of Xerus you want to use. You can find the latest version on
 the [Release Page](https://github.com/OneLiteFeatherNET/Xerus/releases)
