@@ -33,9 +33,8 @@ Once that's done, add the following dependency to your `build.gradle.kts` file:
 
 ```kotlin
 dependencies {
-    implementation("net.theevilreaper:xerus:<version>")
+    implementation("net.theevilreaper:xerus:1.0.0")
 }
 ```
 
-Replace <version> with the desired version of Xerus you want to use. You can find the latest version on
-the [Release Page](https://github.com/OneLiteFeatherNET/Xerus/releases)
+Other releases can be found on the [Release Page](https://github.com/OneLiteFeatherNET/Xerus/releases)
