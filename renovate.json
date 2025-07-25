@@ -4,5 +4,18 @@
     "github>OneLiteFeatherNET/renovate:default(OneLiteFeatherNET/aves-maintainers)",
     "github>OneLiteFeatherNET/renovate:minestom",
     ":semanticCommitsDisabled"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/README.md/"
+      ],
+      "matchStrings": [
+        "implementation\\(\"net\\.theevilreaper:xerus:(?<currentValue>.*?)\""
+      ],
+      "datasourceTemplate": "maven",
+      "depNameTemplate": "net.theevilreaper:xerus"
+    }
   ]
 }
