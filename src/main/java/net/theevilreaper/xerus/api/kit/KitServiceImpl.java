@@ -130,7 +130,7 @@ public final class KitServiceImpl implements KitService {
      * @return The fetched kit in an optional
      */
     @Override
-    public Optional<Kit> getKit(@NotNull String name) {
+    public @NotNull Optional<Kit> getKit(@NotNull String name) {
         if (name.isEmpty()) {
             throw new IllegalArgumentException("The name can not be empty");
         }
@@ -166,7 +166,7 @@ public final class KitServiceImpl implements KitService {
      * @return the underlying list
      */
     @Override
-    public List<Kit> getKits() {
+    public @NotNull List<Kit> getKits() {
         return kits;
     }
 

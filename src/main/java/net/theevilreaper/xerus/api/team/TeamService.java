@@ -8,12 +8,13 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * The {@link TeamService} interface defines all method signatures that are required to create an implementation of a team service.
- * It contains methods to manage teams, such as adding, removing, and retrieving teams.
+ * The {link TeamService} interface is the ground definition for a service which handles teams in different cases.
+ * It contains management methods like add, remove or other methods to retrieve teams.
  *
+ * @param <T> the type of the team
  * @author theEvilReaper
- * @version 1.1.0
- * @since 1.0.0
+ * @version 1.0.4
+ * @since 1.1.0
  **/
 public interface TeamService {
 

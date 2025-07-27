@@ -3,12 +3,12 @@ package net.theevilreaper.xerus.api.phase;
 import org.jetbrains.annotations.NotNull;
 
 /**
+ * Describes any Phase which will be externally started and which can finish at some point,
+ * when the phase finishes it can notify a listener using the {@code finishedCallback}
+ *
  * @author Patrick Zdarsky / Rxcki
  * @version 1.0
  * @since 03/01/2020 21:00
- * <br>
- * Describes any Phase which will be externally started and which can finish at some point,
- * when the phase finishes it can notify a listener using the {@code finishedCallback}
  */
 public abstract class Phase {
 
@@ -30,7 +30,6 @@ public abstract class Phase {
 
     /**
      * Used to start the phase.
-     * <p>
      * A phase can only be started once, so when running is true the phase won't be started
      */
     public void start() {
@@ -41,14 +40,19 @@ public abstract class Phase {
         onStart();
     }
 
+    /**
+     * Called by the implementation when a phase should be started.
+     */
     protected abstract void onStart();
 
-    public void onSkip() {
-    }
+    /**
+     * Called when the phase should be skipped.
+     */
+    public void onSkip() {}
 
     /**
      * Used to finish the phase.
-     * <p>
+     *
      * A phase can only be finished once, so when finished is true the phase won't be stated as finished again
      */
     public void finish() {
@@ -76,27 +80,46 @@ public abstract class Phase {
     }
 
     /**
-     * @return True if the phase is currently active, false otherwise
+     * Returns an indication if the phase is currently running or not.
+     *
+     * @return true if the phase is running, false otherwise
      */
     public boolean isRunning() {
         return running;
     }
 
     /**
-     * @return True if the phase is already finished, false otherwise
+     * Returns an indication if the phase is currently finished or not.
+     *
+     * @return true if the phase is finished, false otherwise
      */
     public boolean isFinished() {
         return finished;
     }
 
+    /**
+     * Sets the state if a phase is finished or not.
+     *
+     * @param finished the state to set
+     */
     public void setFinished(boolean finished) {
         this.finished = finished;
     }
 
+    /**
+     * Returns an indication if the phase is currently skipped or not.
+     *
+     * @return true if the phase is skipped, false otherwise
+     */
     public boolean isSkipping() {
         return skipping;
     }
 
+    /**
+     * Sets the state if a phase should be skipped or not.
+     *
+     * @param skipping the skipping state to set
+     */
     public void setSkipping(boolean skipping) {
         this.skipping = skipping;
     }
