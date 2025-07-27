@@ -1,5 +1,7 @@
 package net.theevilreaper.xerus.api.phase;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 /**
@@ -13,17 +15,12 @@ public class LinearPhaseSeries<T extends Phase> extends PhaseCollection<T> {
     protected int currentPhaseIndex;
     private boolean paused;
 
-    public LinearPhaseSeries() {}
 
-    public LinearPhaseSeries(String name) {
+    public LinearPhaseSeries(@NotNull String name) {
         super(name);
     }
 
-    public LinearPhaseSeries(List<T> phases) {
-        super(phases);
-    }
-
-    public LinearPhaseSeries(String name, List<T> phases) {
+    public LinearPhaseSeries(@NotNull String name, @NotNull List<T> phases) {
         super(name, phases);
     }
 

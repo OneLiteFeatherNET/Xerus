@@ -15,14 +15,8 @@ public class CyclicPhaseSeries<T extends Phase> extends LinearPhaseSeries<T> {
     private int maxIterations;
     private int iterations;
 
-    public CyclicPhaseSeries() { }
-
     public CyclicPhaseSeries(@NotNull String name) {
         super(name);
-    }
-
-    public CyclicPhaseSeries(@NotNull List<T> phases) {
-        super(phases);
     }
 
     public CyclicPhaseSeries(@NotNull String name, List<T> phases) {
