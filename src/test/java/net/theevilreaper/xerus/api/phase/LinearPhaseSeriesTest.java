@@ -22,7 +22,7 @@ class LinearPhaseSeriesTest {
 
     @BeforeAll
     void setUp() {
-        phaseSeries = new LinearPhaseSeries<>();
+        phaseSeries = new LinearPhaseSeries<>("Test Phase Series");
         phase1 = new SimplePhase("Phase #1");
         phase2 = new SimplePhase("Phase #2");
 

@@ -15,7 +15,7 @@ class AdvancedCyclicPhaseSeriesTest {
 
     @Test
     void testSkipIteration() {
-        var phaseSeries = new CyclicPhaseSeries<SimplePhase>();
+        var phaseSeries = new CyclicPhaseSeries<SimplePhase>("Test Phase Series");
         var phase1 = Mockito.spy(new SimplePhase("Phase #1"));
         var phase2 = new SimplePhase("Phase #2");
 
