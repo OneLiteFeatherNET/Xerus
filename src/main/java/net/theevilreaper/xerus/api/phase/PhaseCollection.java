@@ -20,17 +20,9 @@ public abstract class PhaseCollection<T extends Phase> extends Phase implements 
 
     protected final List<T> phaseList;
 
-    protected PhaseCollection() {
-        phaseList = new LinkedList<>();
-    }
-
     protected PhaseCollection(@NotNull String name) {
         super(name);
         phaseList = new LinkedList<>();
-    }
-
-    protected PhaseCollection(@NotNull List<T> phaseList) {
-        this.phaseList = phaseList;
     }
 
     protected PhaseCollection(@NotNull String name, @NotNull List<T> phaseList) {
