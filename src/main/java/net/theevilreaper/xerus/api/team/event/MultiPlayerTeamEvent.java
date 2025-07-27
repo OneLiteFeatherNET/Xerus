@@ -24,7 +24,6 @@ public class MultiPlayerTeamEvent implements Event, CancellableEvent {
     private final TeamAction action;
     private boolean cancelled;
 
-
     /**
      * Event is called when multiple players interact with a team.
      *
