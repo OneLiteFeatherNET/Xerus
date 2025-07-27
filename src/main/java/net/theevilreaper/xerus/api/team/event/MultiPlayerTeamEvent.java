@@ -12,59 +12,36 @@ import java.util.Set;
 /**
  * The event will be fired if an action is applied to a team where more than one player is involved.
  * There is a separate event for it, so that the event is called with only one player less
+ *
  * @author theEvilReaper
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.11
  **/
-public class MultiPlayerTeamEvent<T extends Team> extends TeamEvent<T> implements Event, CancellableEvent {
+public class MultiPlayerTeamEvent implements Event, CancellableEvent {
 
+    private final Team team;
     private final Set<Player> players;
+    private final TeamAction action;
     private boolean cancelled;
 
-    /**
-     * Creates a new instance of {@link MultiPlayerTeamEvent} representing the addition of multiple players to a team.
-     *
-     * @param team    The team to which players are being added.
-     * @param players A set of players being added to the team.
-     * @param <T>     The type of team (must extend the Team class).
-     * @return A new MultiPlayerTeamEvent instance indicating the addition of multiple players to the team.
-     * @throws NullPointerException if 'team' or 'players' is null.
-     */
-    @Contract(value = "_, _ -> new", pure = true)
-    public static <T extends Team> @NotNull MultiPlayerTeamEvent<T> addEvent(@NotNull T team, @NotNull Set<Player> players) {
-        return new MultiPlayerTeamEvent<>(team, players, TeamEvent.Action.ADD);
-    }
-
-    /**
-     * Creates a new instance of {@link MultiPlayerTeamEvent} representing the removal of multiple players from a team.
-     *
-     * @param team    The team from which players are being removed.
-     * @param players A set of players being removed from the team.
-     * @param <T>     The type of team (must extend the Team class).
-     * @return A new MultiPlayerTeamEvent instance indicating the removal of multiple players from the team.
-     * @throws NullPointerException if 'team' or 'players' is null.
-     */
-    @Contract(value = "_, _ -> new", pure = true)
-    public static <T extends Team> @NotNull MultiPlayerTeamEvent<T> removeEvent(
-            @NotNull T team,
-            @NotNull Set<Player> players) {
-        return new MultiPlayerTeamEvent<>(team, players, TeamEvent.Action.REMOVE);
-    }
 
     /**
      * Event is called when multiple players interact with a team.
-     * @param team the team which is involved in the event
-     * @param players the set with the players who are involved in the event
+     *
+     * @param team       the team which is involved in the event
+     * @param players    the set with the players who are involved in the event
      * @param teamAction the action for the event
      */
-    MultiPlayerTeamEvent(@NotNull T team, @NotNull Set<Player> players, @NotNull TeamEvent.Action teamAction) {
-        super(team, teamAction);
+    public MultiPlayerTeamEvent(@NotNull Team team, @NotNull Set<Player> players, @NotNull TeamAction teamAction) {
+        this.team = team;
         this.players = players;
+        this.action = teamAction;
     }
 
     /**
-     * Updates the state if the event is cancelled or not.
-     * @param cancelled The new cancelled state
+     * Set the cancellation state of this event.
+     *
+     * @param cancelled true if the event should be canceled, false otherwise
      */
     @Override
     public void setCancelled(boolean cancelled) {
@@ -72,8 +49,9 @@ public class MultiPlayerTeamEvent<T extends Team> extends TeamEvent<T> implement
     }
 
     /**
-     * Returns an indicator if the event is cancelled or not.
-     * @return True if the game is cancelled otherwise false
+     * Gets the cancellation state of this event.
+     *
+     * @return true if this event is canceled, false otherwise
      */
     @Override
     public boolean isCancelled() {
@@ -81,11 +59,30 @@ public class MultiPlayerTeamEvent<T extends Team> extends TeamEvent<T> implement
     }
 
     /**
-     * Returns all player that are effected from the event.
-     * @return a {@link Set} which contains the players
+     * Returns the players who are involved in this event.
+     *
+     * @return the set with the involved players
      */
     @NotNull
     public Set<Player> getPlayers() {
         return players;
+    }
+
+    /**
+     * Returns the team which is involved in this event.
+     *
+     * @return the involved team
+     */
+    public @NotNull Team getTeam() {
+        return team;
+    }
+
+    /**
+     * Returns the action which was performed on the team.
+     *
+     * @return the performed action
+     */
+    public @NotNull TeamAction getAction() {
+        return action;
     }
 }
