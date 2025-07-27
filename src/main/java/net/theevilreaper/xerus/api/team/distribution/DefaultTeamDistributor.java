@@ -57,7 +57,7 @@ public class DefaultTeamDistributor<T extends Team> implements TeamDistributor<T
             Team team = null;
 
             for (int i = 0; i < teams.size() && team == null; i++) {
-                if (!teams.get(i).getName().equals(distributionTeam.name())) continue;
+                if (!teams.get(i).getIdentifier().equals(distributionTeam.name())) continue;
                 team = teams.get(i);
             }
 
