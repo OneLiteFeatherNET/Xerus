@@ -26,6 +26,11 @@ public abstract class GamePhase extends Phase {
     private EventNode<Event> phaseNode;
     private HashMap<Class<? extends Event>, EventListener<? extends Event>> listenerHashMap;
 
+    /**
+     * Creates a new instance of {@link GamePhase} with the specified name.
+     *
+     * @param name the name of the phase, used to identify it within the game
+     */
     protected GamePhase(@NotNull String name) {
         super(name);
     }

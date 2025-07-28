@@ -2,6 +2,7 @@ package net.theevilreaper.xerus.api.phase;
 
 import net.minestom.server.MinecraftServer;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.temporal.TemporalUnit;
 
@@ -31,11 +32,24 @@ public abstract class TimedPhase extends TickingPhase {
     private int currentTicks;
     private TickDirection tickDirection = TickDirection.DOWN;
 
-    protected TimedPhase(String name, TemporalUnit temporalUnit, long interval) {
+    /**
+     * Constructs a new {@code TimedPhase} with the specified name, temporal unit, and interval.
+     *
+     * @param name         the name used to identify this phase
+     * @param temporalUnit the unit of time for the interval
+     * @param interval     the interval at which {@link #onUpdate()} will be called, in the specified temporal unit
+     */
+    protected TimedPhase(@NotNull String name, @NotNull TemporalUnit temporalUnit, long interval) {
         super(name, temporalUnit, interval);
     }
 
-    protected TimedPhase(String name, TemporalUnit temporalUnit) {
+    /**
+     * Constructs a {@code TimedPhase} with a default interval of 20 ticks in the specified temporal unit.
+     *
+     * @param name         the name used to identify this phase
+     * @param temporalUnit the unit of time for the interval
+     */
+    protected TimedPhase(@NotNull String name, @NotNull TemporalUnit temporalUnit) {
         super(name, temporalUnit);
     }
 
