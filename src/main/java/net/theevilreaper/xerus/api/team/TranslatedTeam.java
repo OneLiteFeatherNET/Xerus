@@ -18,8 +18,9 @@ import java.util.Set;
 import static net.theevilreaper.xerus.api.team.TeamImpl.DEFAULT_CAPACITY;
 
 /**
+ *
  * @author theEvilReaper
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.13
  **/
 public class TranslatedTeam implements Team {

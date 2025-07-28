@@ -202,6 +202,7 @@ public interface Team extends Joinable {
 
     /**
      * Returns a colored name based on the given locale.
+     * @param locale the locale to use for the name
      *
      * @return the colored name
      */
