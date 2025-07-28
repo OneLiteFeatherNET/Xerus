@@ -15,14 +15,14 @@ import java.util.function.ToIntFunction;
  * @version 1.0
  * @since 03/02/2020 20:32
  */
-public class DefaultTeamDistributor<T extends Team> implements TeamDistributor<T> {
+public class DefaultTeamDistributor implements TeamDistributor {
 
     private static final ConnectionManager CONNECTION_MANAGER = MinecraftServer.getConnectionManager();
 
     @SuppressWarnings("java:S3776")
     @Override
-    public void distribute(@NotNull List<T> teams, @NotNull List<Player> players, int teamSize,
-                           ToIntFunction<Player> eloFunction, boolean evenTeams, boolean lowVariance) {
+    public void distribute(@NotNull List<Team> teams, @NotNull List<Player> players, int teamSize,
+                           @NotNull ToIntFunction<Player> eloFunction, boolean evenTeams, boolean lowVariance) {
         if (teams.isEmpty()) {
             throw new IllegalArgumentException("The list with the teams can not be empty");
         }
@@ -73,7 +73,7 @@ public class DefaultTeamDistributor<T extends Team> implements TeamDistributor<T
     }
 
     @Override
-    public void distribute(@NotNull List<T> teams, @NotNull List<Player> players, int teamSize,
+    public void distribute(@NotNull List<Team> teams, @NotNull List<Player> players, int teamSize,
                            ToIntFunction<Player> eloFunction) {
         distribute(teams, players, teamSize, eloFunction, true, false);
     }
