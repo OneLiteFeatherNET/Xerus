@@ -11,7 +11,6 @@ import java.util.Optional;
  * The {link TeamService} interface is the ground definition for a service which handles teams in different cases.
  * It contains management methods like add, remove or other methods to retrieve teams.
  *
- * @param <T> the type of the team
  * @author theEvilReaper
  * @version 1.0.4
  * @since 1.1.0
