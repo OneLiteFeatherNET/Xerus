@@ -8,28 +8,33 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * The class includes all relevant method for a team service.
+ * The {@link TeamService} interface defines all method signatures that are required to create an implementation of a team service.
+ * It contains methods to manage teams, such as adding, removing, and retrieving teams.
+ *
  * @author theEvilReaper
- * @version 1.0.4
+ * @version 1.1.0
  * @since 1.0.0
  **/
-public interface TeamService<T extends Team> {
+public interface TeamService {
 
     /**
      * Add a team to the service.
-     * @param t The team to add
+     *
+     * @param team which should be added
      */
-    void add(@NotNull T t);
+    void add(@NotNull Team team);
 
     /**
      * Remove a team from the service.
-     * @param t The team to remove
+     *
+     * @param team which should be removed
      */
-    void remove(@NotNull T t);
+    void remove(@NotNull Team team);
 
     /**
      * Removes the team by his given identifier.
      * The identifier is the name of the team or the translated key
+     *
      * @param identifier the identifier from the team
      */
     void remove(@NotNull String identifier);
@@ -42,33 +47,38 @@ public interface TeamService<T extends Team> {
 
     /**
      * Returns if a team exists that matches wit the given identifier.
+     *
      * @param identifier The identifier from the team
-     * @return True when the team exists otherwise false
+     * @return true when the team exists otherwise false
      */
     boolean exists(@NotNull String identifier);
 
     /**
      * Returns the team based on the specified identifier.
+     *
      * @param identifier of the team
-     * @return The team in an {@link Optional}
+     * @return the team in an {@link Optional}
      */
-    Optional<@Nullable T> getTeam(@NotNull String identifier);
+    Optional<@Nullable Team> getTeam(@NotNull String identifier);
 
     /**
      * Returns the team based on the given player.
+     *
      * @param player The player from which the team is determined
-     * @return The team in an {@link Optional}
+     * @return the team in an {@link Optional}
      */
-    Optional<@Nullable T> getTeam(@NotNull Player player);
+    Optional<@Nullable Team> getTeam(@NotNull Player player);
 
     /**
      * Returns the team with the fewest players.
+     *
      * @return the smallest team
      */
-    Optional<@Nullable T> getSmallestTeam();
+    Optional<@Nullable Team> getSmallestTeam();
 
     /**
      * Returns an indication of whether the service has teams.
+     *
      * @return true if the service has teams otherwise false
      */
     default boolean hasTeams() {
@@ -77,7 +87,8 @@ public interface TeamService<T extends Team> {
 
     /**
      * Returns a list with all current available teams.
-     * @return The underlying list
+     *
+     * @return the underlying list
      */
-    @NotNull List<T> getTeams();
+    @NotNull List<Team> getTeams();
 }

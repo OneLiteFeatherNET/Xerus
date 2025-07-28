@@ -1,23 +1,22 @@
 package net.theevilreaper.xerus.api.team;
 
 import net.minestom.server.entity.Player;
-import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 /**
  * @author theEvilReaper
- * @since 1.0.0
  * @version 1.0.3
+ * @since 1.0.0
  */
 @ApiStatus.NonExtendable
-public final class TeamServiceImpl<T extends Team> implements TeamService<T> {
+public final class TeamServiceImpl implements TeamService {
 
-    private final List<T> teams;
+    private final List<Team> teams;
 
     /**
      * Creates a new instance from the {@link TeamServiceImpl}.
@@ -28,6 +27,7 @@ public final class TeamServiceImpl<T extends Team> implements TeamService<T> {
 
     /**
      * Creates a new instance from the {@link TeamServiceImpl} with the given parameter.
+     *
      * @param capacity The size of the underlying list
      */
     public TeamServiceImpl(int capacity) {
@@ -35,35 +35,31 @@ public final class TeamServiceImpl<T extends Team> implements TeamService<T> {
     }
 
     /**
-     * Add a team to the service.
-     * @param team The team to add
+     * {@inheritDoc}
      */
     @Override
-    public void add(@NotNull T team) {
+    public void add(@NotNull Team team) {
         this.teams.add(team);
     }
 
     /**
-     * Remove a team from the service.
-     * @param team The team to remove
+     * {@inheritDoc}
      */
     @Override
-    public void remove(@NotNull T team) {
+    public void remove(@NotNull Team team) {
         this.teams.remove(team);
     }
 
     /**
-     * Removes a team by his identifier.
-     * @param identifier the identifier from the team
+     * {@inheritDoc}
      */
     @Override
     public void remove(@NotNull String identifier) {
-        this.teams.removeIf(team -> team.getName().equals(identifier) || team.getIdentifier().equals(identifier));
+        this.teams.removeIf(team -> team.getIdentifier().equals(identifier));
     }
 
     /**
-     * Clears the underlying team list.
-     * All players in the teams will be removed
+     * {@inheritDoc}
      */
     @Override
     public void clear() {
@@ -77,12 +73,10 @@ public final class TeamServiceImpl<T extends Team> implements TeamService<T> {
     }
 
     /**
-     * Returns the team based on the specified name.
-     * @param identifier of the team
-     * @return The team in an {@link Optional}
+     * {@inheritDoc}
      */
     @Override
-    public Optional<@Nullable T> getTeam(@NotNull String identifier) {
+    public @NotNull Optional<@Nullable Team> getTeam(@NotNull String identifier) {
         int i = 0;
 
         while (i < teams.size() && !teams.get(i).getIdentifier().equals(identifier)) {
@@ -93,9 +87,7 @@ public final class TeamServiceImpl<T extends Team> implements TeamService<T> {
     }
 
     /**
-     * Returns if a team exists that matches wit the given name.
-     * @param identifier The name from the team
-     * @return True when the team exists otherwise false
+     * {@inheritDoc}
      */
     @Override
     public boolean exists(@NotNull String identifier) {
@@ -113,13 +105,11 @@ public final class TeamServiceImpl<T extends Team> implements TeamService<T> {
     }
 
     /**
-     * Returns the team based on the given player.
-     * @param player The player from which the team is determined
-     * @return The team in an {@link Optional}
+     * {@inheritDoc}
      */
     @Override
-    public Optional<@Nullable T> getTeam(@NotNull Player player) {
-        T team = null;
+    public @NotNull Optional<@Nullable Team> getTeam(@NotNull Player player) {
+        Team team = null;
 
         for (int i = 0; i < getTeams().size() && team == null; i++) {
             if (getTeams().get(i).hasPlayer(player)) {
@@ -131,11 +121,10 @@ public final class TeamServiceImpl<T extends Team> implements TeamService<T> {
     }
 
     /**
-     * Returns the team with the fewest players.
-     * @return the smallest team
+     * {@inheritDoc}
      */
     @Override
-    public Optional<@Nullable T> getSmallestTeam() {
+    public Optional<@Nullable Team> getSmallestTeam() {
         if (!teams.isEmpty()) {
             int i = 1;
             var team = teams.getFirst();
@@ -152,11 +141,11 @@ public final class TeamServiceImpl<T extends Team> implements TeamService<T> {
     }
 
     /**
-     * Returns a list with all current available teams.
-     * @return The underlying list
+     * {@inheritDoc}
      */
+    @Contract(pure = true)
     @Override
-    public @NotNull List<T> getTeams() {
-        return teams;
+    public @NotNull @UnmodifiableView List<Team> getTeams() {
+        return Collections.unmodifiableList(teams);
     }
 }
