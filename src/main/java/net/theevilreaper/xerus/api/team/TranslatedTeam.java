@@ -147,9 +147,9 @@ public class TranslatedTeam implements Team {
     }
 
     /**
-     * Returns the name with the color.
+     * Returns the name of the team with its color applied in a {@link Component}.
      *
-     * @return The name with the color
+     * @return the name with the color
      */
     @Override
     public Component getColoredName(Locale locale) {
@@ -190,7 +190,7 @@ public class TranslatedTeam implements Team {
     /**
      * Returns a set with all current players in the team.
      *
-     * @return The underlying set with the players
+     * @return the underlying set with the players
      */
     public @NotNull Set<Player> getPlayers() {
         return players;
