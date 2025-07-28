@@ -18,13 +18,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TeamImplServiceTest {
 
-    TeamService<Team> teamService;
+    TeamService teamService;
 
     Team defaultTeamImpl;
 
     @BeforeAll
     void init() {
-        this.teamService = new TeamServiceImpl<>();
+        this.teamService = new TeamServiceImpl();
         this.defaultTeamImpl = Team.builder().name("Red").capacity(10).colorData(ColorData.DARK_RED).build();
         this.teamService.add(defaultTeamImpl);
     }
