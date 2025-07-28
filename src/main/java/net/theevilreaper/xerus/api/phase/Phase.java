@@ -3,11 +3,18 @@ package net.theevilreaper.xerus.api.phase;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Describes any Phase which will be externally started and which can finish at some point,
- * when the phase finishes it can notify a listener using the {@code finishedCallback}
+ * Represents a unit of execution within a phase-based system.
+ * <p>
+ * A {@code Phase} is started externally and can complete at any time. Once finished,
+ * it can notify an optional listener via a {@code finishedCallback}.
+ * </p>
+ * <p>
+ * Each phase has a unique name and maintains internal state indicating whether it is running,
+ * finished, or being skipped. Subclasses implement the behavior by overriding {@link #onStart()}.
+ * </p>
  *
  * @author Patrick Zdarsky / Rxcki
- * @version 1.0
+ * @version 1.0.1
  * @since 03/01/2020 21:00
  */
 public abstract class Phase {
@@ -16,21 +23,22 @@ public abstract class Phase {
     private boolean running;
     private boolean finished;
     private boolean skipping;
-
     private Runnable finishedCallback;
 
     /**
-     * Creates a new reference of the {@link Phase} with the given parameters.
+     * Constructs a new {@code Phase} with the specified name.
      *
-     * @param name the name of the phase, used to identify it
+     * @param name the name used to identify this phase
      */
     protected Phase(@NotNull String name) {
         this.name = name;
     }
 
     /**
-     * Used to start the phase.
-     * A phase can only be started once, so when running is true the phase won't be started
+     * Starts the phase.
+     * <p>
+     * A phase can only be started once. If it is already running, this method has no effect.
+     * </p>
      */
     public void start() {
         if (running) {
@@ -41,93 +49,110 @@ public abstract class Phase {
     }
 
     /**
-     * Called by the implementation when a phase should be started.
+     * Defines the behavior to execute when the phase starts.
+     * This method is called automatically by {@link #start()}.
      */
     protected abstract void onStart();
 
     /**
      * Called when the phase should be skipped.
+     * <p>
+     * Subclasses may override this to implement custom skipping behavior.
+     * </p>
      */
-    public void onSkip() {}
+    public void onSkip() {
+    }
 
     /**
-     * Used to finish the phase.
-     *
-     * A phase can only be finished once, so when finished is true the phase won't be stated as finished again
+     * Marks the phase as finished and invokes the {@code finishedCallback}, if set.
+     * <p>
+     * A phase can only be finished once. Subsequent calls will be ignored.
+     * </p>
      */
     public void finish() {
-        if (finished)
+        if (finished) {
             return;
+        }
 
         finished = true;
         running = false;
-        if (finishedCallback != null)
-            finishedCallback.run();
         skipping = false;
+
+        if (finishedCallback != null) {
+            finishedCallback.run();
+        }
     }
 
+    /**
+     * Returns the current phase instance.
+     * <p>
+     * Subclasses that wrap other phases may override this to return the active child phase.
+     * </p>
+     *
+     * @return the current {@code Phase} instance
+     */
     public Phase getCurrentPhase() {
         return this;
     }
 
     /**
-     * Returns the name representing this phase.
+     * Returns the name of this phase.
      *
-     * @return the given name
+     * @return the phase name
      */
     public @NotNull String getName() {
         return name;
     }
 
     /**
-     * Returns an indication if the phase is currently running or not.
+     * Returns whether this phase is currently running.
      *
-     * @return true if the phase is running, false otherwise
+     * @return {@code true} if running, otherwise {@code false}
      */
     public boolean isRunning() {
         return running;
     }
 
     /**
-     * Returns an indication if the phase is currently finished or not.
+     * Returns whether this phase has been marked as finished.
      *
-     * @return true if the phase is finished, false otherwise
+     * @return {@code true} if finished, otherwise {@code false}
      */
     public boolean isFinished() {
         return finished;
     }
 
     /**
-     * Sets the state if a phase is finished or not.
+     * Manually sets the finished state of this phase.
      *
-     * @param finished the state to set
+     * @param finished {@code true} to mark as finished, {@code false} otherwise
      */
     public void setFinished(boolean finished) {
         this.finished = finished;
     }
 
     /**
-     * Returns an indication if the phase is currently skipped or not.
+     * Returns whether this phase is currently being skipped.
      *
-     * @return true if the phase is skipped, false otherwise
+     * @return {@code true} if skipping, otherwise {@code false}
      */
     public boolean isSkipping() {
         return skipping;
     }
 
     /**
-     * Sets the state if a phase should be skipped or not.
+     * Sets the skipping state of this phase.
      *
-     * @param skipping the skipping state to set
+     * @param skipping {@code true} to mark as skipping, {@code false} otherwise
      */
     public void setSkipping(boolean skipping) {
         this.skipping = skipping;
     }
 
     /**
-     * Sets the callback which will be called when the phase is finished
+     * Sets the callback to be invoked when this phase finishes.
      *
-     * @param finishedCallback The callback to be called when the phase finished
+     * @param finishedCallback the {@link Runnable} to be executed on phase completion
      */
     public void setFinishedCallback(Runnable finishedCallback) {
         this.finishedCallback = finishedCallback;
