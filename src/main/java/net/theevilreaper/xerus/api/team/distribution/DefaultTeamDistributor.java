@@ -3,7 +3,6 @@ package net.theevilreaper.xerus.api.team.distribution;
 import net.theevilreaper.xerus.api.team.Team;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
-import net.minestom.server.network.ConnectionManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -11,13 +10,13 @@ import java.util.List;
 import java.util.function.ToIntFunction;
 
 /**
+ * Default implementation of the {@link TeamDistributor} interface.
+ *
  * @author Patrick Zdarsky / Rxcki
  * @version 1.0
  * @since 03/02/2020 20:32
  */
 public class DefaultTeamDistributor implements TeamDistributor {
-
-    private static final ConnectionManager CONNECTION_MANAGER = MinecraftServer.getConnectionManager();
 
     /**
      * {@inheritDoc}
@@ -67,7 +66,7 @@ public class DefaultTeamDistributor implements TeamDistributor {
             if (team == null) return;
 
             for (DistributionPlayer player : distributionTeam.players()) {
-                final Player realPlayer = CONNECTION_MANAGER.getOnlinePlayerByUuid(player.uuid());
+                final Player realPlayer = MinecraftServer.getConnectionManager().getOnlinePlayerByUuid(player.uuid());
 
                 if (realPlayer == null) continue;
                 team.addPlayer(realPlayer);

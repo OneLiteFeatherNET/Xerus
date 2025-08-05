@@ -27,6 +27,9 @@ import java.util.function.Consumer;
  **/
 public interface Team extends Joinable {
 
+    /**
+     * An empty runnable implementation.
+     */
     @NotNull Runnable EMPTY = () -> {
     };
 
@@ -130,7 +133,7 @@ public interface Team extends Joinable {
         if (players.isEmpty()) return;
         players.removeIf(player -> getPlayers().contains(player));
         Runnable successCallback = consumer == null ? EMPTY : () -> getPlayers().forEach(consumer);
-        EventDispatcher.callCancellable( new MultiPlayerTeamEvent(this, players, TeamAction.REMOVE), successCallback);
+        EventDispatcher.callCancellable(new MultiPlayerTeamEvent(this, players, TeamAction.REMOVE), successCallback);
     }
 
     /**
@@ -194,6 +197,8 @@ public interface Team extends Joinable {
     Component getName(Locale locale);
 
     /**
+     * Returns the name of a team as a {@link Component}.
+     *
      * @return the given name
      */
     default @NotNull Component getName() {
@@ -203,6 +208,7 @@ public interface Team extends Joinable {
     /**
      * Returns a colored name based on the given locale.
      *
+     * @param locale the locale to use for the name
      * @return the colored name
      */
     @UnknownNullability

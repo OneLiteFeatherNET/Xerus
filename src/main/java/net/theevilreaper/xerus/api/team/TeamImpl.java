@@ -13,13 +13,21 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * The class represents a default implementation of the {@link Team} interface.
+ * It provides a generic team which should work for most use cases.
+ * If a case doesn't fit into this, it is recommend to create a custom implementation or inherit from this class.
+ *
  * @author theEvilReaper
- * @since 1.0.0
  * @version 1.0.3
+ * @since 1.0.0
  */
 public class TeamImpl implements Team {
 
+    /**
+     * Default capacity for the team. It indicates that the team can include a high amount of players.
+     */
     protected static final int DEFAULT_CAPACITY = -1;
+
     private final Set<Player> players;
     private final String name;
     private final ColorData colorData;
@@ -28,8 +36,9 @@ public class TeamImpl implements Team {
 
     /**
      * Creates a new instance from the team.
-     * @param name for the team
-     * @param colorData for the team
+     *
+     * @param name            for the team
+     * @param colorData       for the team
      * @param initialCapacity for the team
      */
     protected TeamImpl(@NotNull String name, @NotNull ColorData colorData, int initialCapacity) {
@@ -46,6 +55,7 @@ public class TeamImpl implements Team {
 
     /**
      * Set / overwrite the capacity of the team.
+     *
      * @param capacity The capacity to set
      */
     @Override
@@ -56,6 +66,7 @@ public class TeamImpl implements Team {
 
     /**
      * Checks if a player can join a team or not.
+     *
      * @return true when a player can join otherwise false
      */
     @Override
@@ -78,6 +89,7 @@ public class TeamImpl implements Team {
 
     /**
      * Returns the identifier from the team.
+     *
      * @return the identifier
      */
     @Override
@@ -87,6 +99,7 @@ public class TeamImpl implements Team {
 
     /**
      * Returns the name of the team.
+     *
      * @return The name of the team
      */
     @Override
@@ -96,6 +109,7 @@ public class TeamImpl implements Team {
 
     /**
      * Returns the name with the color.
+     *
      * @return The name with the color
      */
     @Override
@@ -105,6 +119,7 @@ public class TeamImpl implements Team {
 
     /**
      * Returns the given color data from the team.
+     *
      * @return the color data
      */
     @Override
@@ -114,6 +129,7 @@ public class TeamImpl implements Team {
 
     /**
      * Returns the maximum capacity of the team.
+     *
      * @return -1 when no capacity is set otherwise the capacity
      */
     @Override
@@ -123,6 +139,7 @@ public class TeamImpl implements Team {
 
     /**
      * Returns the current size of the team.
+     *
      * @return the current size
      */
     @Override
@@ -132,6 +149,7 @@ public class TeamImpl implements Team {
 
     /**
      * Returns a set with all current players in the team.
+     *
      * @return The underlying set with the players
      */
     @Override

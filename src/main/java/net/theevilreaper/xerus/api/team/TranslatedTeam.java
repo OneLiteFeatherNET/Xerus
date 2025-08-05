@@ -18,8 +18,11 @@ import java.util.Set;
 import static net.theevilreaper.xerus.api.team.TeamImpl.DEFAULT_CAPACITY;
 
 /**
+ * The {@link TranslatedTeam} class represents a team which acts in a translation context.
+ * It contains the same methods as the non translated context but requires in most case the usage of {@link Locale}s.
+ *
  * @author theEvilReaper
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.13
  **/
 public class TranslatedTeam implements Team {

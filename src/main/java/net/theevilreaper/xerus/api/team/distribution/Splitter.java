@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The {@link Splitter} class is a class which is used to distribute players among teams.
+ * Taken from: <a href="https://github.com/Tobi208/TeamSplitterFX">...</a>
+ *
  * @author Patrick Zdarsky / Rxcki
  * @version 1.0
  * @since 03/02/2020 20:21
- *
- * Taken from: <a href="https://github.com/Tobi208/TeamSplitterFX">...</a>
  */
 public class Splitter {
 
@@ -32,6 +33,7 @@ public class Splitter {
      * @param ts          outline for teams
      * @param ps          players
      * @param is          used player array indices
+     * @param teamSize    size of each team
      * @param evenTeams   if teams should be forced to be even
      * @param lowVariance if low variance is preferred
      * @return optimal desired teams constellation
@@ -198,6 +200,8 @@ public class Splitter {
      *---------*/
 
     /**
+     * Creates a deep clone of the given teams array
+     *
      * @return deep cloned teams array
      */
     private @NotNull DistributionTeam[] deepClone(@NotNull DistributionTeam[] ts) {
@@ -211,6 +215,8 @@ public class Splitter {
     }
 
     /**
+     * Creates a deep clone of the given indices array list
+     *
      * @return deep cloned indices array list
      */
     @Contract("_ -> new")

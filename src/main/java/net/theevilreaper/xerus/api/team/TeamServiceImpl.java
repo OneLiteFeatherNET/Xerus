@@ -9,9 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * The default implementation of the {@link TeamService} interface.
+ *
  * @author theEvilReaper
  * @version 1.0.3
- * @since 1.0.0
+ * @since 1.0.1
  */
 @ApiStatus.NonExtendable
 public final class TeamServiceImpl implements TeamService {
