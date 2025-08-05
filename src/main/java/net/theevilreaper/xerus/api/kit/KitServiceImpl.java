@@ -14,8 +14,12 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
+ * The class represents a default implementation of the {@link KitService} interface.
+ * It has some basic functionality for managing kits and which players are currently using them.
+ * If your use case doesn't fit into this please implement your own {@link KitService} implementation.
+ *
  * @author theEvilReaper
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.2.0
  **/
 public final class KitServiceImpl implements KitService {
@@ -24,11 +28,19 @@ public final class KitServiceImpl implements KitService {
     private final List<Kit> kits;
     private final Map<Player, Kit> usedKits;
 
+    /**
+     * Creates a new instance of the {@link KitServiceImpl}.
+     */
     public KitServiceImpl() {
         this.kits = new ArrayList<>();
         this.usedKits = new HashMap<>();
     }
 
+    /**
+     * Creates a new instance of the {@link KitServiceImpl} with a given capacity.
+     *
+     * @param capacity the size of the underlying list
+     */
     public KitServiceImpl(int capacity) {
         this.kits = new ArrayList<>(capacity);
         this.usedKits = new HashMap<>();
@@ -36,8 +48,9 @@ public final class KitServiceImpl implements KitService {
 
     /**
      * Add a specific player and kit to the underlying cache.
-     * @param player The player to add
-     * @param kit The kit to add
+     *
+     * @param player the player to add
+     * @param kit    the kit to add
      */
     public void add(@NotNull Player player, @NotNull Kit kit) {
         this.usedKits.put(player, kit);
@@ -45,8 +58,9 @@ public final class KitServiceImpl implements KitService {
 
     /**
      * Remove a player from the underlying cache.
-     * @param player The player to remove
-     * @return The current {@link Kit} from the player
+     *
+     * @param player the player to remove
+     * @return the current {@link Kit} from the player
      */
     public Kit remove(@NotNull Player player) {
         return this.usedKits.remove(player);
@@ -75,8 +89,9 @@ public final class KitServiceImpl implements KitService {
 
     /**
      * Changes the current kit from a player.
-     * @param player The player who changes his current kit
-     * @param newKit The new {@link Kit}
+     *
+     * @param player the player who changes his current kit
+     * @param newKit the new {@link Kit}
      */
     public void changeKit(@NotNull Player player, @NotNull Kit newKit) {
         var oldKit = usedKits.remove(player);
@@ -90,8 +105,7 @@ public final class KitServiceImpl implements KitService {
     }
 
     /**
-     * Add a kit to the service.
-     * @param kit that should be added
+     * {@inheritDoc}
      */
     @Override
     public void add(@NotNull Kit kit) {
@@ -102,8 +116,7 @@ public final class KitServiceImpl implements KitService {
     }
 
     /**
-     * Remove a kit from the service.
-     * @param kit that should be removed
+     * {@inheritDoc}
      */
     @Override
     public boolean remove(@NotNull Kit kit) {
@@ -111,9 +124,7 @@ public final class KitServiceImpl implements KitService {
     }
 
     /**
-     * Removes a kit by his identifier.
-     * @param identifier The identifier from the kit
-     * @return true when the kit was removed otherwise false
+     * {@inheritDoc}
      */
     @Override
     public boolean remove(@NotNull String identifier) {
@@ -125,9 +136,7 @@ public final class KitServiceImpl implements KitService {
     }
 
     /**
-     * Returns the kit based on the given name.
-     * @param name The name of the kit
-     * @return The fetched kit in an optional
+     * {@inheritDoc}
      */
     @Override
     public @NotNull Optional<Kit> getKit(@NotNull String name) {
@@ -147,7 +156,8 @@ public final class KitServiceImpl implements KitService {
     /**
      * Returns a kit from a given player.
      * When the player has no active kit yet. The method returns a empty {@link Optional}
-     * @param player The player to determine his kit
+     *
+     * @param player the player to determine his kit
      * @return the fetched kit.
      */
     public Optional<Kit> getKit(@NotNull Player player) {
@@ -162,8 +172,7 @@ public final class KitServiceImpl implements KitService {
     }
 
     /**
-     * Returns a list with all current available kits.
-     * @return the underlying list
+     * {@inheritDoc}
      */
     @Override
     public @NotNull List<Kit> getKits() {
@@ -172,6 +181,7 @@ public final class KitServiceImpl implements KitService {
 
     /**
      * Returns a map which contains all player and kits which are currently in use.
+     *
      * @return the underlying map
      */
     public Map<Player, Kit> getUsedKits() {
