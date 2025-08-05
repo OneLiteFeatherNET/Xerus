@@ -132,7 +132,7 @@ public final class KitServiceImpl implements KitService {
             throw new IllegalArgumentException("The identifier can not be empty");
         }
 
-        return this.kits.removeIf(iKit -> iKit.getIdentifier().equals(identifier) || iKit.getName().equals(identifier));
+        return this.kits.removeIf(iKit -> iKit.getIdentifier().equals(identifier));
     }
 
     /**
