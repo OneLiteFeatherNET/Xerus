@@ -18,7 +18,7 @@ import java.util.List;
 public record DistributionTeam(@NotNull String name, List<DistributionPlayer> players) {
 
     /**
-     * Creates a new instance from the {@link DistributionTeam} with the given value.
+     * Creates a new instance of the {@link DistributionTeam} with the given value.
      *
      * @param name the name of the team
      */
