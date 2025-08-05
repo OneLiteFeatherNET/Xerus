@@ -12,8 +12,10 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
+ * The {@link KitImpl} class represents a default implementation of the {@link Kit} interface.
+ *
  * @author theEvilReaper
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.2.0
  **/
 public class KitImpl extends BaseKit {
@@ -21,12 +23,21 @@ public class KitImpl extends BaseKit {
     private final Component name;
     private final Component description;
 
+    /**
+     * Creates a new instance from the kit.
+     * @param name the name of the kit
+     * @param description the description of the kit
+     * @param armorItems whether the kit should contain armor items
+     */
     public KitImpl(@NotNull Component name, @Nullable Component description, boolean armorItems) {
         super(armorItems);
         this.name = name;
         this.description = description;
     }
 
+    /**
+     * {@inheritDoc}}
+     */
     @Override
     public void setEquipment(@NotNull Player player, Locale locale, int... shiftedSlots) {
         Players.updateArmorItems(player, armorItems.values().toArray(IItem[]::new), locale);
@@ -46,19 +57,15 @@ public class KitImpl extends BaseKit {
     }
 
     /**
-     * Returns the name from the kit.
-     * @param ignored can be ignored because the kits is not translated
-     * @return the given name from the kit
+     * {@inheritDoc}}
      */
     @Override
     public Component getName(@Nullable Locale ignored) {
-       return name;
+        return name;
     }
 
     /**
-     * Returns the description from the kit.
-     * @param ignored can be ignored because the kit is not translated
-     * @return the given description as string
+     * {@inheritDoc}}
      */
     @Override
     public Component getDescription(@Nullable Locale ignored) {
@@ -66,9 +73,7 @@ public class KitImpl extends BaseKit {
     }
 
     /**
-     * Returns the identifier from the kit.
-     * In the non translated context the method returns the same result as getName() method;
-     * @return the given identifier
+     * {@inheritDoc}}
      */
     @Override
     public String getIdentifier() {

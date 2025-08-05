@@ -91,8 +91,9 @@ public interface Kit extends ItemShiftOption {
     }
 
     /**
-     * Returns the name of the kit.
+     * Returns the name of the kit depending on the given locale as a {@link Component}.
      *
+     * @param locale The locale to determine the right name
      * @return the underlying value
      */
     Component getName(@UnknownNullability Locale locale);
