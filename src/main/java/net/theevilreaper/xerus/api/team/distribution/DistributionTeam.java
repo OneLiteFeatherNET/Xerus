@@ -60,7 +60,7 @@ public record DistributionTeam(@NotNull String name, List<DistributionPlayer> pl
     }
 
     /**
-     * Adds all list of players to the team.
+     * Adds a list of players to the team.
      *
      * @param players the players to add
      */
