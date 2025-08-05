@@ -8,10 +8,7 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.EventDispatcher;
 import net.theevilreaper.xerus.api.team.event.TeamAction;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.UnknownNullability;
+import org.jetbrains.annotations.*;
 
 import java.util.Locale;
 import java.util.Set;
@@ -261,8 +258,9 @@ public interface Team extends Joinable {
     @NotNull Set<Player> getPlayers();
 
     /**
-     * The interface defines all relevant method for a builder pattern.
+     * The interface defines all relevant methods for a builder pattern.
      */
+    @ApiStatus.NonExtendable
     sealed interface Builder permits TeamBuilder {
 
         /**

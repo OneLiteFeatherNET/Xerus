@@ -2,7 +2,6 @@ package net.theevilreaper.xerus.api.team;
 
 import net.theevilreaper.xerus.api.ColorData;
 import net.minestom.server.utils.validate.Check;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -12,7 +11,6 @@ import org.jetbrains.annotations.NotNull;
  * @version 1.0.0
  * @since 1.2.0
  */
-@ApiStatus.NonExtendable
 public final class TeamBuilder implements Team.Builder {
 
     private final TeamCreator teamCreator;

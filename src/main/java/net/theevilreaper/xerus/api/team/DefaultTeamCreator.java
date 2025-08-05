@@ -15,7 +15,6 @@ import org.jetbrains.annotations.NotNull;
  * @version 1.0.0
  * @since 1.2.0
  */
-@ApiStatus.NonExtendable
 public final class DefaultTeamCreator {
 
     private DefaultTeamCreator() { }

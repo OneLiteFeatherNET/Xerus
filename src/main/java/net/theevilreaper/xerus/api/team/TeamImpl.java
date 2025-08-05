@@ -15,7 +15,7 @@ import java.util.Set;
 /**
  * The class represents a default implementation of the {@link Team} interface.
  * It provides a generic team which should work for most use cases.
- * If a case doesn't fit into this, it is recommend to create a custom implementation or inherit from this class.
+ * If a case doesn't fit into this, it is recommended to create a custom implementation or inherit from this class.
  *
  * @author theEvilReaper
  * @version 1.0.3

@@ -1,6 +1,7 @@
 package net.theevilreaper.xerus.api.team;
 
 import net.minestom.server.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -15,6 +16,7 @@ import java.util.Optional;
  * @version 1.0.4
  * @since 1.1.0
  **/
+@ApiStatus.NonExtendable
 public interface TeamService {
 
     /**

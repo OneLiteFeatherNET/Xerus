@@ -15,7 +15,6 @@ import java.util.Optional;
  * @version 1.0.3
  * @since 1.0.1
  */
-@ApiStatus.NonExtendable
 public final class TeamServiceImpl implements TeamService {
 
     private final List<Team> teams;
