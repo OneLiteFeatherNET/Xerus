@@ -157,7 +157,7 @@ public final class KitServiceImpl implements KitService {
      * Returns a kit from a given player.
      * When the player has no active kit yet. The method returns a empty {@link Optional}
      *
-     * @param player the player to determine his kit
+     * @param player the player whose kit should be determined
      * @return the fetched kit.
      */
     public Optional<Kit> getKit(@NotNull Player player) {
