@@ -16,9 +16,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MicrotusExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class KitServiceImplTest {
+class DefaultKitServiceTest {
 
-    KitServiceImpl kitService;
+    DefaultKitService kitService;
 
     Kit defaultKit;
 
@@ -26,15 +26,8 @@ class KitServiceImplTest {
     void init() {
         final Component name = Component.text("TestKit");
         this.defaultKit = new KitImpl(name, name, true);
-        this.kitService = new KitServiceImpl();
+        this.kitService = new DefaultKitService();
         this.kitService.add(defaultKit);
-    }
-
-    @Order(1)
-    @Test
-    void testOtherConstructor() {
-        var service = new KitServiceImpl(10);
-        assertSame(0, service.getKits().size());
     }
 
     @Order(2)

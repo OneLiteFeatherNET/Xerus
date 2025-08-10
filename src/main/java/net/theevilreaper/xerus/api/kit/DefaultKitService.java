@@ -1,13 +1,17 @@
 package net.theevilreaper.xerus.api.kit;
 
+import net.kyori.adventure.key.Key;
 import net.theevilreaper.xerus.api.kit.event.PlayerKitChangeEvent;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.UnmodifiableView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,27 +26,17 @@ import java.util.Optional;
  * @version 1.1.0
  * @since 1.2.0
  **/
-public final class KitServiceImpl implements KitService {
+public final class DefaultKitService implements KitService {
 
-    private static final Logger KIT_LOGGER = LoggerFactory.getLogger(KitServiceImpl.class);
+    private static final Logger KIT_LOGGER = LoggerFactory.getLogger(DefaultKitService.class);
     private final List<Kit> kits;
     private final Map<Player, Kit> usedKits;
 
     /**
-     * Creates a new instance of the {@link KitServiceImpl}.
+     * Creates a new instance of the {@link DefaultKitService}.
      */
-    public KitServiceImpl() {
+    DefaultKitService() {
         this.kits = new ArrayList<>();
-        this.usedKits = new HashMap<>();
-    }
-
-    /**
-     * Creates a new instance of the {@link KitServiceImpl} with a given capacity.
-     *
-     * @param capacity the size of the underlying list
-     */
-    public KitServiceImpl(int capacity) {
-        this.kits = new ArrayList<>(capacity);
         this.usedKits = new HashMap<>();
     }
 
@@ -127,25 +121,18 @@ public final class KitServiceImpl implements KitService {
      * {@inheritDoc}
      */
     @Override
-    public boolean remove(@NotNull String identifier) {
-        if (identifier.trim().isEmpty()) {
-            throw new IllegalArgumentException("The identifier can not be empty");
-        }
-
-        return this.kits.removeIf(iKit -> iKit.getIdentifier().equals(identifier));
+    public boolean remove(@NotNull Key identifier) {
+        return this.kits.removeIf(iKit -> iKit.key().equals(identifier));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public @NotNull Optional<Kit> getKit(@NotNull String name) {
-        if (name.isEmpty()) {
-            throw new IllegalArgumentException("The name can not be empty");
-        }
+    public @NotNull Optional<Kit> getKit(@NotNull Key name) {
         Kit kit = null;
         for (int i = 0; i < kits.size() && kit == null; i++) {
-            if (kits.get(i).getIdentifier().equals(name)) {
+            if (kits.get(i).key().equals(name)) {
                 kit = kits.get(i);
             }
         }
@@ -174,17 +161,19 @@ public final class KitServiceImpl implements KitService {
     /**
      * {@inheritDoc}
      */
+    @Contract(pure = true)
     @Override
-    public @NotNull List<Kit> getKits() {
-        return kits;
+    public @NotNull @UnmodifiableView List<Kit> getKits() {
+        return Collections.unmodifiableList(this.kits);
     }
 
     /**
-     * Returns a map which contains all player and kits which are currently in use.
+     * Returns a map which contains all players and kits that are currently in use.
      *
      * @return the underlying map
      */
-    public Map<Player, Kit> getUsedKits() {
-        return usedKits;
+    @Contract(pure = true)
+    public @NotNull @UnmodifiableView Map<Player, Kit> getUsedKits() {
+        return Collections.unmodifiableMap(this.usedKits);
     }
 }
