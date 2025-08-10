@@ -28,8 +28,8 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         create("libs") {
-            version("bom", "1.4.2")
-            version("aves", "1.11.0")
+            version("bom", "1.4.3")
+            version("aves", "1.11.1")
             version("publishdata", "1.4.0")
 
             library("bom.base", "net.onelitefeather", "mycelium-bom").versionRef("bom")
