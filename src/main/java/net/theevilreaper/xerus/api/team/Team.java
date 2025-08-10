@@ -1,7 +1,8 @@
 package net.theevilreaper.xerus.api.team;
 
+import net.kyori.adventure.key.Key;
 import net.theevilreaper.xerus.api.Joinable;
-import net.theevilreaper.xerus.api.ColorData;
+import net.theevilreaper.xerus.api.component.Componentable;
 import net.theevilreaper.xerus.api.team.event.MultiPlayerTeamEvent;
 import net.theevilreaper.xerus.api.team.event.PlayerTeamEvent;
 import net.kyori.adventure.text.Component;
@@ -10,7 +11,7 @@ import net.minestom.server.event.EventDispatcher;
 import net.theevilreaper.xerus.api.team.event.TeamAction;
 import org.jetbrains.annotations.*;
 
-import java.util.Locale;
+import java.util.Comparator;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -19,10 +20,10 @@ import java.util.function.Consumer;
  * It defines essential methods for organizing and interacting with a team of players or members.
  *
  * @author theEvilReaper
- * @version 1.0.4
+ * @version 2.0.0
  * @since 1.1.6
  **/
-public interface Team extends Joinable {
+public interface Team extends Joinable, Componentable, Comparator<Key> {
 
     /**
      * An empty runnable implementation.
@@ -31,50 +32,26 @@ public interface Team extends Joinable {
     };
 
     /**
-     * Creates a new instance from the {@link TeamImpl.Builder} interface.
+     * Creates a new {@link Team} instance with the given key.
      *
-     * @return the created instance
+     * @param key the key of the team
+     * @return the created team
      */
-    @Contract(value = " -> new", pure = true)
-    static @NotNull Builder builder() {
-        return new TeamBuilder();
+    @Contract("_ -> new")
+    static @NotNull Team of(@NotNull Key key) {
+        return new DefaultTeam(key, -1);
     }
 
     /**
-     * Creates a new instance from a {@link Team.Builder} to create a new team.
-     * This method allows to set a {@link TeamCreator} to create custom teams over the builder
+     * Creates a new {@link Team} instance with the given key and capacity.
      *
-     * @param creator the creator to use
-     * @return the builder instance
+     * @param key      the key of the team
+     * @param capacity the capacity of the team
+     * @return the created team
      */
-    @Contract(value = "_ -> new", pure = true)
-    static @NotNull Builder builder(@NotNull TeamCreator creator) {
-        return new TeamBuilder(creator);
-    }
-
-    /**
-     * Creates a new instance from the {@link Builder} to create a team.
-     *
-     * @param name      the name of the team
-     * @param colorData the {@link ColorData} to set
-     * @return the created instance
-     */
-    @Contract(value = "_, _ -> new", pure = true)
-    static @NotNull Team of(@NotNull String name, @NotNull ColorData colorData) {
-        return builder().name(name).colorData(colorData).build();
-    }
-
-    /**
-     * Creates a new instance from the {@link Builder} to create a team.
-     *
-     * @param name      the name of the team
-     * @param colorData the {@link ColorData} to set
-     * @param capacity  the capacity of the team
-     * @return the created instance
-     */
-    @Contract(value = "_, _, _ -> new", pure = true)
-    static @NotNull Team of(@NotNull String name, @NotNull ColorData colorData, int capacity) {
-        return builder().name(name).colorData(colorData).capacity(capacity).build();
+    @Contract("_, _ -> new")
+    static @NotNull Team of(@NotNull Key key, int capacity) {
+        return new DefaultTeam(key, capacity);
     }
 
     /**
@@ -178,54 +155,11 @@ public interface Team extends Joinable {
     }
 
     /**
-     * Returns the identifier of the team.
+     * Returns the identifier of the team as {@link Key}.
      *
-     * @return the underlying value
+     * @return the identifier
      */
-    @NotNull String getIdentifier();
-
-    /**
-     * Return the name of the team based on the given locale.
-     *
-     * @param locale the locale to use for the name
-     * @return the name of the team
-     */
-    @UnknownNullability
-    Component getName(Locale locale);
-
-    /**
-     * Returns the name of a team as a {@link Component}.
-     *
-     * @return the given name
-     */
-    default @NotNull Component getName() {
-        return getName(null);
-    }
-
-    /**
-     * Returns a colored name based on the given locale.
-     *
-     * @param locale the locale to use for the name
-     * @return the colored name
-     */
-    @UnknownNullability
-    Component getColoredName(Locale locale);
-
-    /**
-     * Returns the name with the color.
-     *
-     * @return the colored name
-     */
-    default @NotNull Component getColoredName() {
-        return getColoredName(null);
-    }
-
-    /**
-     * Returns the given color data from the team.
-     *
-     * @return the color data
-     */
-    @NotNull ColorData getColorData();
+    @NotNull Key key();
 
     /**
      * Returns a boolean indicator if the team contains entries or not.
@@ -256,43 +190,4 @@ public interface Team extends Joinable {
      * @return the given set
      */
     @NotNull Set<Player> getPlayers();
-
-    /**
-     * The interface defines all relevant methods for a builder pattern.
-     */
-    @ApiStatus.NonExtendable
-    sealed interface Builder permits TeamBuilder {
-
-        /**
-         * Set a name to the team.
-         *
-         * @param name the new name set
-         * @return the builder instance
-         */
-        @NotNull Builder name(@NotNull String name);
-
-        /**
-         * Set the used color to the team
-         *
-         * @param colorData the {@link ColorData} to set
-         * @return the builder instance
-         */
-        @NotNull Builder colorData(@NotNull ColorData colorData);
-
-        /**
-         * Set the maximum size for the team.
-         *
-         * @param capacity the capacity to set
-         * @return the builder instance
-         */
-        @NotNull Builder capacity(int capacity);
-
-        /**
-         * Creates a new instance from the team with the given values from the builder.
-         * When some value is invalid the creation process will fail with an exception
-         *
-         * @return the builder instance
-         */
-        @NotNull Team build();
-    }
 }

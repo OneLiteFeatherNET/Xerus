@@ -1,5 +1,6 @@
 package net.theevilreaper.xerus.api.team;
 
+import net.kyori.adventure.key.Key;
 import net.minestom.server.entity.Player;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -13,7 +14,7 @@ import java.util.Optional;
  * It contains management methods like add, remove or other methods to retrieve teams.
  *
  * @author theEvilReaper
- * @version 1.0.4
+ * @version 2.0.0
  * @since 1.1.0
  **/
 @ApiStatus.NonExtendable
@@ -39,7 +40,7 @@ public interface TeamService {
      *
      * @param identifier the identifier from the team
      */
-    void remove(@NotNull String identifier);
+    void remove(@NotNull Key identifier);
 
     /**
      * Clears the underlying team list.
@@ -48,12 +49,11 @@ public interface TeamService {
     void clear();
 
     /**
-     * Returns if a team exists that matches wit the given identifier.
-     *
-     * @param identifier The identifier from the team
-     * @return true when the team exists otherwise false
+     * Returns an indication of whether the team with the given identifier exists.
+     * @param identifier the identifier of the team
+     * @return true if the team exists otherwise false
      */
-    boolean exists(@NotNull String identifier);
+    boolean exists(@NotNull Key identifier);
 
     /**
      * Returns the team based on the specified identifier.
@@ -61,7 +61,7 @@ public interface TeamService {
      * @param identifier of the team
      * @return the team in an {@link Optional}
      */
-    Optional<@Nullable Team> getTeam(@NotNull String identifier);
+    Optional<@Nullable Team> getTeam(@NotNull Key identifier);
 
     /**
      * Returns the team based on the given player.
