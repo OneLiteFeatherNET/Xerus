@@ -1,5 +1,6 @@
 package net.theevilreaper.xerus.api.team.event;
 
+import net.kyori.adventure.key.Key;
 import net.minestom.server.event.EventFilter;
 import net.minestom.testing.Collector;
 import net.theevilreaper.xerus.api.ColorData;
@@ -22,7 +23,7 @@ class PlayerTeamEventIntegrationTest {
     void testPlayerTeamEvent(@NotNull Env env) {
         final Instance instance = env.createFlatInstance();
         final Player player = env.createPlayer(instance, Pos.ZERO);
-        final Team team = Team.of("Test", ColorData.DARK_AQUA);
+        final Team team = Team.of(Key.key("xerus", "team_test"));
 
         Collector<PlayerTeamEvent> eventCollector = env.trackEvent(PlayerTeamEvent.class, EventFilter.PLAYER, player);
 

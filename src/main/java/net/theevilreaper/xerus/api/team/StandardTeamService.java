@@ -1,5 +1,6 @@
 package net.theevilreaper.xerus.api.team;
 
+import net.kyori.adventure.key.Key;
 import net.minestom.server.entity.Player;
 import org.jetbrains.annotations.*;
 
@@ -12,26 +13,26 @@ import java.util.Optional;
  * The default implementation of the {@link TeamService} interface.
  *
  * @author theEvilReaper
- * @version 1.0.3
+ * @version 1.1.0
  * @since 1.0.1
  */
-public final class TeamServiceImpl implements TeamService {
+public final class StandardTeamService implements TeamService {
 
     private final List<Team> teams;
 
     /**
-     * Creates a new instance from the {@link TeamServiceImpl}.
+     * Creates a new instance from the {@link StandardTeamService}.
      */
-    public TeamServiceImpl() {
+    public StandardTeamService() {
         this.teams = new ArrayList<>();
     }
 
     /**
-     * Creates a new instance from the {@link TeamServiceImpl} with the given parameter.
+     * Creates a new instance from the {@link StandardTeamService} with the given parameter.
      *
      * @param capacity The size of the underlying list
      */
-    public TeamServiceImpl(int capacity) {
+    public StandardTeamService(int capacity) {
         this.teams = new ArrayList<>(capacity);
     }
 
@@ -55,8 +56,13 @@ public final class TeamServiceImpl implements TeamService {
      * {@inheritDoc}
      */
     @Override
-    public void remove(@NotNull String identifier) {
-        this.teams.removeIf(team -> team.getIdentifier().equals(identifier));
+    public void remove(@NotNull Key identifier) {
+        System.out.printf("Team size: %d%n", teams.size());
+        this.teams.removeIf(team -> {
+            System.out.printf("Checking team: %s against identifier: %s%n", team.key(), identifier);
+            return team.key().equals(identifier);
+        });
+        System.out.printf("Team size: %d%n", teams.size());
     }
 
     /**
@@ -77,10 +83,10 @@ public final class TeamServiceImpl implements TeamService {
      * {@inheritDoc}
      */
     @Override
-    public @NotNull Optional<@Nullable Team> getTeam(@NotNull String identifier) {
+    public @NotNull Optional<@Nullable Team> getTeam(@NotNull Key identifier) {
         int i = 0;
 
-        while (i < teams.size() && !teams.get(i).getIdentifier().equals(identifier)) {
+        while (i < teams.size() && !teams.get(i).key().equals(identifier)) {
             i++;
         }
 
@@ -91,14 +97,14 @@ public final class TeamServiceImpl implements TeamService {
      * {@inheritDoc}
      */
     @Override
-    public boolean exists(@NotNull String identifier) {
+    public boolean exists(@NotNull Key identifier) {
         if (teams.isEmpty()) {
             return false;
         }
 
         int i = 0;
 
-        while (i < teams.size() && !teams.get(i).getIdentifier().equals(identifier)) {
+        while (i < teams.size() && !teams.get(i).key().equals(identifier)) {
             i++;
         }
 

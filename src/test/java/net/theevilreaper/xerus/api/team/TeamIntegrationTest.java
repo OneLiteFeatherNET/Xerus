@@ -1,5 +1,6 @@
 package net.theevilreaper.xerus.api.team;
 
+import net.kyori.adventure.key.Key;
 import net.theevilreaper.xerus.api.ColorData;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.Instance;
@@ -19,10 +20,7 @@ public class TeamIntegrationTest {
 
     @BeforeAll
     static void init() {
-        team = Team.builder()
-                .name("Team A")
-                .colorData(ColorData.AQUA)
-                .build();
+        team = Team.of(Key.key("xerus", "team_a"), 10);
     }
 
     @Test

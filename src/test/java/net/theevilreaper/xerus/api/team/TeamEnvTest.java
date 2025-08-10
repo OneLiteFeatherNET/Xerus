@@ -1,5 +1,6 @@
 package net.theevilreaper.xerus.api.team;
 
+import net.kyori.adventure.key.Key;
 import net.theevilreaper.xerus.api.ColorData;
 import net.theevilreaper.xerus.api.team.event.MultiPlayerTeamEvent;
 import net.minestom.server.coordinate.Pos;
@@ -29,7 +30,7 @@ class TeamEnvTest {
     @BeforeAll
     void initTeam(@NotNull Env env) {
         this.instance = env.createFlatInstance();
-        this.team = Team.builder().name("TestTeam").colorData(ColorData.BLACK).capacity(5).build();
+        this.team = Team.of(Key.key("xerus", "team"), 5);
         for (int i = 0; i < TEST_AMOUNT; i++) {
             this.testPlayers.add(env.createPlayer(instance, Pos.ZERO));
         }

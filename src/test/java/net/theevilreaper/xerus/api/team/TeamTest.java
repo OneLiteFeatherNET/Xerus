@@ -1,5 +1,6 @@
 package net.theevilreaper.xerus.api.team;
 
+import net.kyori.adventure.key.Key;
 import net.theevilreaper.xerus.api.ColorData;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.junit.jupiter.api.BeforeAll;
@@ -15,10 +16,7 @@ class TeamTest {
 
     @BeforeAll
     static void init() {
-        team = Team.builder()
-                .name("Team A")
-                .colorData(ColorData.AQUA)
-                .build();
+        team = Team.of(Key.key("xerus", "team_a"));
     }
 
     @Test
@@ -30,15 +28,8 @@ class TeamTest {
 
     @Test
     void testCanJoin() {
-        var currentTeam = Team.builder().name("Team C").capacity(10).colorData(ColorData.AQUA).build();
+        var currentTeam = Team.of(Key.key("xerus", "team_c"), 5);
         assertTrue(currentTeam.canJoin());
-    }
-
-    @Test
-    void testNameOrIdentifierMethods() {
-        assertEquals("Team A", team.getIdentifier());
-        assertNotEquals("Team C", PlainTextComponentSerializer.plainText().serialize(team.getName(Locale.ENGLISH)));
-        assertEquals("Team A", PlainTextComponentSerializer.plainText().serialize(team.getName()));
     }
 
     @Test
