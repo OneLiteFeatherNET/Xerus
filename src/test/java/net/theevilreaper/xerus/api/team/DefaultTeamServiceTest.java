@@ -1,6 +1,6 @@
 package net.theevilreaper.xerus.api.team;
 
-import net.theevilreaper.xerus.api.ColorData;
+import net.kyori.adventure.key.Key;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.Instance;
@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MicrotusExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class TeamImplServiceTest {
+class DefaultTeamServiceTest {
 
     TeamService teamService;
 
@@ -24,8 +24,8 @@ class TeamImplServiceTest {
 
     @BeforeAll
     void init() {
-        this.teamService = new TeamServiceImpl();
-        this.defaultTeamImpl = Team.builder().name("Red").capacity(10).colorData(ColorData.DARK_RED).build();
+        this.teamService = new StandardTeamService();
+        this.defaultTeamImpl = Team.of(Key.key("xerus", "team_red"), 10);
         this.teamService.add(defaultTeamImpl);
     }
 
@@ -61,8 +61,9 @@ class TeamImplServiceTest {
 
     @Test
     void testRemoveWithIdentifier() {
-        this.teamService.remove("Team A");
         assertFalse(this.teamService.getTeams().isEmpty());
+        this.teamService.remove(Key.key("xerus", "team_red"));
+        assertTrue(this.teamService.getTeams().isEmpty());
     }
 
     @Test
