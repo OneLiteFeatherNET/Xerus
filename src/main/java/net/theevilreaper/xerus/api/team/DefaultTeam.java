@@ -87,7 +87,7 @@ public class DefaultTeam implements Team {
      */
     @Override
     public void setCapacity(int capacity) {
-        Check.argCondition(capacity < 0, "The capacity of the can't be neagtive");
+        Check.argCondition(capacity < 0, "The capacity of the can't be negative");
         this.capacity = capacity;
     }
 
@@ -100,8 +100,8 @@ public class DefaultTeam implements Team {
     }
 
     @Override
-    public int compare(@NotNull Key o1, @NotNull Key o2) {
-        return o1.compareTo(o2);
+    public int compare(@NotNull Team o1, @NotNull Team o2) {
+        return o1.key().compareTo(o2.key());
     }
 
     @Override
