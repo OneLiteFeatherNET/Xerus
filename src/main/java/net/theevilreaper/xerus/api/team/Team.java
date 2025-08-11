@@ -23,7 +23,7 @@ import java.util.function.Consumer;
  * @version 2.0.0
  * @since 1.1.6
  **/
-public interface Team extends Joinable, Componentable, Comparator<Key> {
+public interface Team extends Joinable, Componentable, Comparator<Team> {
 
     /**
      * An empty runnable implementation.
