@@ -2,7 +2,6 @@ package net.theevilreaper.xerus.api.kit;
 
 import net.kyori.adventure.key.Key;
 import net.minestom.server.entity.Player;
-import net.theevilreaper.xerus.api.ItemShiftOption;
 import net.theevilreaper.xerus.api.component.Componentable;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
  * @version 2.0.0
  * @since 1.2.0
  **/
-public interface Kit extends ItemShiftOption, Componentable {
+public interface Kit extends Componentable {
 
     /**
      * Applies the kit to a player.
