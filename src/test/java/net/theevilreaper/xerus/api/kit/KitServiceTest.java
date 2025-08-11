@@ -1,13 +1,10 @@
 package net.theevilreaper.xerus.api.kit;
 
 import net.kyori.adventure.key.Key;
-import net.minestom.server.entity.Player;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -64,26 +61,5 @@ class KitServiceTest {
     void testKitGetNonExisting() {
         Optional<Kit> fetchedKit = kitService.getKit(Key.key("xerus", "test_kit"));
         assertFalse(fetchedKit.isPresent());
-    }
-
-    private final class TestKit extends BaseKit {
-
-        public TestKit() {
-            super(Key.key("xerus", "test_kit"));
-        }
-
-        public TestKit(@NotNull Key key) {
-            super(key);
-        }
-
-        @Override
-        public void apply(@NotNull Player player) {
-            throw new UnsupportedOperationException("Not yet implemented");
-        }
-
-        @Override
-        public void setEquipment(@NotNull Player player, Locale locale, int... shiftedSlots) {
-
-        }
     }
 }
