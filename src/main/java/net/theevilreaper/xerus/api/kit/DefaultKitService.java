@@ -1,20 +1,16 @@
 package net.theevilreaper.xerus.api.kit;
 
 import net.kyori.adventure.key.Key;
-import net.theevilreaper.xerus.api.kit.event.PlayerKitChangeEvent;
-import net.minestom.server.MinecraftServer;
-import net.minestom.server.entity.Player;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.UnmodifiableView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -30,46 +26,12 @@ public final class DefaultKitService implements KitService {
 
     private static final Logger KIT_LOGGER = LoggerFactory.getLogger(DefaultKitService.class);
     private final List<Kit> kits;
-    private final Map<Player, Kit> usedKits;
 
     /**
      * Creates a new instance of the {@link DefaultKitService}.
      */
     DefaultKitService() {
         this.kits = new ArrayList<>();
-        this.usedKits = new HashMap<>();
-    }
-
-    /**
-     * Add a specific player and kit to the underlying cache.
-     *
-     * @param player the player to add
-     * @param kit    the kit to add
-     */
-    public void add(@NotNull Player player, @NotNull Kit kit) {
-        this.usedKits.put(player, kit);
-    }
-
-    /**
-     * Remove a player from the underlying cache.
-     *
-     * @param player the player to remove
-     * @return the current {@link Kit} from the player
-     */
-    public Kit remove(@NotNull Player player) {
-        return this.usedKits.remove(player);
-    }
-
-    /**
-     * Clears the underlying map and the inventories from each who is currently in the map
-     */
-    public void invalidatePlayerCache() {
-        if (this.usedKits.isEmpty()) return;
-
-        for (Player player : usedKits.keySet()) {
-            player.getInventory().clear();
-        }
-        usedKits.clear();
     }
 
     /**
@@ -79,23 +41,6 @@ public final class DefaultKitService implements KitService {
     public void clear() {
         if (this.kits.isEmpty()) return;
         this.kits.clear();
-    }
-
-    /**
-     * Changes the current kit from a player.
-     *
-     * @param player the player who changes his current kit
-     * @param newKit the new {@link Kit}
-     */
-    public void changeKit(@NotNull Player player, @NotNull Kit newKit) {
-        var oldKit = usedKits.remove(player);
-
-        var event = new PlayerKitChangeEvent(player, oldKit, newKit);
-
-        if (event.isCancelled()) return;
-
-        this.usedKits.put(player, newKit);
-        MinecraftServer.getGlobalEventHandler().call(event);
     }
 
     /**
@@ -113,14 +58,6 @@ public final class DefaultKitService implements KitService {
      * {@inheritDoc}
      */
     @Override
-    public boolean remove(@NotNull Kit kit) {
-        return this.kits.remove(kit);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public boolean remove(@NotNull Key identifier) {
         return this.kits.removeIf(iKit -> iKit.key().equals(identifier));
     }
@@ -129,7 +66,7 @@ public final class DefaultKitService implements KitService {
      * {@inheritDoc}
      */
     @Override
-    public @NotNull Optional<Kit> getKit(@NotNull Key name) {
+    public @NotNull Optional<@Nullable Kit> getKit(@NotNull Key name) {
         Kit kit = null;
         for (int i = 0; i < kits.size() && kit == null; i++) {
             if (kits.get(i).key().equals(name)) {
@@ -141,39 +78,11 @@ public final class DefaultKitService implements KitService {
     }
 
     /**
-     * Returns a kit from a given player.
-     * When the player has no active kit yet. The method returns a empty {@link Optional}
-     *
-     * @param player the player whose kit should be determined
-     * @return the fetched kit.
-     */
-    public Optional<Kit> getKit(@NotNull Player player) {
-        if (!usedKits.isEmpty()) {
-            for (var entry : usedKits.entrySet()) {
-                if (!entry.getKey().getUuid().equals(player.getUuid())) continue;
-                return Optional.of(entry.getValue());
-            }
-        }
-
-        return Optional.empty();
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Contract(pure = true)
     @Override
     public @NotNull @UnmodifiableView List<Kit> getKits() {
         return Collections.unmodifiableList(this.kits);
-    }
-
-    /**
-     * Returns a map which contains all players and kits that are currently in use.
-     *
-     * @return the underlying map
-     */
-    @Contract(pure = true)
-    public @NotNull @UnmodifiableView Map<Player, Kit> getUsedKits() {
-        return Collections.unmodifiableMap(this.usedKits);
     }
 }
