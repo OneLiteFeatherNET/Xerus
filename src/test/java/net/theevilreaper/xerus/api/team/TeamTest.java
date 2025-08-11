@@ -1,45 +1,44 @@
 package net.theevilreaper.xerus.api.team;
 
 import net.kyori.adventure.key.Key;
-import net.theevilreaper.xerus.api.ColorData;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.Locale;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.junit.jupiter.api.Assertions.*;
+public class TeamTest {
 
-class TeamTest {
-
-    static Team team;
-
-    @BeforeAll
-    static void init() {
-        team = Team.of(Key.key("xerus", "team_a"));
+    @Test
+    void testInvalidCapacityUpdate() {
+        Team team = Team.of(Key.key("xerus", "test"));
+        assertNotNull(team);
+        assertThrowsExactly(
+                IllegalArgumentException.class,
+                () -> team.setCapacity(-1),
+                "The capacity of the can't be negative"
+        );
     }
 
     @Test
-    void testSetCapacity() {
-        assertSame(-1, team.getCapacity());
-        team.setCapacity(12);
-        assertSame(12, team.getCapacity());
+    void testCapacityUpdate() {
+        Team team = Team.of(Key.key("xerus", "test"));
+        assertNotNull(team);
+        assertEquals(-1, team.getCapacity());
+        assertTrue(team.canJoin());
+
+        team.setCapacity(10);
+        assertEquals(10, team.getCapacity());
     }
 
     @Test
-    void testCanJoin() {
-        var currentTeam = Team.of(Key.key("xerus", "team_c"), 5);
-        assertTrue(currentTeam.canJoin());
-    }
+    void testTeamEquality() {
+        Team team1 = Team.of(Key.key("xerus", "test"));
+        Team team2 = Team.of(Key.key("xerus", "test"));
 
-    @Test
-    void testGetPlayers() {
-        assertNotNull(team.getPlayers());
-        assertTrue(team.getPlayers().isEmpty());
-    }
-
-    @Test
-    void testHashCode() {
-        assertNotEquals(32, team.hashCode());
+        assertEquals(0, team1.compare(team1, team2));
+        assertEquals(team1, team2);
+        assertEquals(team1.hashCode(), team2.hashCode());
     }
 }
