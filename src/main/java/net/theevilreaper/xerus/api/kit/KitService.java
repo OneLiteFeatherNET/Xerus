@@ -38,14 +38,6 @@ public interface KitService {
     void add(@NotNull Kit kit);
 
     /**
-     * Remove a kit from the service.
-     *
-     * @param kit that should be removed
-     * @return true when the kit can be removed otherwise false
-     */
-    boolean remove(@NotNull Kit kit);
-
-    /**
      * Remove a kit by the identifier from the kit.
      *
      * @param identifier the identifier from the kit
