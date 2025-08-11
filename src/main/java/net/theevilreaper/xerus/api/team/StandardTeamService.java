@@ -23,17 +23,8 @@ public final class StandardTeamService implements TeamService {
     /**
      * Creates a new instance from the {@link StandardTeamService}.
      */
-    public StandardTeamService() {
+    StandardTeamService() {
         this.teams = new ArrayList<>();
-    }
-
-    /**
-     * Creates a new instance from the {@link StandardTeamService} with the given parameter.
-     *
-     * @param capacity The size of the underlying list
-     */
-    public StandardTeamService(int capacity) {
-        this.teams = new ArrayList<>(capacity);
     }
 
     /**
@@ -57,12 +48,7 @@ public final class StandardTeamService implements TeamService {
      */
     @Override
     public void remove(@NotNull Key identifier) {
-        System.out.printf("Team size: %d%n", teams.size());
-        this.teams.removeIf(team -> {
-            System.out.printf("Checking team: %s against identifier: %s%n", team.key(), identifier);
-            return team.key().equals(identifier);
-        });
-        System.out.printf("Team size: %d%n", teams.size());
+        this.teams.removeIf(team -> team.key().equals(identifier));
     }
 
     /**

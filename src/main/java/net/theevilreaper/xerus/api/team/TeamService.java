@@ -3,6 +3,7 @@ package net.theevilreaper.xerus.api.team;
 import net.kyori.adventure.key.Key;
 import net.minestom.server.entity.Player;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,6 +20,16 @@ import java.util.Optional;
  **/
 @ApiStatus.NonExtendable
 public interface TeamService {
+
+    /**
+     * Returns a new instance of the {@link TeamService}.
+     *
+     * @return the new instance
+     */
+    @Contract(pure = true)
+    static @NotNull TeamService of() {
+        return new StandardTeamService();
+    }
 
     /**
      * Add a team to the service.
@@ -50,6 +61,7 @@ public interface TeamService {
 
     /**
      * Returns an indication of whether the team with the given identifier exists.
+     *
      * @param identifier the identifier of the team
      * @return true if the team exists otherwise false
      */
