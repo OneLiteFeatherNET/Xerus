@@ -3,7 +3,6 @@ package net.theevilreaper.xerus.api.team.distribution;
 import net.theevilreaper.xerus.api.team.Team;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
-import net.minestom.server.network.ConnectionManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -11,18 +10,21 @@ import java.util.List;
 import java.util.function.ToIntFunction;
 
 /**
+ * Default implementation of the {@link TeamDistributor} interface.
+ *
  * @author Patrick Zdarsky / Rxcki
  * @version 1.0
  * @since 03/02/2020 20:32
  */
-public class DefaultTeamDistributor<T extends Team> implements TeamDistributor<T> {
+public class DefaultTeamDistributor implements TeamDistributor {
 
-    private static final ConnectionManager CONNECTION_MANAGER = MinecraftServer.getConnectionManager();
-
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("java:S3776")
     @Override
-    public void distribute(@NotNull List<T> teams, @NotNull List<Player> players, int teamSize,
-                           ToIntFunction<Player> eloFunction, boolean evenTeams, boolean lowVariance) {
+    public void distribute(@NotNull List<Team> teams, @NotNull List<Player> players, int teamSize,
+                           @NotNull ToIntFunction<Player> eloFunction, boolean evenTeams, boolean lowVariance) {
         if (teams.isEmpty()) {
             throw new IllegalArgumentException("The list with the teams can not be empty");
         }
@@ -35,7 +37,7 @@ public class DefaultTeamDistributor<T extends Team> implements TeamDistributor<T
         DistributionTeam[] dTeams = new DistributionTeam[teams.size()];
         for (int i = 0; i < teams.size(); i++) {
             var currentTeam = teams.get(i);
-            dTeams[i] = new DistributionTeam(currentTeam.getIdentifier());
+            dTeams[i] = new DistributionTeam(currentTeam.key());
             if (teams.get(i).getCurrentSize() > 0) {
                 for (Player player : currentTeam.getPlayers())
                     dTeams[i].add(new DistributionPlayer(player.getUuid(), eloFunction.applyAsInt(player)));
@@ -57,14 +59,14 @@ public class DefaultTeamDistributor<T extends Team> implements TeamDistributor<T
             Team team = null;
 
             for (int i = 0; i < teams.size() && team == null; i++) {
-                if (!teams.get(i).getName().equals(distributionTeam.name())) continue;
+                if (!teams.get(i).key().equals(distributionTeam.name())) continue;
                 team = teams.get(i);
             }
 
             if (team == null) return;
 
             for (DistributionPlayer player : distributionTeam.players()) {
-                final Player realPlayer = CONNECTION_MANAGER.getOnlinePlayerByUuid(player.uuid());
+                final Player realPlayer = MinecraftServer.getConnectionManager().getOnlinePlayerByUuid(player.uuid());
 
                 if (realPlayer == null) continue;
                 team.addPlayer(realPlayer);
@@ -72,9 +74,12 @@ public class DefaultTeamDistributor<T extends Team> implements TeamDistributor<T
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void distribute(@NotNull List<T> teams, @NotNull List<Player> players, int teamSize,
-                           ToIntFunction<Player> eloFunction) {
+    public void distribute(@NotNull List<Team> teams, @NotNull List<Player> players, int teamSize,
+                           @NotNull ToIntFunction<Player> eloFunction) {
         distribute(teams, players, teamSize, eloFunction, true, false);
     }
 }

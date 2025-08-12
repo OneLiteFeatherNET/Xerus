@@ -5,43 +5,60 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 /**
+ * A {@code CyclicPhaseSeries} is a specialized {@link LinearPhaseSeries} that supports
+ * repeating its sequence of phases for a defined number of iterations.
+ * <p>
+ * Once the end of the phase list is reached, the series either restarts from the beginning
+ * or finishes, depending on whether the maximum number of iterations has been reached.
+ * </p>
+ * <p>
+ * This class is useful for modeling repeating workflows or game logic sequences.
+ * </p>
+ *
+ * @param <T> the type of {@link Phase} this series operates on
  * @author Patrick Zdarsky / Rxcki
- * @version 1.0
+ * @version 1.0.1
  * @since 03/01/2020 21:33
  */
-
 public class CyclicPhaseSeries<T extends Phase> extends LinearPhaseSeries<T> {
 
     private int maxIterations;
     private int iterations;
 
-    public CyclicPhaseSeries() { }
-
+    /**
+     * Constructs a new {@code CyclicPhaseSeries} with the specified name.
+     *
+     * @param name the name of the phase series
+     */
     public CyclicPhaseSeries(@NotNull String name) {
         super(name);
     }
 
-    public CyclicPhaseSeries(@NotNull List<T> phases) {
-        super(phases);
-    }
-
+    /**
+     * Constructs a new {@code CyclicPhaseSeries} with the specified name and a list of phases.
+     *
+     * @param name   the name of the phase series
+     * @param phases the phases to be added to this series
+     */
     public CyclicPhaseSeries(@NotNull String name, List<T> phases) {
         super(name, phases);
     }
 
+    /**
+     * Advances the phase series to the next phase. If the current phase is the last one,
+     * the iteration count is increased. When the maximum number of iterations is reached,
+     * the series is marked as finished. Otherwise, it restarts from the first phase.
+     */
     @Override
     public void advance() {
         if (isFinished()) {
             return;
         }
 
-        //Check if the current phase is the last one
         if (isLastPhase()) {
-            //Increase iterations, if this is exceeding the max iterations, finish this phase
             if (!increaseIteration())
                 return;
 
-            //Reset underlying LinearPhaseSeries for next iteration
             setCurrentPhaseIndex(0);
             getCurrentPhase().setFinished(false);
 
@@ -50,34 +67,39 @@ public class CyclicPhaseSeries<T extends Phase> extends LinearPhaseSeries<T> {
         }
 
         setCurrentPhaseIndex(currentPhaseIndex + 1);
-        //Reset current phase since it could be already finished because this is another iteration
         currentPhase.setFinished(false);
         startCurrentPhase();
     }
 
+    /**
+     * Skips the current iteration of the phase series.
+     * <p>
+     * The current phase is skipped and marked as finished, and the iteration count is increased.
+     * If the maximum number of iterations has not yet been reached, the series restarts at the first phase.
+     * </p>
+     */
     public void skipIteration() {
-        //Pause the linearPhaseSeries and skip the current phase
         setPaused(true);
         getCurrentPhase().onSkip();
         getCurrentPhase().finish();
 
-        //Increase the iteration count and finish if we have reached the end
         if (!increaseIteration())
             return;
 
-        //Reset to the first phase and reset it
         setCurrentPhaseIndex(0);
         getCurrentPhase().setFinished(false);
-        //Unpause
         setPaused(false);
-        //Start the current phase
         startCurrentPhase();
     }
 
+    /**
+     * Increases the internal iteration counter by one.
+     * If the maximum number of iterations is reached, the phase series is finished.
+     *
+     * @return {@code true} if another iteration is allowed; {@code false} if the series is finished
+     */
     private boolean increaseIteration() {
         iterations++;
-
-        //Check if we reached the max allowed iterations, if yes => finish
         if (iterations == maxIterations) {
             finish();
             return false;
@@ -85,15 +107,30 @@ public class CyclicPhaseSeries<T extends Phase> extends LinearPhaseSeries<T> {
         return true;
     }
 
+    /**
+     * Returns the maximum number of iterations allowed for this phase series.
+     *
+     * @return the maximum number of iterations
+     */
     public int getMaxIterations() {
         return maxIterations;
     }
 
-    public int getIterations() {
-        return iterations;
-    }
-
+    /**
+     * Sets the maximum number of iterations for this phase series.
+     *
+     * @param maxIterations the number of times the series is allowed to repeat
+     */
     public void setMaxIterations(int maxIterations) {
         this.maxIterations = maxIterations;
+    }
+
+    /**
+     * Returns the current iteration value of this phase series.
+     *
+     * @return the current iterations
+     */
+    public int getIterations() {
+        return iterations;
     }
 }

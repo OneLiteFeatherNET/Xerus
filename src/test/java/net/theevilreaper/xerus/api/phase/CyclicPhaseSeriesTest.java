@@ -22,7 +22,7 @@ class CyclicPhaseSeriesTest {
 
     @BeforeAll
     void init() {
-        phaseSeries = new CyclicPhaseSeries<>();
+        phaseSeries = new CyclicPhaseSeries<>("Test Phase Series");
         phase1 = new SimplePhase("Phase #1");
         phase2 = new SimplePhase("Phase #2");
 

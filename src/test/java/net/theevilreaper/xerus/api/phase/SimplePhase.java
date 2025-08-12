@@ -6,6 +6,7 @@ package net.theevilreaper.xerus.api.phase;
 public class SimplePhase extends Phase {
 
     public SimplePhase() {
+        super("Simple Phase");
     }
 
     public SimplePhase(String name) {

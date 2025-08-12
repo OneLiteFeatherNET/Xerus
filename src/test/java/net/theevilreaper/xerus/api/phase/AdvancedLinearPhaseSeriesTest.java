@@ -19,7 +19,7 @@ class AdvancedLinearPhaseSeriesTest {
 
     @Test
     void onSkipPassthrough() {
-        var phaseSeries = new LinearPhaseSeries<SimplePhase>();
+        var phaseSeries = new LinearPhaseSeries<SimplePhase>("Test Phase Series");
         var phase1 = Mockito.spy(new SimplePhase());
 
         phaseSeries.add(phase1);

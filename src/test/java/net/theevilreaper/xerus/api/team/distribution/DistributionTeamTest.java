@@ -1,5 +1,7 @@
 package net.theevilreaper.xerus.api.team.distribution;
 
+import net.kyori.adventure.key.Key;
+import net.theevilreaper.xerus.api.team.Team;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -15,35 +17,35 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class DistributionTeamTest {
 
-    private final DistributionTeam blueTeam = new DistributionTeam("blue");
+    private final DistributionTeam blueTeam = new DistributionTeam(Key.key("xerus", "blue"));
 
     @Test
     void testTeamWithName() {
-        var team = new DistributionTeam("Test");
-        assertSame("Test", team.name());
+        DistributionTeam team = new DistributionTeam(Key.key("xerus", "test"));
+        assertTrue(team.name().asString().contains("test"));
+        assertEquals(Key.key("xerus", "test"), team.name());
     }
 
     @Order(1)
     @Test
     void testWithNameAndPlayers() {
-        var team = new DistributionTeam("Yellow", List.of(new DistributionPlayer(UUID.randomUUID(), 1)));
+        DistributionTeam team = new DistributionTeam(Key.key("xerus", "yellow"), List.of(new DistributionPlayer(UUID.randomUUID(), 1)));
 
-        assertSame("Yellow", team.name());
+        assertTrue(team.name().asString().contains("yellow"));
         assertFalse(team.players().isEmpty());
     }
 
     @Order(2)
     @Test
     void testStaticCreationWithName() {
-        var team = new DistributionTeam("Hallo");
-        assertNotSame("Test", team.name());
+        var team = new DistributionTeam(Key.key("xerus", "test"));
+        assertNotSame(Key.key("xerus", "test"), team.name());
     }
 
     @Order(3)
     @Test
     void testStaticCreationWithNameAndPlayers() {
-        var team = new DistributionTeam("Red", List.of());
-        assertSame("Red", team.name());
+        var team = new DistributionTeam(Key.key("xerus", "red"), List.of());
         assertSame(0, team.length());
     }
 

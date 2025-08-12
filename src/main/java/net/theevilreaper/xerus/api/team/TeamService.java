@@ -1,6 +1,9 @@
 package net.theevilreaper.xerus.api.team;
 
+import net.kyori.adventure.key.Key;
 import net.minestom.server.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -8,31 +11,47 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * The class includes all relevant method for a team service.
+ * The {link TeamService} interface is the ground definition for a service which handles teams in different cases.
+ * It contains management methods like add, remove or other methods to retrieve teams.
+ *
  * @author theEvilReaper
- * @version 1.0.4
- * @since 1.0.0
+ * @version 2.0.0
+ * @since 1.1.0
  **/
-public interface TeamService<T extends Team> {
+@ApiStatus.NonExtendable
+public interface TeamService {
+
+    /**
+     * Returns a new instance of the {@link TeamService}.
+     *
+     * @return the new instance
+     */
+    @Contract(pure = true)
+    static @NotNull TeamService of() {
+        return new StandardTeamService();
+    }
 
     /**
      * Add a team to the service.
-     * @param t The team to add
+     *
+     * @param team which should be added
      */
-    void add(@NotNull T t);
+    void add(@NotNull Team team);
 
     /**
      * Remove a team from the service.
-     * @param t The team to remove
+     *
+     * @param team which should be removed
      */
-    void remove(@NotNull T t);
+    void remove(@NotNull Team team);
 
     /**
      * Removes the team by his given identifier.
      * The identifier is the name of the team or the translated key
+     *
      * @param identifier the identifier from the team
      */
-    void remove(@NotNull String identifier);
+    void remove(@NotNull Key identifier);
 
     /**
      * Clears the underlying team list.
@@ -41,34 +60,39 @@ public interface TeamService<T extends Team> {
     void clear();
 
     /**
-     * Returns if a team exists that matches wit the given identifier.
-     * @param identifier The identifier from the team
-     * @return True when the team exists otherwise false
+     * Returns an indication of whether the team with the given identifier exists.
+     *
+     * @param identifier the identifier of the team
+     * @return true if the team exists otherwise false
      */
-    boolean exists(@NotNull String identifier);
+    boolean exists(@NotNull Key identifier);
 
     /**
      * Returns the team based on the specified identifier.
+     *
      * @param identifier of the team
-     * @return The team in an {@link Optional}
+     * @return the team in an {@link Optional}
      */
-    Optional<@Nullable T> getTeam(@NotNull String identifier);
+    Optional<@Nullable Team> getTeam(@NotNull Key identifier);
 
     /**
      * Returns the team based on the given player.
+     *
      * @param player The player from which the team is determined
-     * @return The team in an {@link Optional}
+     * @return the team in an {@link Optional}
      */
-    Optional<@Nullable T> getTeam(@NotNull Player player);
+    Optional<@Nullable Team> getTeam(@NotNull Player player);
 
     /**
      * Returns the team with the fewest players.
+     *
      * @return the smallest team
      */
-    Optional<@Nullable T> getSmallestTeam();
+    Optional<@Nullable Team> getSmallestTeam();
 
     /**
      * Returns an indication of whether the service has teams.
+     *
      * @return true if the service has teams otherwise false
      */
     default boolean hasTeams() {
@@ -77,7 +101,8 @@ public interface TeamService<T extends Team> {
 
     /**
      * Returns a list with all current available teams.
-     * @return The underlying list
+     *
+     * @return the underlying list
      */
-    @NotNull List<T> getTeams();
+    @NotNull List<Team> getTeams();
 }

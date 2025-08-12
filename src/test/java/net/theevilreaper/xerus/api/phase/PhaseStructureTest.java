@@ -17,7 +17,7 @@ class PhaseStructureTest {
 
     @BeforeAll
     void init() {
-        this.phase = new Phase() {
+        this.phase = new Phase("Test") {
             @Override
             protected void onStart() {
                 throw new RuntimeException("Start called");
@@ -60,51 +60,37 @@ class PhaseStructureTest {
 
     @Order(5)
     @Test
-    void testSetName() {
-        this.phase.setName("New name");
-        assertSame("New name", this.phase.getName());
-    }
-
-    @Order(6)
-    @Test
-    void testSetNameWithException() {
-        assertThrowsExactly(IllegalArgumentException.class,
-                () -> this.phase.setName(" "), "The name can't be empty");
-    }
-
-    @Order(7)
-    @Test
     void testIsRunning() {
         assertFalse(this.phase.isRunning());
     }
 
-    @Order(8)
+    @Order(6)
     @Test
     void testIsFinished() {
         assertTrue(this.phase.isFinished());
     }
 
-    @Order(9)
+    @Order(7)
     @Test
     void testSetFinish() {
         this.phase.setFinished(false);
         assertFalse(this.phase.isFinished());
     }
 
-    @Order(10)
+    @Order(8)
     @Test
     void testIsSkipping() {
         assertFalse(this.phase.isSkipping());
     }
 
-    @Order(11)
+    @Order(9)
     @Test
     void testSetSkipping() {
         this.phase.setSkipping(true);
         assertTrue(this.phase.isSkipping());
     }
 
-    @Order(12)
+    @Order(10)
     @Test
     void testSetFinishCallback() {
         this.phase.setFinishedCallback(null);

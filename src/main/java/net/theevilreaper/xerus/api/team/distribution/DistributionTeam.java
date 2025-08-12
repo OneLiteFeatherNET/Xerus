@@ -1,21 +1,29 @@
 package net.theevilreaper.xerus.api.team.distribution;
 
+import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The {@link DistributionTeam} class represents a team construct which is required for the distribution of players.
+ * Taken from: <a href="https://github.com/Tobi208/TeamSplitterFX">...</a>
+ *
+ * @param name    the name of the team
+ * @param players the list of players in the team
  * @author Patrick Zdarsky / Rxcki
  * @version 1.0
  * @since 03/02/2020 20:28
- *
- * Taken from: <a href="https://github.com/Tobi208/TeamSplitterFX">...</a>
  */
+public record DistributionTeam(@NotNull Key name, List<DistributionPlayer> players) {
 
-public record DistributionTeam(@NotNull String name, List<DistributionPlayer> players) {
-
-    public DistributionTeam(@NotNull String name) {
+    /**
+     * Creates a new instance of the {@link DistributionTeam} with the given value.
+     *
+     * @param name the name of the team
+     */
+    public DistributionTeam(@NotNull Key name) {
         this(name, new ArrayList<>());
     }
 
@@ -24,7 +32,9 @@ public record DistributionTeam(@NotNull String name, List<DistributionPlayer> pl
      *------------*/
 
     /**
-     * @return sum of elo of all players
+     * Calculates the sum of all players elo.
+     *
+     * @return the sum elo of all players
      */
     int sum() {
         int sum = 0;
@@ -41,14 +51,29 @@ public record DistributionTeam(@NotNull String name, List<DistributionPlayer> pl
      * Wrapper *
      *---------*/
 
+    /**
+     * Returns the length of the team.
+     *
+     * @return the length
+     */
     public int length() {
         return players.size();
     }
 
+    /**
+     * Adds a list of players to the team.
+     *
+     * @param players the players to add
+     */
     public void addAll(@NotNull List<DistributionPlayer> players) {
         this.players.addAll(players);
     }
 
+    /**
+     * Adds a single player to the team.
+     *
+     * @param player the player to add
+     */
     public void add(@NotNull DistributionPlayer player) {
         players.add(player);
     }

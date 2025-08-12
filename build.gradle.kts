@@ -7,22 +7,22 @@ plugins {
 }
 
 group = "net.theevilreaper"
-version = "1.7.2"
+version = "1.8.0"
 
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))
     }
+    withJavadocJar()
+    withSourcesJar()
 }
 
 dependencies {
     implementation(platform(libs.bom.base))
     compileOnly(libs.minestom)
-    compileOnly(libs.aves)
     compileOnly(libs.adventure)
     testImplementation(platform(libs.bom.base))
     testImplementation(libs.minestom)
-    testImplementation(libs.aves)
     testImplementation(libs.cyano)
     testImplementation(libs.adventure)
     testImplementation(libs.junit.api)
