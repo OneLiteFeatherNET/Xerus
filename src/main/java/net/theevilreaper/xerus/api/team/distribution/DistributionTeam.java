@@ -1,5 +1,6 @@
 package net.theevilreaper.xerus.api.team.distribution;
 
+import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -15,14 +16,14 @@ import java.util.List;
  * @version 1.0
  * @since 03/02/2020 20:28
  */
-public record DistributionTeam(@NotNull String name, List<DistributionPlayer> players) {
+public record DistributionTeam(@NotNull Key name, List<DistributionPlayer> players) {
 
     /**
      * Creates a new instance of the {@link DistributionTeam} with the given value.
      *
      * @param name the name of the team
      */
-    public DistributionTeam(@NotNull String name) {
+    public DistributionTeam(@NotNull Key name) {
         this(name, new ArrayList<>());
     }
 

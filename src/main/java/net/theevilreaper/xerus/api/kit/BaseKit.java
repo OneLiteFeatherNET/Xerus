@@ -1,13 +1,12 @@
 package net.theevilreaper.xerus.api.kit;
 
-import net.minestom.server.utils.validate.Check;
-import net.theevilreaper.aves.item.IItem;
+import net.kyori.adventure.key.Key;
+import net.theevilreaper.xerus.api.component.ObjectComponent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.EnumMap;
-
-import static net.minestom.server.inventory.PlayerInventory.INVENTORY_SIZE;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The {@link BaseKit} is an abstract layer implementation of the {@link Kit} interface.
@@ -19,71 +18,54 @@ import static net.minestom.server.inventory.PlayerInventory.INVENTORY_SIZE;
  **/
 public abstract class BaseKit implements Kit {
 
-    private IItem icon;
-    protected EnumMap<ArmorSlot, IItem> armorItems;
-    protected IItem[] items;
+    private final Map<Class<? extends ObjectComponent>, ObjectComponent> components;
+    private final Key key;
 
     /**
      * Creates a new instance of the {@link BaseKit}.
-     *
-     * @param armorItems whether the kit should contain armor items
      */
-    protected BaseKit(boolean armorItems) {
-        this.items = new IItem[INVENTORY_SIZE];
-        if (armorItems) {
-            this.armorItems = new EnumMap<>(ArmorSlot.class);
-        }
+    protected BaseKit(@NotNull Key key) {
+        this.key = key;
+        this.components = new HashMap<>();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public <T extends ObjectComponent> void add(@NotNull Class<T> componentClass, @NotNull T component) {
+        this.components.computeIfAbsent(componentClass, k -> component);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public <T extends ObjectComponent> boolean has(@NotNull Class<T> componentClass) {
+        return this.components.containsKey(componentClass);
     }
 
     /**
      * {@inheritDoc}}
      */
     @Override
-    public void setArmorItem(@NotNull ArmorSlot slot, @NotNull IItem item) {
-        this.armorItems.put(slot, item);
+    public <T extends ObjectComponent> @Nullable T get(@NotNull Class<T> componentClass) {
+        return componentClass.cast(this.components.get(componentClass));
     }
 
     /**
-     * {@inheritDoc}}
+     * {@inheritDoc}
      */
     @Override
-    public void setArmorItems(@NotNull EnumMap<ArmorSlot, IItem> armorItems) {
-        this.armorItems = armorItems;
+    public <T extends ObjectComponent> @Nullable T remove(@NotNull Class<T> componentClass) {
+        return componentClass.cast(this.components.remove(componentClass));
     }
 
     /**
-     * {@inheritDoc}}
+     * {@inheritDoc}
      */
     @Override
-    public void setItem(int index, @NotNull IItem item) {
-        Check.argCondition(index > items.length, "The index is to high");
-        items[index] = item;
-    }
-
-    /**
-     * {@inheritDoc}}
-     */
-    @Override
-    public void setItems(IItem[] items) {
-        Check.argCondition(items.length != this.items.length, "The given array has not the same index (" + INVENTORY_SIZE + ")");
-        this.items = items;
-    }
-
-    /**
-     * {@inheritDoc}}
-     */
-    @Override
-    public void setIcon(@NotNull IItem icon) {
-        this.icon = icon;
-    }
-
-    /**
-     * Returns the underlying icon from the kit.
-     *
-     * @return The underlying icon which is an object from {@link IItem}
-     */
-    @Override
-    public @Nullable IItem getIcon() {
-        return icon;
+    public @NotNull Key key() {
+        return this.key;
     }
 }

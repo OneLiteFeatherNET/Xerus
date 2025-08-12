@@ -37,7 +37,7 @@ public class DefaultTeamDistributor implements TeamDistributor {
         DistributionTeam[] dTeams = new DistributionTeam[teams.size()];
         for (int i = 0; i < teams.size(); i++) {
             var currentTeam = teams.get(i);
-            dTeams[i] = new DistributionTeam(currentTeam.getIdentifier());
+            dTeams[i] = new DistributionTeam(currentTeam.key());
             if (teams.get(i).getCurrentSize() > 0) {
                 for (Player player : currentTeam.getPlayers())
                     dTeams[i].add(new DistributionPlayer(player.getUuid(), eloFunction.applyAsInt(player)));
@@ -59,7 +59,7 @@ public class DefaultTeamDistributor implements TeamDistributor {
             Team team = null;
 
             for (int i = 0; i < teams.size() && team == null; i++) {
-                if (!teams.get(i).getIdentifier().equals(distributionTeam.name())) continue;
+                if (!teams.get(i).key().equals(distributionTeam.name())) continue;
                 team = teams.get(i);
             }
 

@@ -20,11 +20,9 @@ java {
 dependencies {
     implementation(platform(libs.bom.base))
     compileOnly(libs.minestom)
-    compileOnly(libs.aves)
     compileOnly(libs.adventure)
     testImplementation(platform(libs.bom.base))
     testImplementation(libs.minestom)
-    testImplementation(libs.aves)
     testImplementation(libs.cyano)
     testImplementation(libs.adventure)
     testImplementation(libs.junit.api)

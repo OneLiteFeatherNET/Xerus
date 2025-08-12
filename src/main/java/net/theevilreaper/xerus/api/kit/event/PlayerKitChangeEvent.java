@@ -64,7 +64,7 @@ public final class PlayerKitChangeEvent implements PlayerEvent, CancellableEvent
 
     /**
      * Returns the current kit of a player
-     * If the kit is null then the player has no kit yet
+     * If the kit is null, then the player has no kit yet
      * @return the current kit
      */
     public @Nullable Kit getCurrentKit() {
