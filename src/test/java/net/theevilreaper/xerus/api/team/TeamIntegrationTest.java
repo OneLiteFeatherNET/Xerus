@@ -3,7 +3,6 @@ package net.theevilreaper.xerus.api.team;
 import net.kyori.adventure.key.Key;
 import net.minestom.server.event.EventFilter;
 import net.minestom.testing.Collector;
-import net.theevilreaper.xerus.api.ColorData;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.Instance;
 import net.minestom.testing.Env;
@@ -21,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MicrotusExtension.class)
-public class TeamIntegrationTest {
+class TeamIntegrationTest {
 
     static Team team;
 
