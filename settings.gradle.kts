@@ -1,5 +1,12 @@
 rootProject.name = "xerus"
 
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven("https://eldonexus.de/repository/maven-public/")
+    }
+}
+
 dependencyResolutionManagement {
     repositories {
         maven {
@@ -21,7 +28,8 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         create("libs") {
-            version("bom", "1.4.5")
+            version("bom", "1.4.4")
+            version("publishdata", "1.4.0")
 
             library("bom.base", "net.onelitefeather", "mycelium-bom").versionRef("bom")
             library("adventure", "net.kyori", "adventure-text-minimessage").withoutVersion()
@@ -32,6 +40,8 @@ dependencyResolutionManagement {
             library("mockito.core", "org.mockito", "mockito-core").withoutVersion()
             library("mockito.junit", "org.mockito", "mockito-junit-jupiter").withoutVersion()
             library("junit.platform.launcher", "org.junit.platform", "junit-platform-launcher").withoutVersion()
+
+            plugin("publishdata", "de.chojo.publishdata").versionRef("publishdata")
         }
     }
 }
