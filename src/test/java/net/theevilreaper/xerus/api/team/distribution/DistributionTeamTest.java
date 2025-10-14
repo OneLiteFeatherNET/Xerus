@@ -1,7 +1,6 @@
 package net.theevilreaper.xerus.api.team.distribution;
 
 import net.kyori.adventure.key.Key;
-import net.theevilreaper.xerus.api.team.Team;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;

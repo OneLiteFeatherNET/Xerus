@@ -3,7 +3,6 @@ package net.theevilreaper.xerus.api.team.event;
 import net.kyori.adventure.key.Key;
 import net.minestom.server.event.EventFilter;
 import net.minestom.testing.Collector;
-import net.theevilreaper.xerus.api.ColorData;
 import net.theevilreaper.xerus.api.team.Team;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
