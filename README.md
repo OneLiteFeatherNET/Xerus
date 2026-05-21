@@ -38,3 +38,10 @@ dependencies {
 ```
 
 Other releases can be found on the [Release Page](https://github.com/OneLiteFeatherNET/Xerus/releases)
+
+### Support
+
+We develop these projects in our free time.
+
+If you find them useful and would like to support us, you can do so via
+[OpenCollective](https://opencollective.com/onelitefeather)
