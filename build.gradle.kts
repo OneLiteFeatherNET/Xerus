@@ -17,9 +17,10 @@ java {
 
 dependencies {
     implementation(platform(libs.bom.base))
+
     compileOnly(libs.minestom)
     compileOnly(libs.adventure)
-    testImplementation(platform(libs.bom.base))
+
     testImplementation(libs.minestom)
     testImplementation(libs.cyano)
     testImplementation(libs.adventure)
@@ -27,6 +28,7 @@ dependencies {
     testImplementation(libs.junit.platform.launcher)
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.junit)
+
     testRuntimeOnly(libs.junit.engine)
 }
 
