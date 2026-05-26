@@ -2,6 +2,7 @@ rootProject.name = "xerus"
 
 dependencyResolutionManagement {
     repositories {
+        mavenCentral()
         maven {
             name = "OneLiteFeatherRepository"
             url = uri("https://repo.onelitefeather.dev/onelitefeather")
@@ -17,7 +18,6 @@ dependencyResolutionManagement {
                 }
             }
         }
-        mavenCentral()
     }
     versionCatalogs {
         create("libs") {
