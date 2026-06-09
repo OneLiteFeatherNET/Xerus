@@ -17,6 +17,7 @@ java {
 
 dependencies {
     implementation(platform(libs.bom.base))
+    implementation(libs.slf4j.api)
 
     compileOnly(libs.minestom)
     compileOnly(libs.adventure)
