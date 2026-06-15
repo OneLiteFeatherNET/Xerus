@@ -33,7 +33,7 @@ Once that's done, add the following dependency to your `build.gradle.kts` file:
 
 ```kotlin
 dependencies {
-    implementation("net.theevilreaper:xerus:1.0.0")
+    implementation("net.theevilreaper:xerus:1.11.1")
 }
 ```
 
