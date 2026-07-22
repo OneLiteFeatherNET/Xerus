@@ -4,7 +4,6 @@ import net.kyori.adventure.key.Key;
 import net.minestom.server.entity.Player;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.Optional;
  * It contains management methods like add, remove or other methods to retrieve teams.
  *
  * @author theEvilReaper
- * @version 2.0.0
+ * @version 2.1.0
  * @since 1.1.0
  **/
 @ApiStatus.NonExtendable

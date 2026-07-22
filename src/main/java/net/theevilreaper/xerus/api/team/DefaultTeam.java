@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * If a case doesn't fit into this, it is recommended to create a custom implementation or inherit from this class.
  *
  * @author theEvilReaper
- * @version 2.0.0
+ * @version 2.1.0
  * @since 1.0.0
  */
 public class DefaultTeam implements Team {

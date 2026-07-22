@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * The default implementation of the {@link TeamService} interface.
  *
  * @author theEvilReaper
- * @version 1.2.0
+ * @version 1.3.0
  * @since 1.0.1
  */
 public final class StandardTeamService implements TeamService {
