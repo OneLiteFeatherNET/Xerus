@@ -16,8 +16,8 @@ class TeamTest {
         assertNotNull(team);
         assertThrowsExactly(
                 IllegalArgumentException.class,
-                () -> team.setCapacity(-1),
-                "The capacity of the can't be negative"
+                () -> team.setCapacity(-5),
+                "The capacity of the team can't be negative"
         );
     }
 
@@ -30,6 +30,9 @@ class TeamTest {
 
         team.setCapacity(10);
         assertEquals(10, team.getCapacity());
+
+        team.setCapacity(-1);
+        assertEquals(-1, team.getCapacity());
     }
 
     @Test
