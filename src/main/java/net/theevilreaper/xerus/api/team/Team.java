@@ -22,16 +22,10 @@ import java.util.function.Consumer;
  * It defines essential methods for organizing and interacting with a team of players or members.
  *
  * @author theEvilReaper
- * @version 2.1.0
+ * @version 2.2.0
  * @since 1.1.6
  **/
 public interface Team extends Joinable, Componentable, Comparator<Team> {
-
-    /**
-     * An empty runnable implementation.
-     */
-    @NotNull Runnable EMPTY = () -> {
-    };
 
     /**
      * Creates a new {@link Team} instance with the given key.
@@ -40,7 +34,7 @@ public interface Team extends Joinable, Componentable, Comparator<Team> {
      * @return the created team
      */
     @Contract("_ -> new")
-    static @NotNull Team of(@NotNull Key key) {
+    static Team of(Key key) {
         return new DefaultTeam(key, -1);
     }
 
@@ -52,7 +46,7 @@ public interface Team extends Joinable, Componentable, Comparator<Team> {
      * @return the created team
      */
     @Contract("_, _ -> new")
-    static @NotNull Team of(@NotNull Key key, int capacity) {
+    static Team of(Key key, int capacity) {
         return new DefaultTeam(key, capacity);
     }
 
@@ -80,7 +74,7 @@ public interface Team extends Joinable, Componentable, Comparator<Team> {
      * @param consumer a consumer which is called to execute some logic
      */
     @Override
-    default void addPlayers(@NotNull Collection<Player> players, @Nullable Consumer<Player> consumer) {
+    default void addPlayers(Collection<Player> players, @Nullable Consumer<Player> consumer) {
         if (players.isEmpty()) return;
         Set<Player> toAdd = new HashSet<>(players);
         toAdd.removeIf(this::hasPlayer);
@@ -101,7 +95,7 @@ public interface Team extends Joinable, Componentable, Comparator<Team> {
      * @param consumer    a consumer which is called to execute some logic
      */
     @Override
-    default void removePlayer(@NotNull Player paramPlayer, @Nullable Consumer<Player> consumer) {
+    default void removePlayer(Player paramPlayer, @Nullable Consumer<Player> consumer) {
         PlayerTeamEvent teamEvent = new PlayerTeamEvent(paramPlayer, this, TeamAction.REMOVE);
         EventDispatcher.callCancellable(teamEvent, () -> {
             if (getPlayers().remove(paramPlayer) && consumer != null) {
@@ -117,7 +111,7 @@ public interface Team extends Joinable, Componentable, Comparator<Team> {
      * @param consumer a consumer which is called to execute some logic
      */
     @Override
-    default void removePlayers(@NotNull Collection<Player> players, @Nullable Consumer<Player> consumer) {
+    default void removePlayers(Collection<Player> players, @Nullable Consumer<Player> consumer) {
         if (players.isEmpty()) return;
         Set<Player> toRemove = new HashSet<>(players);
         toRemove.retainAll(getPlayers());
@@ -152,7 +146,7 @@ public interface Team extends Joinable, Componentable, Comparator<Team> {
      * @param player the player to check
      * @return true when the player is in the team otherwise false
      */
-    default boolean hasPlayer(@NotNull Player player) {
+    default boolean hasPlayer(Player player) {
         return getPlayers().contains(player);
     }
 
@@ -161,7 +155,7 @@ public interface Team extends Joinable, Componentable, Comparator<Team> {
      *
      * @param component the message wraps as {@link Component} who should send
      */
-    default void sendMessage(@NotNull Component component) {
+    default void sendMessage(Component component) {
         if (isEmpty()) return;
         for (Player player : getPlayers()) {
             player.sendMessage(component);
@@ -181,7 +175,7 @@ public interface Team extends Joinable, Componentable, Comparator<Team> {
      *
      * @return the identifier
      */
-    @NotNull Key key();
+    Key key();
 
     /**
      * Returns a boolean indicator if the team contains entries or not.
@@ -211,5 +205,5 @@ public interface Team extends Joinable, Componentable, Comparator<Team> {
      *
      * @return the given set
      */
-    @NotNull Set<Player> getPlayers();
+    Set<Player> getPlayers();
 }
