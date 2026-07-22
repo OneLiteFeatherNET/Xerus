@@ -27,7 +27,7 @@ public interface TeamService {
      * @return the new instance
      */
     @Contract(pure = true)
-    static @NotNull TeamService of() {
+    static TeamService of() {
         return new StandardTeamService();
     }
 
@@ -36,14 +36,14 @@ public interface TeamService {
      *
      * @param team which should be added
      */
-    void add(@NotNull Team team);
+    void add(Team team);
 
     /**
      * Remove a team from the service.
      *
      * @param team which should be removed
      */
-    void remove(@NotNull Team team);
+    void remove(Team team);
 
     /**
      * Removes the team by his given identifier.
@@ -51,7 +51,7 @@ public interface TeamService {
      *
      * @param identifier the identifier from the team
      */
-    void remove(@NotNull Key identifier);
+    void remove(Key identifier);
 
     /**
      * Clears the underlying team list.
@@ -65,7 +65,7 @@ public interface TeamService {
      * @param identifier the identifier of the team
      * @return true if the team exists otherwise false
      */
-    boolean exists(@NotNull Key identifier);
+    boolean exists(Key identifier);
 
     /**
      * Returns the team based on the specified identifier.
@@ -73,7 +73,7 @@ public interface TeamService {
      * @param identifier of the team
      * @return the team in an {@link Optional}
      */
-    Optional<@Nullable Team> getTeam(@NotNull Key identifier);
+    Optional<@Nullable Team> getTeam(Key identifier);
 
     /**
      * Returns the team based on the given player.
@@ -81,7 +81,7 @@ public interface TeamService {
      * @param player The player from which the team is determined
      * @return the team in an {@link Optional}
      */
-    Optional<@Nullable Team> getTeam(@NotNull Player player);
+    Optional<@Nullable Team> getTeam(Player player);
 
     /**
      * Returns the team with the fewest players.
@@ -104,5 +104,5 @@ public interface TeamService {
      *
      * @return the underlying list
      */
-    @NotNull List<Team> getTeams();
+    List<Team> getTeams();
 }
