@@ -4,14 +4,12 @@ import net.kyori.adventure.key.Key;
 import net.minestom.server.entity.Player;
 import net.minestom.server.utils.validate.Check;
 import net.theevilreaper.xerus.api.component.ObjectComponent;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The class represents a default implementation of the {@link Team} interface.
@@ -39,22 +37,18 @@ public class DefaultTeam implements Team {
      * @param key             the key for the team name
      * @param initialCapacity the initial capacity for the team
      */
-    protected DefaultTeam(@NotNull Key key, int initialCapacity) {
+    protected DefaultTeam(Key key, int initialCapacity) {
         this.key = key;
         this.capacity = initialCapacity;
-        if (initialCapacity == DEFAULT_CAPACITY) {
-            this.players = new HashSet<>();
-        } else {
-            this.players = HashSet.newHashSet(initialCapacity);
-        }
-        this.components = new HashMap<>();
+        this.players = ConcurrentHashMap.newKeySet();
+        this.components = new ConcurrentHashMap<>();
     }
 
     /**
      * {@inheritDoc}}
      */
     @Override
-    public <T extends ObjectComponent> void add(@NotNull Class<T> componentClass, @NotNull T component) {
+    public <T extends ObjectComponent> void add(Class<T> componentClass, T component) {
         this.components.computeIfAbsent(componentClass, k -> component);
     }
 
@@ -62,7 +56,7 @@ public class DefaultTeam implements Team {
      * {@inheritDoc}
      */
     @Override
-    public <T extends ObjectComponent> boolean has(@NotNull Class<T> componentClass) {
+    public <T extends ObjectComponent> boolean has(Class<T> componentClass) {
         return this.components.containsKey(componentClass);
     }
 
@@ -70,7 +64,7 @@ public class DefaultTeam implements Team {
      * {@inheritDoc}
      */
     @Override
-    public <T extends ObjectComponent> @Nullable T get(@NotNull Class<T> componentClass) {
+    public <T extends ObjectComponent> @Nullable T get(Class<T> componentClass) {
         return componentClass.cast(this.components.get(componentClass));
     }
 
@@ -78,7 +72,7 @@ public class DefaultTeam implements Team {
      * {@inheritDoc}
      */
     @Override
-    public <T extends ObjectComponent> @Nullable T remove(@NotNull Class<T> componentClass) {
+    public <T extends ObjectComponent> @Nullable T remove(Class<T> componentClass) {
         return componentClass.cast(this.components.remove(componentClass));
     }
 
@@ -87,7 +81,7 @@ public class DefaultTeam implements Team {
      */
     @Override
     public void setCapacity(int capacity) {
-        Check.argCondition(capacity < 0, "The capacity of the can't be negative");
+        Check.argCondition(capacity < 0 && capacity != DEFAULT_CAPACITY, "The capacity of the team can't be negative");
         this.capacity = capacity;
     }
 
@@ -100,7 +94,7 @@ public class DefaultTeam implements Team {
     }
 
     @Override
-    public int compare(@NotNull Team o1, @NotNull Team o2) {
+    public int compare(Team o1, Team o2) {
         return o1.key().compareTo(o2.key());
     }
 
@@ -119,7 +113,7 @@ public class DefaultTeam implements Team {
      * {@inheritDoc}
      */
     @Override
-    public @NotNull Key key() {
+    public Key key() {
         return this.key;
     }
 
@@ -143,7 +137,7 @@ public class DefaultTeam implements Team {
      * {@inheritDoc}
      */
     @Override
-    public @NotNull Set<Player> getPlayers() {
+    public Set<Player> getPlayers() {
         return players;
     }
 }

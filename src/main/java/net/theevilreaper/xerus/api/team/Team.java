@@ -13,6 +13,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -21,7 +22,7 @@ import java.util.function.Consumer;
  * It defines essential methods for organizing and interacting with a team of players or members.
  *
  * @author theEvilReaper
- * @version 2.0.0
+ * @version 2.1.0
  * @since 1.1.6
  **/
 public interface Team extends Joinable, Componentable, Comparator<Team> {
@@ -63,10 +64,13 @@ public interface Team extends Joinable, Componentable, Comparator<Team> {
      */
     @Override
     default void addPlayer(@NotNull Player player, @Nullable Consumer<Player> consumer) {
-        if (getPlayers().add(player)) {
-            PlayerTeamEvent teamEvent = new PlayerTeamEvent(player, this, TeamAction.ADD);
-            EventDispatcher.callCancellable(teamEvent, consumer != null ? () -> consumer.accept(player) : EMPTY);
-        }
+        if (!canJoin()) return;
+        PlayerTeamEvent teamEvent = new PlayerTeamEvent(player, this, TeamAction.ADD);
+        EventDispatcher.callCancellable(teamEvent, () -> {
+            if (getPlayers().add(player) && consumer != null) {
+                consumer.accept(player);
+            }
+        });
     }
 
     /**
@@ -78,9 +82,16 @@ public interface Team extends Joinable, Componentable, Comparator<Team> {
     @Override
     default void addPlayers(@NotNull Collection<Player> players, @Nullable Consumer<Player> consumer) {
         if (players.isEmpty()) return;
-        players.removeIf(player -> !getPlayers().add(player));
-        Runnable successCallback = consumer == null ? EMPTY : () -> getPlayers().forEach(consumer);
-        EventDispatcher.callCancellable(new MultiPlayerTeamEvent(this, players, TeamAction.ADD), successCallback);
+        Set<Player> toAdd = new HashSet<>(players);
+        toAdd.removeIf(this::hasPlayer);
+        if (toAdd.isEmpty()) return;
+        EventDispatcher.callCancellable(new MultiPlayerTeamEvent(this, toAdd, TeamAction.ADD), () -> {
+            for (Player player : toAdd) {
+                if (canJoin() && getPlayers().add(player) && consumer != null) {
+                    consumer.accept(player);
+                }
+            }
+        });
     }
 
     /**
@@ -91,10 +102,12 @@ public interface Team extends Joinable, Componentable, Comparator<Team> {
      */
     @Override
     default void removePlayer(@NotNull Player paramPlayer, @Nullable Consumer<Player> consumer) {
-        if (getPlayers().remove(paramPlayer)) {
-            PlayerTeamEvent teamEvent = new PlayerTeamEvent(paramPlayer, this, TeamAction.REMOVE);
-            EventDispatcher.callCancellable(teamEvent, consumer == null ? EMPTY : () -> consumer.accept(paramPlayer));
-        }
+        PlayerTeamEvent teamEvent = new PlayerTeamEvent(paramPlayer, this, TeamAction.REMOVE);
+        EventDispatcher.callCancellable(teamEvent, () -> {
+            if (getPlayers().remove(paramPlayer) && consumer != null) {
+                consumer.accept(paramPlayer);
+            }
+        });
     }
 
     /**
@@ -106,9 +119,17 @@ public interface Team extends Joinable, Componentable, Comparator<Team> {
     @Override
     default void removePlayers(@NotNull Collection<Player> players, @Nullable Consumer<Player> consumer) {
         if (players.isEmpty()) return;
-        players.removeIf(player -> getPlayers().contains(player));
-        Runnable successCallback = consumer == null ? EMPTY : () -> getPlayers().forEach(consumer);
-        EventDispatcher.callCancellable(new MultiPlayerTeamEvent(this, players, TeamAction.REMOVE), successCallback);
+        Set<Player> toRemove = new HashSet<>(players);
+        toRemove.retainAll(getPlayers());
+        if (toRemove.isEmpty()) return;
+        EventDispatcher.callCancellable(new MultiPlayerTeamEvent(this, toRemove, TeamAction.REMOVE), () -> {
+            for (Player player : toRemove) {
+                getPlayers().remove(player);
+                if (consumer != null) {
+                    consumer.accept(player);
+                }
+            }
+        });
     }
 
     /**
@@ -152,7 +173,7 @@ public interface Team extends Joinable, Componentable, Comparator<Team> {
      */
     default void clearPlayers() {
         if (getPlayers().isEmpty()) return;
-        removePlayers(getPlayers());
+        removePlayers(new HashSet<>(getPlayers()), null);
     }
 
     /**
