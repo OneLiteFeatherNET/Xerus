@@ -1,7 +1,5 @@
 package net.theevilreaper.xerus.api.team.distribution;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.UUID;
 
 /**
@@ -16,5 +14,5 @@ import java.util.UUID;
  * @version 1.1.0
  * @since 03/02/2020 20:26
  */
-public record DistributionPlayer(@NotNull UUID uuid, int elo) {
+public record DistributionPlayer(UUID uuid, int elo) {
 }
