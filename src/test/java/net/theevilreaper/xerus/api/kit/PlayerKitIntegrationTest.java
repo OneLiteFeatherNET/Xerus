@@ -32,11 +32,11 @@ class PlayerKitIntegrationTest {
         PlayerKitChangeEvent event = new PlayerKitChangeEvent(player, oldKit, newKit);
         EventDispatcher.call(event);
 
-        collector.assertSingle(e -> {
-            assertEquals(player, e.getPlayer());
-            assertEquals(oldKit, e.getCurrentKit());
-            assertEquals(newKit, e.getNewKit());
-            assertFalse(e.isCancelled());
+        collector.assertSingle(firedEvent -> {
+            assertEquals(player, firedEvent.getPlayer());
+            assertEquals(oldKit, firedEvent.getCurrentKit());
+            assertEquals(newKit, firedEvent.getNewKit());
+            assertFalse(firedEvent.isCancelled());
         });
 
         env.destroyInstance(instance, true);
