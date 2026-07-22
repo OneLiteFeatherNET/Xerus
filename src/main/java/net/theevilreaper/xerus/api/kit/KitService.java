@@ -2,8 +2,6 @@ package net.theevilreaper.xerus.api.kit;
 
 import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.List;
@@ -15,7 +13,7 @@ import java.util.Optional;
  * So he must implement the interface by self and can add additional method to the service.
  *
  * @author theEvilReaper
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.2.0
  **/
 public interface KitService {
@@ -26,7 +24,7 @@ public interface KitService {
      * @return the new instance
      */
     @Contract(pure = true)
-    static @NotNull KitService of() {
+    static KitService of() {
         return new DefaultKitService();
     }
 
@@ -35,7 +33,7 @@ public interface KitService {
      *
      * @param kit that should be added
      */
-    void add(@NotNull Kit kit);
+    void add(Kit kit);
 
     /**
      * Remove a kit by the identifier from the kit.
@@ -43,7 +41,7 @@ public interface KitService {
      * @param identifier the identifier from the kit
      * @return true when the kit can be removed otherwise false
      */
-    boolean remove(@NotNull Key identifier);
+    boolean remove(Key identifier);
 
     /**
      * Clears the underlying data structure.
@@ -56,14 +54,13 @@ public interface KitService {
      * @param name the name of the kit
      * @return the fetched kit in an optional
      */
-    @NotNull Optional<@Nullable Kit> getKit(@NotNull Key name);
+    Optional<Kit> getKit(Key name);
 
     /**
      * Returns a list with all current available kits.
      *
      * @return the underlying list
      */
-    @NotNull
     @UnmodifiableView
     @Contract(pure = true)
     List<Kit> getKits();
