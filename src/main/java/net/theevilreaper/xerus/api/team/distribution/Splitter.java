@@ -11,7 +11,7 @@ import java.util.List;
  * Taken from: <a href="https://github.com/Tobi208/TeamSplitterFX">...</a>
  *
  * @author Patrick Zdarsky / Rxcki
- * @version 1.0
+ * @version 1.1
  * @since 03/02/2020 20:21
  */
 public class Splitter {
@@ -155,9 +155,11 @@ public class Splitter {
      */
     private DistributionTeam minTeam(DistributionTeam[] ts) {
         int i = 0;
-        if (evenTeams)
-            while (ts[i].length() >= evenMax)
+        if (evenTeams) {
+            while (i < tn - 1 && ts[i].length() >= evenMax) {
                 i++;
+            }
+        }
         DistributionTeam mt = ts[i];
         int min = mt.sum();
         for (int j = 1; j < tn; j++) {
