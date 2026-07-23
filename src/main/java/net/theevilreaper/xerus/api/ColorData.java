@@ -4,14 +4,13 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.color.Color;
 import net.minestom.server.color.DyeColor;
 import net.minestom.server.item.Material;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents a mapping of visual color variants using text color, dye color, block material, and a string identifier.
  * Each constant aligns with a specific base color and can be used to harmonize visual elements across different systems.
  *
  * @author theEvilReaper
- * @version 1.5.0
+ * @version 1.6.0
  * @since 1.0.0
  */
 @SuppressWarnings("java:S3252")
@@ -81,12 +80,7 @@ public enum ColorData {
      * @param material     the material for the wool
      * @param translateKey the key for the translation
      */
-    ColorData(
-            @NotNull NamedTextColor chatColor,
-            @NotNull DyeColor dyeColor,
-            @NotNull Material material,
-            @NotNull String translateKey
-    ) {
+    ColorData(NamedTextColor chatColor, DyeColor dyeColor, Material material, String translateKey) {
         this.chatColor = chatColor;
         this.dyeColor = dyeColor;
         this.material = material;
@@ -98,7 +92,7 @@ public enum ColorData {
      *
      * @return the underlying dyeColor
      */
-    public @NotNull DyeColor getDyeColor() {
+    public DyeColor getDyeColor() {
         return dyeColor;
     }
 
@@ -107,7 +101,7 @@ public enum ColorData {
      *
      * @return the underlying material
      */
-    public @NotNull Material getMaterial() {
+    public Material getMaterial() {
         return material;
     }
 
@@ -116,7 +110,7 @@ public enum ColorData {
      *
      * @return the underlying chatColor
      */
-    public @NotNull NamedTextColor getChatColor() {
+    public NamedTextColor getChatColor() {
         return chatColor;
     }
 
@@ -125,7 +119,7 @@ public enum ColorData {
      *
      * @return the underlying translation key
      */
-    public @NotNull String getTranslateKey() {
+    public String getTranslateKey() {
         return translateKey;
     }
 
@@ -134,7 +128,7 @@ public enum ColorData {
      *
      * @return the underlying color
      */
-    public @NotNull Color getColor() {
+    public Color getColor() {
         return this.dyeColor.color();
     }
 
@@ -145,7 +139,7 @@ public enum ColorData {
      *
      * @return an array with the color data values
      */
-    public static @NotNull ColorData[] getValues() {
+    public static ColorData[] getValues() {
         return VALUES;
     }
 }

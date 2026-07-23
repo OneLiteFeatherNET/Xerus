@@ -1,6 +1,5 @@
 package net.theevilreaper.xerus.api.component;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -8,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
  * It allows adding, checking, retrieving, and removing components of a specific type.
  *
  * @author theEvilReaper
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.8.0
  */
 public interface Componentable {
@@ -20,7 +19,7 @@ public interface Componentable {
      * @param component      the component to add
      * @param <T>            the type of the component
      */
-    <T extends ObjectComponent> void add(@NotNull Class<T> componentClass, @NotNull T component);
+    <T extends ObjectComponent> void add(Class<T> componentClass, T component);
 
     /**
      * Checks if a structure has a specific component.
@@ -29,7 +28,7 @@ public interface Componentable {
      * @param <T>            the type of the component
      * @return true if the room has the component, false otherwise
      */
-    <T extends ObjectComponent> boolean has(@NotNull Class<T> componentClass);
+    <T extends ObjectComponent> boolean has(Class<T> componentClass);
 
     /**
      * Get a component of the specified class.
@@ -38,7 +37,7 @@ public interface Componentable {
      * @param <T>            the type of the component
      * @return the component if it was present, null otherwise
      */
-    <T extends ObjectComponent> @Nullable T get(@NotNull Class<T> componentClass);
+    <T extends ObjectComponent> @Nullable T get(Class<T> componentClass);
 
     /**
      * Removes a component of the specified class from a structure.
@@ -47,5 +46,5 @@ public interface Componentable {
      * @param <T>            the type of the component
      * @return the removed component if it was present, null otherwise
      */
-    <T extends ObjectComponent> @Nullable T remove(@NotNull Class<T> componentClass);
+    <T extends ObjectComponent> @Nullable T remove(Class<T> componentClass);
 }
