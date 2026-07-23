@@ -2,6 +2,7 @@ package net.theevilreaper.xerus.api;
 
 import net.minestom.server.entity.Player;
 import net.minestom.server.utils.validate.Check;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.Locale;
@@ -23,7 +24,7 @@ public interface ItemShiftOption {
      * @param locale       the locale to determine the right items
      * @param shiftedSlots specifies whether the items should be added in a different order
      */
-    void setEquipment(Player player, Locale locale, int... shiftedSlots);
+    void setEquipment(Player player, @Nullable Locale locale, int @Nullable ... shiftedSlots);
 
     /**
      * Sets equipment to a specific player.
