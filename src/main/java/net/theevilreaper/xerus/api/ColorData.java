@@ -39,7 +39,7 @@ public enum ColorData {
     GRAY(NamedTextColor.GRAY, DyeColor.GRAY, Material.LIGHT_GRAY_WOOL, "colorLightGray"),
 
     /** Aligns with the dark gray color. */
-    DARK_GREY(NamedTextColor.DARK_GRAY, DyeColor.GRAY, Material.GRAY_WOOL, "colorDarkGray"),
+    DARK_GRAY(NamedTextColor.DARK_GRAY, DyeColor.GRAY, Material.GRAY_WOOL, "colorDarkGray"),
 
     /** Aligns with the green color. */
     GREEN(NamedTextColor.DARK_GREEN, DyeColor.GREEN, Material.GREEN_WOOL, "colorGreen"),
