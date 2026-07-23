@@ -10,7 +10,7 @@ import java.util.Locale;
  * Contains some methods that help to set the player items.
  *
  * @author theEvilReaper
- * @version 1.2.0
+ * @version 1.3.0
  * @since 1.2.0
  **/
 @FunctionalInterface
@@ -26,7 +26,7 @@ public interface ItemShiftOption {
     void setEquipment(Player player, Locale locale, int... shiftedSlots);
 
     /**
-     * Sets an equipment to an specific player.
+     * Sets equipment to a specific player.
      *
      * @param player       the player who receives the equipment
      * @param shiftedSlots array containing shifted slots for the items
@@ -45,8 +45,6 @@ public interface ItemShiftOption {
     default void setEquipment(Collection<Player> players, int... shiftedSlots) {
         if (players.isEmpty()) return;
 
-        for (Player player : players) {
-            this.setEquipment(player, shiftedSlots);
-        }
+        players.forEach(player -> setEquipment(player, shiftedSlots));
     }
 }
