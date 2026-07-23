@@ -41,7 +41,7 @@ public interface Componentable {
     <T extends ObjectComponent> @Nullable T get(@NotNull Class<T> componentClass);
 
     /**
-     * Remoeves a component of the specified class from a structure.
+     * Removes a component of the specified class from a structure.
      *
      * @param componentClass the class of the component to remove
      * @param <T>            the type of the component
