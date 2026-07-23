@@ -3,76 +3,76 @@ package net.theevilreaper.xerus.api;
 import net.minestom.server.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Set;
+import java.util.Collection;
 import java.util.function.Consumer;
 
 /**
- * The interface provides some method to add a single player object or a set off players.
+ * The interface provides some method to add a single player object or a collection of players.
  * Each developer can implement the interface into his class but must write his own logic for the methods.
  *
  * @author theEvilReaper
- * @version 1.1.0
+ * @version 1.2.0
  * @since 1.0.0
  */
 public interface Joinable {
 
     /**
      * Add a single player
-     * @param paramPlayer The player to add
+     * @param player The player to add
      */
-    default void addPlayer(Player paramPlayer) {
-        this.addPlayer(paramPlayer, null);
+    default void addPlayer(Player player) {
+        this.addPlayer(player, null);
     }
 
     /**
      * Add a single {@link Player} entry to a structure.
-     * @param paramPlayer the player to add
+     * @param player the player to add
      * @param consumer a consumer which is called to execute some logic
      */
-    void addPlayer(Player paramPlayer, @Nullable Consumer<Player> consumer);
+    void addPlayer(Player player, @Nullable Consumer<Player> consumer);
 
     /**
-     * Add a set off players
-     * @param players The set which contains the players to add
+     * Add a collection of players
+     * @param players The collection which contains the players to add
      */
-    default void addPlayers(Set<Player> players) {
+    default void addPlayers(Collection<Player> players) {
         this.addPlayers(players, null);
     }
 
     /**
-     * Add a set off players
-     * @param players The set which contains the players to add
+     * Add a collection of players
+     * @param players The collection which contains the players to add
      * @param consumer a consumer which is called to execute some logic
      */
-    void addPlayers(Set<Player> players, @Nullable Consumer<Player> consumer);
+    void addPlayers(Collection<Player> players, @Nullable Consumer<Player> consumer);
 
     /**
      * Remove a single player
-     * @param paramPlayer The player to remove
+     * @param player The player to remove
      */
-    default void removePlayer(Player paramPlayer) {
-        this.removePlayer(paramPlayer, null);
+    default void removePlayer(Player player) {
+        this.removePlayer(player, null);
     }
 
     /**
      * Remove a single {@link Player} entry from a structure.
-     * @param paramPlayer the player to remove
+     * @param player the player to remove
      * @param consumer a consumer which is called to execute some logic
      */
-    void removePlayer(Player paramPlayer, @Nullable Consumer<Player> consumer);
+    void removePlayer(Player player, @Nullable Consumer<Player> consumer);
 
     /**
-     * Remove a set off players
-     * @param players The set which contains the players to remove
+     * Remove a collection of players
+     * @param players The collection which contains the players to remove
      */
-    default void removePlayers(Set<Player> players) {
+    default void removePlayers(Collection<Player> players) {
         this.removePlayers(players, null);
     }
 
     /**
-     * Remove a set off players
-     * @param players The set which contains the players to remove
+     * Remove a collection of players
+     * @param players The collection which contains the players to remove
      * @param consumer a consumer which is called to execute some logic
      */
-    void removePlayers(Set<Player> players, @Nullable Consumer<Player> consumer);
+    void removePlayers(Collection<Player> players, @Nullable Consumer<Player> consumer);
 }

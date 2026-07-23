@@ -11,6 +11,7 @@ import net.minestom.server.event.EventDispatcher;
 import net.theevilreaper.xerus.api.team.event.TeamAction;
 import org.jetbrains.annotations.*;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -75,7 +76,7 @@ public interface Team extends Joinable, Componentable, Comparator<Team> {
      * @param consumer a consumer which is called to execute some logic
      */
     @Override
-    default void addPlayers(@NotNull Set<Player> players, @Nullable Consumer<Player> consumer) {
+    default void addPlayers(@NotNull Collection<Player> players, @Nullable Consumer<Player> consumer) {
         if (players.isEmpty()) return;
         players.removeIf(player -> !getPlayers().add(player));
         Runnable successCallback = consumer == null ? EMPTY : () -> getPlayers().forEach(consumer);
@@ -103,7 +104,7 @@ public interface Team extends Joinable, Componentable, Comparator<Team> {
      * @param consumer a consumer which is called to execute some logic
      */
     @Override
-    default void removePlayers(@NotNull Set<Player> players, @Nullable Consumer<Player> consumer) {
+    default void removePlayers(@NotNull Collection<Player> players, @Nullable Consumer<Player> consumer) {
         if (players.isEmpty()) return;
         players.removeIf(player -> getPlayers().contains(player));
         Runnable successCallback = consumer == null ? EMPTY : () -> getPlayers().forEach(consumer);
