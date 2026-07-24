@@ -50,4 +50,20 @@ class JoinableTest {
         this.joinable.removePlayers(players);
         assertTrue(this.joinable.getPlayers().isEmpty());
     }
+
+    @Test
+    void testMultipleOperationWithList(Env env) {
+        final Instance instance = env.createFlatInstance();
+        final var playersList = java.util.List.of(
+                env.createPlayer(instance, Pos.ZERO),
+                env.createPlayer(instance, Pos.ZERO)
+        );
+
+        assertTrue(this.joinable.getPlayers().isEmpty());
+        this.joinable.addPlayers(playersList);
+        assertEquals(2, this.joinable.getPlayers().size());
+
+        this.joinable.removePlayers(playersList);
+        assertTrue(this.joinable.getPlayers().isEmpty());
+    }
 }

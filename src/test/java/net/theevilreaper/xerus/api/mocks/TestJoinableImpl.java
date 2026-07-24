@@ -5,6 +5,7 @@ import net.minestom.server.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -18,47 +19,55 @@ public class TestJoinableImpl implements Joinable {
     }
 
     @Override
-    public void addPlayer(@NotNull Player paramPlayer) {
-        this.players.add(paramPlayer);
+    public void addPlayer(@NotNull Player player) {
+        this.players.add(player);
     }
 
     @Override
-    public void addPlayer(@NotNull Player paramPlayer, @Nullable Consumer<Player> consumer) {
-        this.players.add(paramPlayer);
+    public void addPlayer(@NotNull Player player, @Nullable Consumer<Player> consumer) {
+        this.players.add(player);
 
         if (consumer != null) {
-            consumer.accept(paramPlayer);
+            consumer.accept(player);
         }
     }
 
     @Override
-    public void addPlayers(@NotNull Set<Player> players) {
+    public void addPlayers(@NotNull Collection<Player> players) {
         this.players.addAll(players);
     }
 
     @Override
-    public void addPlayers(@NotNull Set<Player> players, @Nullable Consumer<Player> consumer) {
-
+    public void addPlayers(@NotNull Collection<Player> players, @Nullable Consumer<Player> consumer) {
+        this.players.addAll(players);
+        if (consumer != null) {
+            players.forEach(consumer);
+        }
     }
 
     @Override
-    public void removePlayer(@NotNull Player paramPlayer) {
-        this.players.remove(paramPlayer);
+    public void removePlayer(@NotNull Player player) {
+        this.players.remove(player);
     }
 
     @Override
-    public void removePlayer(@NotNull Player paramPlayer, @Nullable Consumer<Player> consumer) {
-
+    public void removePlayer(@NotNull Player player, @Nullable Consumer<Player> consumer) {
+        if (this.players.remove(player) && consumer != null) {
+            consumer.accept(player);
+        }
     }
 
     @Override
-    public void removePlayers(@NotNull Set<Player> players) {
+    public void removePlayers(@NotNull Collection<Player> players) {
         this.players.removeAll(players);
     }
 
     @Override
-    public void removePlayers(@NotNull Set<Player> players, @Nullable Consumer<Player> consumer) {
-
+    public void removePlayers(@NotNull Collection<Player> players, @Nullable Consumer<Player> consumer) {
+        this.players.removeAll(players);
+        if (consumer != null) {
+            players.forEach(consumer);
+        }
     }
 
     public Set<Player> getPlayers() {
