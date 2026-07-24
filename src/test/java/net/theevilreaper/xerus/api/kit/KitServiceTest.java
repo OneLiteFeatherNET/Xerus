@@ -62,4 +62,42 @@ class KitServiceTest {
         Optional<Kit> fetchedKit = kitService.getKit(Key.key("xerus", "test_kit"));
         assertFalse(fetchedKit.isPresent());
     }
+
+    @Test
+    void testDuplicateKitAddition() {
+        assertTrue(kitService.getKits().isEmpty());
+
+        Kit kit1 = new TestKit();
+        Kit kit2 = new TestKit();
+
+        kitService.add(kit1);
+        assertEquals(1, kitService.getKits().size());
+
+        // Adding kit with same key must replace existing without duplicating size
+        kitService.add(kit2);
+        assertEquals(1, kitService.getKits().size());
+        assertEquals(kit2, kitService.getKit(kit1.key()).orElse(null));
+    }
+
+    @Test
+    void testRemoveNonExisting() {
+        assertFalse(kitService.remove(Key.key("xerus", "non_existing_kit")));
+    }
+
+    @Test
+    void testClearMultipleKits() {
+        kitService.add(new TestKit(Key.key("xerus", "kit_1")));
+        kitService.add(new TestKit(Key.key("xerus", "kit_2")));
+        assertEquals(2, kitService.getKits().size());
+
+        kitService.clear();
+        assertTrue(kitService.getKits().isEmpty());
+    }
+
+    @Test
+    void testUnmodifiableKitsList() {
+        kitService.add(new TestKit());
+        var kitsList = kitService.getKits();
+        assertThrows(UnsupportedOperationException.class, () -> kitsList.add(new TestKit(Key.key("xerus", "other"))));
+    }
 }

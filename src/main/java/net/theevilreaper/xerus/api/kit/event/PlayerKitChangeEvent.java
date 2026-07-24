@@ -4,7 +4,6 @@ import net.theevilreaper.xerus.api.kit.Kit;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.trait.CancellableEvent;
 import net.minestom.server.event.trait.PlayerEvent;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -16,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 public final class PlayerKitChangeEvent implements PlayerEvent, CancellableEvent {
 
     private final Player player;
-    private final Kit currentKit;
+    private final @Nullable Kit currentKit;
     private final Kit newKit;
     private boolean cancelled;
 
@@ -26,7 +25,7 @@ public final class PlayerKitChangeEvent implements PlayerEvent, CancellableEvent
      * @param currentKit The current kit of the player
      * @param newKit The new kit of the player
      */
-    public PlayerKitChangeEvent(@NotNull Player player, @Nullable Kit currentKit, @NotNull Kit newKit) {
+    public PlayerKitChangeEvent(Player player, @Nullable Kit currentKit, Kit newKit) {
         this.player = player;
         this.currentKit = currentKit;
         this.newKit = newKit;
@@ -37,7 +36,7 @@ public final class PlayerKitChangeEvent implements PlayerEvent, CancellableEvent
      * @return the involved player
      */
     @Override
-    public @NotNull Player getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 
@@ -75,7 +74,7 @@ public final class PlayerKitChangeEvent implements PlayerEvent, CancellableEvent
      * Returns the new kit for a player
      * @return the new kit
      */
-    public @NotNull Kit getNewKit() {
+    public Kit getNewKit() {
         return newKit;
     }
 }
