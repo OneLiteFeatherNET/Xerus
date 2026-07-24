@@ -13,7 +13,7 @@ import java.util.function.ToIntFunction;
  * Default implementation of the {@link TeamDistributor} interface.
  *
  * @author Patrick Zdarsky / Rxcki
- * @version 1.0
+ * @version 1.1
  * @since 03/02/2020 20:32
  */
 public class DefaultTeamDistributor implements TeamDistributor {
@@ -23,8 +23,8 @@ public class DefaultTeamDistributor implements TeamDistributor {
      */
     @SuppressWarnings("java:S3776")
     @Override
-    public void distribute(@NotNull List<Team> teams, @NotNull List<Player> players, int teamSize,
-                           @NotNull ToIntFunction<Player> eloFunction, boolean evenTeams, boolean lowVariance) {
+    public void distribute(List<Team> teams, List<Player> players, int teamSize,
+                           ToIntFunction<Player> eloFunction, boolean evenTeams, boolean lowVariance) {
         if (teams.isEmpty()) {
             throw new IllegalArgumentException("The list with the teams can not be empty");
         }
@@ -63,7 +63,7 @@ public class DefaultTeamDistributor implements TeamDistributor {
                 team = teams.get(i);
             }
 
-            if (team == null) return;
+            if (team == null) continue;
 
             for (DistributionPlayer player : distributionTeam.players()) {
                 final Player realPlayer = MinecraftServer.getConnectionManager().getOnlinePlayerByUuid(player.uuid());
@@ -78,8 +78,8 @@ public class DefaultTeamDistributor implements TeamDistributor {
      * {@inheritDoc}
      */
     @Override
-    public void distribute(@NotNull List<Team> teams, @NotNull List<Player> players, int teamSize,
-                           @NotNull ToIntFunction<Player> eloFunction) {
+    public void distribute(List<Team> teams, List<Player> players, int teamSize,
+                           ToIntFunction<Player> eloFunction) {
         distribute(teams, players, teamSize, eloFunction, true, false);
     }
 }

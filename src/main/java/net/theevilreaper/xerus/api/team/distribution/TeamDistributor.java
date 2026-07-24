@@ -2,7 +2,6 @@ package net.theevilreaper.xerus.api.team.distribution;
 
 import net.theevilreaper.xerus.api.team.Team;
 import net.minestom.server.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.function.ToIntFunction;
@@ -28,10 +27,10 @@ public interface TeamDistributor {
      * @param lowVariance if true, the distribution will aim for low variance in team elo ratings
      */
     void distribute(
-            @NotNull List<Team> teams,
-            @NotNull List<Player> players,
+            List<Team> teams,
+            List<Player> players,
             int teamSize,
-            @NotNull ToIntFunction<Player> eloFunction,
+            ToIntFunction<Player> eloFunction,
             boolean evenTeams,
             boolean lowVariance
     );
@@ -45,9 +44,9 @@ public interface TeamDistributor {
      * @param eloFunction a function to get the elo rating of a player
      */
     void distribute(
-            @NotNull List<Team> teams,
-            @NotNull List<Player> players,
+            List<Team> teams,
+            List<Player> players,
             int teamSize,
-            @NotNull ToIntFunction<Player> eloFunction
+            ToIntFunction<Player> eloFunction
     );
 }

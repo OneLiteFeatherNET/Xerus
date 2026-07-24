@@ -4,7 +4,6 @@ import net.theevilreaper.xerus.api.team.Team;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.trait.CancellableEvent;
 import net.minestom.server.event.trait.PlayerEvent;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * The {@link PlayerTeamEvent} is called when a player changes his given team reference.
@@ -28,7 +27,7 @@ public final class PlayerTeamEvent implements PlayerEvent, CancellableEvent {
      * @param team   the current team from the player
      * @param action the action which was applied to the team
      */
-    public PlayerTeamEvent(@NotNull Player player, @NotNull Team team, @NotNull TeamAction action) {
+    public PlayerTeamEvent(Player player, Team team, TeamAction action) {
         this.player = player;
         this.team = team;
         this.action = action;
@@ -59,7 +58,7 @@ public final class PlayerTeamEvent implements PlayerEvent, CancellableEvent {
      *
      * @return the involved team
      */
-    public @NotNull Team getTeam() {
+    public Team getTeam() {
         return team;
     }
 
@@ -68,7 +67,7 @@ public final class PlayerTeamEvent implements PlayerEvent, CancellableEvent {
      *
      * @return the performed action
      */
-    public @NotNull TeamAction getAction() {
+    public TeamAction getAction() {
         return action;
     }
 
@@ -78,7 +77,7 @@ public final class PlayerTeamEvent implements PlayerEvent, CancellableEvent {
      * @return the involved player
      */
     @Override
-    public @NotNull Player getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 }

@@ -75,4 +75,27 @@ class TeamServiceIntegrationTest {
         assertTrue(teamService.exists(Key.key("xerus", "team_yellow")));
         assertFalse(teamService.exists(Key.key("xerus", "team_green")));
     }
+
+    @Test
+    void testGetNonExistingTeam() {
+        assertFalse(teamService.hasTeams());
+        Optional<Team> team = teamService.getTeam(Key.key("xerus", "non_existing"));
+        assertTrue(team.isEmpty());
+    }
+
+    @Test
+    void testGetSmallestTeam() {
+        assertFalse(teamService.hasTeams());
+        assertTrue(teamService.getSmallestTeam().isEmpty());
+
+        Team team1 = Team.of(Key.key("xerus", "team_1"));
+        Team team2 = Team.of(Key.key("xerus", "team_2"));
+        teamService.add(team1);
+        teamService.add(team2);
+
+        // team1 has 0 players, team2 has 0 players - smallest is either (size 0)
+        assertTrue(teamService.getSmallestTeam().isPresent());
+        assertEquals(0, teamService.getSmallestTeam().get().getCurrentSize());
+    }
 }
+

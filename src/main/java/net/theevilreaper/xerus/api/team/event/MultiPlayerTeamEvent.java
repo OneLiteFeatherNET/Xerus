@@ -4,7 +4,6 @@ import net.theevilreaper.xerus.api.team.Team;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.trait.CancellableEvent;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 
@@ -30,7 +29,7 @@ public class MultiPlayerTeamEvent implements Event, CancellableEvent {
      * @param players    the collection with the players who are involved in the event
      * @param teamAction the action for the event
      */
-    public MultiPlayerTeamEvent(@NotNull Team team, @NotNull Collection<Player> players, @NotNull TeamAction teamAction) {
+    public MultiPlayerTeamEvent(Team team, Collection<Player> players, TeamAction teamAction) {
         this.team = team;
         this.players = players;
         this.action = teamAction;
@@ -61,7 +60,6 @@ public class MultiPlayerTeamEvent implements Event, CancellableEvent {
      *
      * @return the collection with the involved players
      */
-    @NotNull
     public Collection<Player> getPlayers() {
         return players;
     }
@@ -71,7 +69,7 @@ public class MultiPlayerTeamEvent implements Event, CancellableEvent {
      *
      * @return the involved team
      */
-    public @NotNull Team getTeam() {
+    public Team getTeam() {
         return team;
     }
 
@@ -80,7 +78,7 @@ public class MultiPlayerTeamEvent implements Event, CancellableEvent {
      *
      * @return the performed action
      */
-    public @NotNull TeamAction getAction() {
+    public TeamAction getAction() {
         return action;
     }
 }
