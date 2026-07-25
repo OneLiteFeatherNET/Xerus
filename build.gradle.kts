@@ -26,6 +26,7 @@ dependencies {
     testImplementation(libs.cyano)
     testImplementation(libs.adventure)
     testImplementation(libs.junit.api)
+    testImplementation(libs.junit.params)
     testImplementation(libs.junit.platform.launcher)
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.junit)

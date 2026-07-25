@@ -35,6 +35,7 @@ dependencyResolutionManagement {
             library("mockito.core", "org.mockito", "mockito-core").withoutVersion()
             library("mockito.junit", "org.mockito", "mockito-junit-jupiter").withoutVersion()
             library("junit.platform.launcher", "org.junit.platform", "junit-platform-launcher").withoutVersion()
+            library("junit.params", "org.junit.jupiter", "junit-jupiter-params").withoutVersion()
         }
     }
 }
