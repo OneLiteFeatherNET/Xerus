@@ -3,14 +3,18 @@ package net.theevilreaper.xerus.api;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.color.Color;
 import net.minestom.server.color.DyeColor;
+import net.minestom.server.color.TeamColor;
 import net.minestom.server.item.Material;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 /**
  * Represents a mapping of visual color variants using text color, dye color, block material, and a string identifier.
  * Each constant aligns with a specific base color and can be used to harmonize visual elements across different systems.
  *
  * @author theEvilReaper
- * @version 1.6.0
+ * @version 1.7.0
  * @since 1.0.0
  */
 @SuppressWarnings("java:S3252")
@@ -40,14 +44,14 @@ public enum ColorData {
     /** Aligns with the dark gray color. */
     DARK_GRAY(NamedTextColor.DARK_GRAY, DyeColor.GRAY, Material.GRAY_WOOL, "colorDarkGray"),
 
+    /** Aligns with the dark green color. */
+    DARK_GREEN(NamedTextColor.DARK_GREEN, DyeColor.GREEN, Material.GREEN_WOOL, "colorGreen"),
+
     /** Aligns with the green color. */
-    GREEN(NamedTextColor.DARK_GREEN, DyeColor.GREEN, Material.GREEN_WOOL, "colorGreen"),
+    GREEN(NamedTextColor.GREEN, DyeColor.LIME, Material.LIME_WOOL, "colorLime"),
 
-    /** Aligns with the light green color. */
-    LIGHT_GREEN(NamedTextColor.GREEN, DyeColor.LIME, Material.LIME_WOOL, "colorLime"),
-
-    /** Aligns with the purple color. */
-    PURPLE(NamedTextColor.DARK_PURPLE, DyeColor.PURPLE, Material.PURPLE_WOOL, "colorPurple"),
+    /** Aligns with the dark purple color. */
+    DARK_PURPLE(NamedTextColor.DARK_PURPLE, DyeColor.PURPLE, Material.PURPLE_WOOL, "colorPurple"),
 
     /** Aligns with the light purple color. */
     LIGHT_PURPLE(NamedTextColor.LIGHT_PURPLE, DyeColor.MAGENTA, Material.MAGENTA_WOOL, "colorMagenta"),
@@ -66,6 +70,20 @@ public enum ColorData {
 
     //Reduce defensive copies from the array, because values() returns each call a new array!
     private static final ColorData[] VALUES = values();
+
+    private static final Map<ColorData, TeamColor> TEAM_COLOR_CACHE = new EnumMap<>(ColorData.class);
+
+    static {
+        for (ColorData colorData : VALUES) {
+            TeamColor mapped = TeamColor.fromName(colorData.chatColor.toString());
+            if (mapped == null) {
+                throw new ExceptionInInitializerError(
+                        "No TeamColor mapping found for ColorData " + colorData.name()
+                );
+            }
+            TEAM_COLOR_CACHE.put(colorData, mapped);
+        }
+    }
 
     private final NamedTextColor chatColor;
     private final DyeColor dyeColor;
@@ -130,6 +148,17 @@ public enum ColorData {
      */
     public Color getColor() {
         return this.dyeColor.color();
+    }
+
+    /**
+     * Returns the matching {@link TeamColor} for this entry, resolved via the underlying
+     * {@link NamedTextColor} rather than the enum name to avoid mismatches
+     * (e.g. this enum's {@code DARK_GREEN} maps to {@link NamedTextColor#DARK_GREEN}).
+     *
+     * @return the underlying teamColor
+     */
+    public TeamColor toTeamColor() {
+        return TEAM_COLOR_CACHE.get(this);
     }
 
     /**
