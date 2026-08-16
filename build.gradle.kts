@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "net.theevilreaper"
-version = "1.12.1"
+version = "1.12.2"
 
 java {
     toolchain {
