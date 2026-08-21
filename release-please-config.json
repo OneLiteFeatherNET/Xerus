@@ -6,7 +6,14 @@
   "packages": {
     ".": {
       "package-name": "Xerus",
-      "changelog-path": "CHANGELOG.md"
+      "changelog-path": "CHANGELOG.md",
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "build.gradle.kts"
+        }
+      ]
     }
-  }
+  },
+  "bootstrap-sha": "a7eeaff335d3acf155b039c9cd1f2a67a29e6aed"
 }
