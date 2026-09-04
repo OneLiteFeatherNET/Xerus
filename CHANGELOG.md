@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.12.4](https://github.com/OneLiteFeatherNET/Xerus/compare/v1.12.3...v1.12.4) (2026-09-04)
+
+
+### Bug Fixes
+
+* **deps:** update dependency org.slf4j:slf4j-api to v2.0.19 ([#87](https://github.com/OneLiteFeatherNET/Xerus/issues/87)) ([87ec788](https://github.com/OneLiteFeatherNET/Xerus/commit/87ec788b0ea1368ab4b6234f9ea55a7ba19da206))
+
 ## [1.12.3](https://github.com/OneLiteFeatherNET/Xerus/compare/v1.12.3...v1.12.3) (2026-09-02)
 
 
@@ -30,5 +37,3 @@
 ### Miscellaneous Chores
 
 * prepare patch release ([032a525](https://github.com/OneLiteFeatherNET/Xerus/commit/032a525ec6663e8df2c0c484c2328f205f485999))
-
-
