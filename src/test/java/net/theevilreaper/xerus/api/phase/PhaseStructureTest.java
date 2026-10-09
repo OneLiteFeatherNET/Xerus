@@ -23,7 +23,7 @@ class PhaseStructureTest {
                 throw new RuntimeException("Start called");
             }
         };
-        this.phase.setFinishedCallback(() -> {
+        this.phase.addFinishedCallback(() -> {
             throw new RuntimeException("Finish callback");
         });
     }
@@ -49,7 +49,7 @@ class PhaseStructureTest {
     @Order(3)
     @Test
     void testFinishMethod() {
-        assertThrowsExactly(RuntimeException.class, phase::finish, "Finish callback");
+        assertDoesNotThrow(phase::finish);
     }
 
     @Order(4)
@@ -92,6 +92,7 @@ class PhaseStructureTest {
 
     @Order(10)
     @Test
+    @SuppressWarnings("removal")
     void testSetFinishCallback() {
         this.phase.setFinishedCallback(null);
         this.phase.finish();

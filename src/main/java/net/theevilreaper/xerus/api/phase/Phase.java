@@ -1,12 +1,17 @@
 package net.theevilreaper.xerus.api.phase;
 
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a unit of execution within a phase-based system.
  * <p>
  * A {@code Phase} is started externally and can complete at any time. Once finished,
- * it can notify an optional listener via a {@code finishedCallback}.
+ * it notifies all registered finished callbacks.
  * </p>
  * <p>
  * Each phase has a unique name and maintains internal state indicating whether it is running,
@@ -19,11 +24,14 @@ import org.jetbrains.annotations.NotNull;
  */
 public abstract class Phase {
 
+    private static final Logger PHASE_LOGGER = LoggerFactory.getLogger(Phase.class);
+
     private final String name;
+    private final List<Runnable> finishedCallbacks;
     private boolean running;
     private boolean finished;
     private boolean skipping;
-    private Runnable finishedCallback;
+    private Runnable seriesCallback;
 
     /**
      * Constructs a new {@code Phase} with the specified name.
@@ -32,6 +40,7 @@ public abstract class Phase {
      */
     protected Phase(@NotNull String name) {
         this.name = name;
+        this.finishedCallbacks = new ArrayList<>();
     }
 
     /**
@@ -64,9 +73,11 @@ public abstract class Phase {
     }
 
     /**
-     * Marks the phase as finished and invokes the {@code finishedCallback}, if set.
+     * Marks the phase as finished and invokes all registered finished callbacks in registration order.
      * <p>
      * A phase can only be finished once. Subsequent calls will be ignored.
+     * An exception thrown by a callback is logged and does not prevent the remaining callbacks
+     * or the owning series from being notified.
      * </p>
      */
     public void finish() {
@@ -78,8 +89,29 @@ public abstract class Phase {
         running = false;
         skipping = false;
 
-        if (finishedCallback != null) {
-            finishedCallback.run();
+        notifyFinishedCallbacks();
+
+        if (seriesCallback != null) {
+            seriesCallback.run();
+        }
+    }
+
+    /**
+     * Invokes all registered finished callbacks in registration order.
+     * <p>
+     * Iterates over a copy so callbacks may remove themselves while being invoked.
+     * Exceptions are logged and do not prevent the remaining callbacks from running.
+     * </p>
+     */
+    private void notifyFinishedCallbacks() {
+        if (finishedCallbacks.isEmpty()) return;
+
+        for (Runnable callback : List.copyOf(finishedCallbacks)) {
+            try {
+                callback.run();
+            } catch (Exception exception) {
+                PHASE_LOGGER.error("A finished callback of phase '{}' threw an exception", name, exception);
+            }
         }
     }
 
@@ -150,11 +182,48 @@ public abstract class Phase {
     }
 
     /**
-     * Sets the callback to be invoked when this phase finishes.
+     * Registers a callback to be invoked when this phase finishes.
      *
-     * @param finishedCallback the {@link Runnable} to be executed on phase completion
+     * @param callback the {@link Runnable} to be executed on phase completion
      */
+    public void addFinishedCallback(@NotNull Runnable callback) {
+        this.finishedCallbacks.add(callback);
+    }
+
+    /**
+     * Removes a previously registered finished callback.
+     *
+     * @param callback the {@link Runnable} to remove
+     * @return {@code true} if the callback was registered, otherwise {@code false}
+     */
+    public boolean removeFinishedCallback(@NotNull Runnable callback) {
+        return this.finishedCallbacks.remove(callback);
+    }
+
+    /**
+     * Replaces all registered finished callbacks with the given one.
+     *
+     * @param finishedCallback the {@link Runnable} to be executed on phase completion, or {@code null} to clear all callbacks
+     * @deprecated use {@link #addFinishedCallback(Runnable)} and {@link #removeFinishedCallback(Runnable)} instead
+     */
+    @Deprecated(forRemoval = true)
     public void setFinishedCallback(Runnable finishedCallback) {
-        this.finishedCallback = finishedCallback;
+        this.finishedCallbacks.clear();
+        if (finishedCallback != null) {
+            this.finishedCallbacks.add(finishedCallback);
+        }
+    }
+
+    /**
+     * Sets the internal callback used by an owning {@link LinearPhaseSeries} to advance once this phase finishes.
+     * <p>
+     * It is kept separate from the user-defined finished callbacks so it can not be removed by them.
+     * The series callback is always invoked after all finished callbacks.
+     * </p>
+     *
+     * @param seriesCallback the {@link Runnable} to be executed by the owning series
+     */
+    void setSeriesCallback(Runnable seriesCallback) {
+        this.seriesCallback = seriesCallback;
     }
 }

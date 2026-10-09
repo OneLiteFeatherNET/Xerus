@@ -45,7 +45,7 @@ class PhaseTest {
     void startFinishCallback() {
         var phase = new SimplePhase("Test=");
         var callback = Mockito.mock(Runnable.class);
-        phase.setFinishedCallback(callback);
+        phase.addFinishedCallback(callback);
 
         phase.start();
         phase.finish();
@@ -94,7 +94,7 @@ class PhaseTest {
     void testDoubleFinished() {
         var phase = new SimplePhase("Test=");
         var callback = Mockito.mock(Runnable.class);
-        phase.setFinishedCallback(callback);
+        phase.addFinishedCallback(callback);
 
         phase.finish();
         phase.finish();
