@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.12.4](https://github.com/OneLiteFeatherNET/Xerus/compare/v1.12.3...v1.12.4) (2026-10-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency net.onelitefeather:mycelium-bom to v1.8.6 ([#91](https://github.com/OneLiteFeatherNET/Xerus/issues/91)) ([8d10158](https://github.com/OneLiteFeatherNET/Xerus/commit/8d10158fb090fc66d4d9be75382888af2abfb7eb))
+* **deps:** update dependency net.onelitefeather:mycelium-bom to v1.8.7 ([#94](https://github.com/OneLiteFeatherNET/Xerus/issues/94)) ([292a55b](https://github.com/OneLiteFeatherNET/Xerus/commit/292a55bdcfaa3a9d239d48ea4d0a67078d58e324))
+* **deps:** update dependency net.onelitefeather:mycelium-bom to v1.8.8 ([#95](https://github.com/OneLiteFeatherNET/Xerus/issues/95)) ([e8d159a](https://github.com/OneLiteFeatherNET/Xerus/commit/e8d159a1c8945a11cc26add7766004c56441be84))
+* **deps:** update dependency net.onelitefeather:mycelium-bom to v1.8.9 ([#97](https://github.com/OneLiteFeatherNET/Xerus/issues/97)) ([89d1913](https://github.com/OneLiteFeatherNET/Xerus/commit/89d1913e583652899a76dcfefcdbf4b83438a184))
+* **deps:** update dependency org.slf4j:slf4j-api to v2.0.19 ([#87](https://github.com/OneLiteFeatherNET/Xerus/issues/87)) ([87ec788](https://github.com/OneLiteFeatherNET/Xerus/commit/87ec788b0ea1368ab4b6234f9ea55a7ba19da206))
+* **deps:** update dependency org.slf4j:slf4j-api to v2.0.20 ([#92](https://github.com/OneLiteFeatherNET/Xerus/issues/92)) ([2781b21](https://github.com/OneLiteFeatherNET/Xerus/commit/2781b21c78d4b0e9f2cd25fa6e3b930ac798aeea))
+* **phase:** fix GamePhase, TimedPhase and LinearPhaseSeries bugs ([#100](https://github.com/OneLiteFeatherNET/Xerus/issues/100)) ([8d757d7](https://github.com/OneLiteFeatherNET/Xerus/commit/8d757d788b69e5f0cd3571901d0ade01edec8593))
+* **phase:** improve finish callback handling and allow multiple callbacks ([#99](https://github.com/OneLiteFeatherNET/Xerus/issues/99)) ([5e08c25](https://github.com/OneLiteFeatherNET/Xerus/commit/5e08c25d48dbefeaadba00f12194c098c16fca32))
+* **team:** fix capacity check and Splitter distribution ([#101](https://github.com/OneLiteFeatherNET/Xerus/issues/101)) ([9d8c1ea](https://github.com/OneLiteFeatherNET/Xerus/commit/9d8c1ea95b3a02da41ac171da61510efe54d7ba6))
+
 ## [1.12.3](https://github.com/OneLiteFeatherNET/Xerus/compare/v1.12.3...v1.12.3) (2026-09-02)
 
 
@@ -30,5 +45,3 @@
 ### Miscellaneous Chores
 
 * prepare patch release ([032a525](https://github.com/OneLiteFeatherNET/Xerus/commit/032a525ec6663e8df2c0c484c2328f205f485999))
-
-
