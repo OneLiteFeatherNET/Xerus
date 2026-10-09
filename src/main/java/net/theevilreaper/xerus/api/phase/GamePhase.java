@@ -80,9 +80,11 @@ public abstract class GamePhase extends Phase {
     /**
      * Starts the phase by calling the overridden start method from the superclass.
      * Adds the phaseNode to the global event handler if phaseNode is not null.
+     * Calling this method on an already running phase has no effect.
      */
     @Override
     public void start() {
+        if (isRunning()) return;
         super.start();
 
         if (phaseNode != null) {

@@ -3,12 +3,16 @@ package net.theevilreaper.xerus.api.phase;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.EventListener;
 import net.minestom.server.event.EventNode;
+import net.minestom.testing.Env;
+import net.minestom.testing.extension.MicrotusExtension;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MicrotusExtension.class)
 class GamePhaseTest {
 
     private static class TestEvent implements Event {
@@ -56,5 +60,15 @@ class GamePhaseTest {
         phase.addListener(TestEvent.class, event -> {});
 
         assertNull(phase.removeListener(Event.class));
+    }
+
+    @Test
+    void testStartTwiceWithNode(Env env) {
+        DummyGamePhase phase = new DummyGamePhase();
+        phase.addListener(TestEvent.class, event -> {});
+
+        phase.start();
+        assertDoesNotThrow(phase::start);
+        phase.finish();
     }
 }
