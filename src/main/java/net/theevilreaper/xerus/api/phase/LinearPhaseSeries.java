@@ -113,7 +113,7 @@ public class LinearPhaseSeries<T extends Phase> extends PhaseCollection<T> {
      * Starts the currently selected phase and registers a callback to advance when it finishes.
      */
     public void startCurrentPhase() {
-        currentPhase.setFinishedCallback(this::advance);
+        currentPhase.setSeriesCallback(this::advance);
         currentPhase.start();
     }
 
