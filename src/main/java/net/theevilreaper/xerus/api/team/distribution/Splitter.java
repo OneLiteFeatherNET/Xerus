@@ -37,8 +37,12 @@ public class Splitter {
      * @param evenTeams   if teams should be forced to be even
      * @param lowVariance if low variance is preferred
      * @return optimal desired teams constellation
+     * @throws IllegalArgumentException if {@code evenTeams} is set without {@code lowVariance} and the players don't fit into the teams
      */
     public DistributionTeam[] compute(DistributionTeam[] ts, DistributionPlayer[] ps, List<Integer> is, int teamSize, boolean evenTeams, boolean lowVariance) {
+        if (evenTeams && !lowVariance) {
+            validateCapacity(ts, ps, is, teamSize);
+        }
         //initialize
         this.ps = ps;
         this.evenTeams = evenTeams;
@@ -52,6 +56,31 @@ public class Splitter {
             bruteForce(0, ts, is);
         //result
         return this.ts;
+    }
+
+    /**
+     * Checks if all players fit into the teams without exceeding the team size.
+     *
+     * @param ts       outline for teams
+     * @param ps       players
+     * @param is       used player array indices
+     * @param teamSize size of each team
+     * @throws IllegalArgumentException if a team already exceeds the team size or not all players fit into the teams
+     */
+    private void validateCapacity(DistributionTeam[] ts, DistributionPlayer[] ps, List<Integer> is, int teamSize) {
+        int assignedPlayers = 0;
+        for (DistributionTeam team : ts) {
+            if (team.length() > teamSize) {
+                throw new IllegalArgumentException("The team " + team.name().asString() + " already exceeds the team size of " + teamSize);
+            }
+            assignedPlayers += team.length();
+        }
+
+        int totalPlayers = assignedPlayers + ps.length - is.size();
+        int capacity = ts.length * teamSize;
+        if (totalPlayers > capacity) {
+            throw new IllegalArgumentException("Unable to distribute " + totalPlayers + " players into " + ts.length + " teams with a size of " + teamSize);
+        }
     }
 
     /**

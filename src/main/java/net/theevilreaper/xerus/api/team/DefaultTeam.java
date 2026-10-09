@@ -90,7 +90,7 @@ public class DefaultTeam implements Team {
      */
     @Override
     public boolean canJoin() {
-        return capacity == DEFAULT_CAPACITY || players.size() != capacity;
+        return capacity == DEFAULT_CAPACITY || players.size() < capacity;
     }
 
     @Override
