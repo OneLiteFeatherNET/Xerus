@@ -39,7 +39,7 @@ class CyclicPhaseSeriesTest {
    /* @Test
     void testSingleLoop() {
         var runnable = Mockito.mock(Runnable.class);
-        phaseSeries.setFinishedCallback(runnable);
+        phaseSeries.addFinishedCallback(runnable);
         phaseSeries.setMaxIterations(1);
         assertEquals(2, phaseSeries.getIterations());
 
@@ -57,7 +57,7 @@ class CyclicPhaseSeriesTest {
     @Test
     void testDoubleLoop() {
         var runnable = Mockito.mock(Runnable.class);
-        phaseSeries.setFinishedCallback(runnable);
+        phaseSeries.addFinishedCallback(runnable);
         phaseSeries.setMaxIterations(2);
 
         phaseSeries.start();
