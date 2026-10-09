@@ -46,7 +46,7 @@ public abstract class GamePhase extends Phase {
     public <T extends Event> EventListener<T> addListener(@NotNull Class<T> eventClass, @NotNull Consumer<T> listener) {
         this.verifyValueIntegrity();
         var eventListener = EventListener.of(eventClass, listener);
-        this.listenerHashMap.put(eventClass, EventListener.of(eventClass, listener));
+        this.listenerHashMap.put(eventClass, eventListener);
         this.phaseNode.addListener(eventListener);
         return eventListener;
     }
@@ -67,11 +67,12 @@ public abstract class GamePhase extends Phase {
      *
      * @param eventClass the class, which should be removed
      * @param <T>        the event class must inherit from the {@link Event}
-     * @return the removed listener
+     * @return the removed listener or {@code null} if no listener is registered for the given class
      */
     public <T extends Event> EventListener<? extends Event> removeListener(@NotNull Class<T> eventClass) {
         if (phaseNode == null || listenerHashMap == null) return null;
         var eventListener = this.listenerHashMap.remove(eventClass);
+        if (eventListener == null) return null;
         this.phaseNode.removeListener(eventListener);
         return eventListener;
     }
@@ -79,9 +80,11 @@ public abstract class GamePhase extends Phase {
     /**
      * Starts the phase by calling the overridden start method from the superclass.
      * Adds the phaseNode to the global event handler if phaseNode is not null.
+     * Calling this method on an already running phase has no effect.
      */
     @Override
     public void start() {
+        if (isRunning()) return;
         super.start();
 
         if (phaseNode != null) {

@@ -7,8 +7,9 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Patrick Zdarsky / Rxcki
@@ -38,5 +39,43 @@ class AdvancedLinearPhaseSeriesTest {
         var phaseSeries = new LinearPhaseSeries<>(null, phaseList);
         phaseSeries.start();
         assertEquals(phase1, phaseSeries.getCurrentPhase());
+    }
+
+    @Test
+    void testResumeDoesNotSkipRunningPhase() {
+        var phase1 = new SimplePhase("Phase #1");
+        var phase2 = new SimplePhase("Phase #2");
+        var phaseSeries = new LinearPhaseSeries<>("Test Phase Series", new ArrayList<>(List.of(phase1, phase2)));
+
+        phaseSeries.start();
+        phaseSeries.setPaused(true);
+        phaseSeries.setPaused(false);
+
+        assertEquals(phase1, phaseSeries.getCurrentPhase());
+        assertFalse(phase2.isRunning());
+    }
+
+    @Test
+    void testResumeAdvancesWhenPhaseFinishedWhilePaused() {
+        var phase1 = new SimplePhase("Phase #1");
+        var phase2 = new SimplePhase("Phase #2");
+        var phaseSeries = new LinearPhaseSeries<>("Test Phase Series", new ArrayList<>(List.of(phase1, phase2)));
+
+        phaseSeries.start();
+        phaseSeries.setPaused(true);
+        phase1.finish();
+        assertEquals(phase1, phaseSeries.getCurrentPhase());
+
+        phaseSeries.setPaused(false);
+        assertEquals(phase2, phaseSeries.getCurrentPhase());
+        assertTrue(phase2.isRunning());
+    }
+
+    @Test
+    void testPauseBeforeStart() {
+        var phaseSeries = new LinearPhaseSeries<>("Test Phase Series", new ArrayList<>(List.of(new SimplePhase())));
+
+        assertDoesNotThrow(() -> phaseSeries.setPaused(true));
+        assertDoesNotThrow(() -> phaseSeries.setPaused(false));
     }
 }

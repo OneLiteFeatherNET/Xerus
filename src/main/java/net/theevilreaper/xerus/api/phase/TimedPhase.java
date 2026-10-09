@@ -111,12 +111,16 @@ public abstract class TimedPhase extends TickingPhase {
     /**
      * Marks the phase as finished and invokes {@link #onFinish()}.
      * <p>
+     * If the phase is already finished, this method has no effect.
+     * </p>
+     * <p>
      * Subclasses overriding this method must call {@code super.finish()}.
      * </p>
      */
     @Override
     @MustBeInvokedByOverriders
     public void finish() {
+        if (isFinished()) return;
         onFinish();
         super.finish();
     }

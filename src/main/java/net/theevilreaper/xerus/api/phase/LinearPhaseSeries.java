@@ -148,12 +148,15 @@ public class LinearPhaseSeries<T extends Phase> extends PhaseCollection<T> {
     /**
      * Sets the paused state of the phase series.
      * <p>
-     * If set to {@code false}, the series will attempt to advance.
+     * If set to {@code false} and the current phase has finished while the series was paused,
+     * the series advances to the next phase. A still running phase is not skipped.
      *
      * @param paused {@code true} to pause the series, {@code false} to resume
      */
     public void setPaused(boolean paused) {
         this.paused = paused;
-        advance();
+        if (!paused && isRunning() && currentPhase != null && currentPhase.isFinished()) {
+            advance();
+        }
     }
 }
